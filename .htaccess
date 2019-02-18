@@ -1,0 +1,28 @@
+#Impedir que se pueda ver el listado de contenidos de un directorio
+
+Options All -Indexes
+
+#URLS AMIGABLES
+# Activar RewriteEngine
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^([^/]+)$ index.php?modulo=$1 [L]
+#RewriteRule ^([^/]+)/([^/]+)$ index.php?modulo=$1 [L]
+#RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ index.php?modulo=$1 [L]
+
+RewriteRule ^([a-zA-Z0-9]+)$ index.php [L]
+RewriteRule ^([a-zA-Z0-9]+)/$ index.php [L]
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php [L]
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ index.php [L]
+RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php [L]
+
+#RewriteRule ^([a-zA-Z0-9]+)$ index.php?modulo=$1 [L]
+#RewriteRule ^([a-zA-Z0-9]+)/$ index.php?modulo=$1 [L]
+#RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php?modulo=$1 [L]
+#RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/$ index.php?modulo=$1 [L]
+#RewriteRule ^([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)$ index.php?modulo=$1 [L]
+
+ErrorDocument 404 /404.html
