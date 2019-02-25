@@ -1,5 +1,5 @@
 <?php
-class Employee
+class Employee implements JsonSerializable
 {
     private $idemployee;
     private $paternal;
@@ -137,5 +137,25 @@ class Employee
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
+    }
+    
+    public function jsonSerialize()
+    {
+        return 
+        [
+            'idemployee'   => $this->idemployee,
+            'paternal' => $this->paternal,
+            'maternal' => $this->maternal,
+            'names' => $this->names,
+            'login' => $this->login,
+            'pass' => $this->pass,
+            'weekly_hours' => $this->weekly_hours,
+            'extra_hours' => $this->extra_hours,
+            'extra_minutes' => $this->extra_minutes,
+            'gender' => $this->gender,
+            'dni' => $this->dni,
+            'mobile' => $this->mobile
+
+        ];
     }
 }

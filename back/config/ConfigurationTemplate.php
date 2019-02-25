@@ -1,6 +1,12 @@
 <?php
 class ConfigurationTemplate
 {
+    private $res_resources;
+    public function __construct()
+    {
+        $routes = new Routes();
+        $this->res_resources = $routes->getResourceForContainer();
+    }
     public function addTemplateBase()
     {
         include "view/template.php";
@@ -8,17 +14,18 @@ class ConfigurationTemplate
     public function addContainer()
     {
         /*CONTENEDOR CAMBIANTE DE ACUERDO AL MODULO E ITEM */
-        $routes = new Routes();
-        $res_resources = $routes->getResourceForContainer();
-        include $res_resources[0];
+        include $this->res_resources[0];
     }
+
+    public function getView(){
+        return $this->res_resources[2];
+    }
+
     public function addScripts()
     {
         /*CONTENEDOR CAMBIANTE DE ACUERDO AL MODULO E ITEM */
-        $routes = new Routes();
-        $res_resources = $routes->getResourceForContainer();
         //INCLUIMOS LOS SCRIPTS
-        $array_scripts = $res_resources[1];
+        $array_scripts = $this->res_resources[1];
         if ($array_scripts==null) {
         $array_scripts = array();
         }

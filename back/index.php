@@ -6,8 +6,14 @@ ini_set('display_errors', '1');
 require_once "config/BeanResource.php";
 require_once "config/ConfigurationTemplate.php";
 require_once "config/Routes.php";
+require_once "config/Conexion.php";
+require_once "capsule/Employee.php";
+require_once "model/EmployeeM.php";
 
 $configurationTemplate = new ConfigurationTemplate();
-$configurationTemplate->addTemplateBase();
+if ($configurationTemplate->getView() == 'view') {
+    $configurationTemplate->addTemplateBase();
+} else {
+    $configurationTemplate->addContainer();
+}
 
-?>
