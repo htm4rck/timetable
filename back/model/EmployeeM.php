@@ -1,6 +1,7 @@
 <?php
 class EmployeeM
 {
+
     public static function insertM(Employee $t)
     {
         try {
@@ -91,12 +92,25 @@ class EmployeeM
         }
     }
 
-    public static function listarM()
+    public static function listarM($parameters)
     {
-
+        $capsule = new Capsule();
+        $query='';
+        $query.='SELECT * FROM HAPPYLAND.EMPLOYEE';
+        $query.=' WHERE ';
+        $query.=" (LOWER(DNI) LIKE :DNI OR LOWER(NAMES) LIKE :NAMES ";
+        $query.=" OR LOWER(PATERNAL) LIKE :PATERNAL OR LOWER(MATERNAL) LIKE :MATERNAL) ";
+        $query.=$parameters['gender'];
+        $query.=$parameters['orderby'];
+        $query.=$parameters['paginate'];
         try {
             $cn = new Conexion;
-            $stmt = $cn->conectar()->prepare("SELECT * FROM HAPPYLAND.EMPLOYEE");
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->bindParam(':DNI', $parameters["filter"]);
+            $stmt->bindParam(':NAMES', $parameters['filter'], PDO::PARAM_STR);
+            $stmt->bindParam(':PATERNAL', $parameters['filter'], PDO::PARAM_STR);
+            $stmt->bindParam(':MATERNAL', $parameters['filter'], PDO::PARAM_STR);
+            $capsule->setQuery($stmt);
             $stmt->execute();
             $array = $stmt->fetchAll();
             $lista = array();
@@ -110,18 +124,26 @@ class EmployeeM
                 $t->setWeekly_hours($array[$i]['weekly_hours']);
                 $t->setExtra_hours($array[$i]['extra_hours']);
                 $t->setExtra_minutes($array[$i]['extra_minutes']);
+                $t->setGender($array[$i]['gender']);
                 $t->setDni($array[$i]['dni']);
                 $t->setMobile($array[$i]['mobile']);
                 $lista[$i] = $t;
             }
-            //return 'abc';
-            return $lista;
+            $capsule->setMessage('Solicitud Completada');
+            $capsule->setCounter(count($lista));
+            $capsule->setContent($lista);
+            $capsule->setAux($parameters);
+            
         } catch (Exception $e) {
-            return array();
+            $capsule->setError(true);
+            $capsule->setMessage($e);
+            $capsule->setQuery($stmt);
+            $capsule->setAux($parameters['gender']);
         } finally {
             $stmt = null;
             $cn->closeCn();
         }
+        return $capsule->getResponse();
     }
 
     public static function getPersonal($id)

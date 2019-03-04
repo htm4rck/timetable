@@ -1,9 +1,9 @@
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
-        <a href="/back/upkeeps">Mantenimientos</a>
+        <a class="text-primary" href="/back/upkeeps">Mantenimientos</a>
     </li>
-    <li class="breadcrumb-item active">Empleados</li>
+    <li class="breadcrumb-item active text-primary">Empleados</li>
 </ol>
 
 <div class="row">
@@ -20,18 +20,19 @@
                             <input type="text" name="txtFilterEmployee" id="txtFilterEmployee" class="form-control form-control-sm" placeholder="INGRESE DATOS . . .">
                         </div>
                         <div class="form-group col-9 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <select type="text" name="txtFiltroEmployee" id="txtFiltroEmployee" class="form-control form-control-sm">
+                            <select type="text" name="slcGenderEmployee" id="slcGenderEmployee" class="form-control form-control-sm">
+                                <option value="-1">SELECCIONAR</option>
                                 <option value="M">MASCULINO</option>
                                 <option value="F">FEMENINO</option>
                             </select>
                         </div>
                         <div class="form-group col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                            <button type="submit" id="btnBuscarEmployee" class="btn btn-info btn-sm mr-3" data-toggle="tooltip" title="Buscar Employee"><i class="fa fa-search" aria-hidden="true"></i>
+                            <button type="submit" id="btnBuscarEmployee" class="btn btn-primary btn-sm mr-3" data-toggle="tooltip" title="Buscar Employee"><i class="fa fa-search" aria-hidden="true"></i>
                             </button>
 
                         </div>
                         <div class="form-group col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 ">
-                            <button type="button" id="btnAbrirEmployee" class="btn btn-info btn-sm" data-toggle="tooltip" title="Agregar Employee"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                            <button type="button" id="btnAbrirEmployee" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Agregar Employee"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </form>
@@ -39,7 +40,7 @@
                     <div class="col-12">
                         <div class="table-responsive-sm">
                             <table class="table table-hover table-sm">
-                                <thead class="bg-info text-white">
+                                <thead class="bg-primary text-white">
                                     <tr>
                                         <th class="align-middle text-center align-middle" style="width: 15%">DNI</th>
                                         <th class="align-middle">NOMBRE</th>
@@ -63,6 +64,19 @@
                     <div class="col-md-10 col-sm-9 col-8">
                         <nav aria-label="Page navigation Employee">
                             <ul id="paginationEmployee" class="pagination pagination-sm justify-content-end">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">2</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#"> <span aria-hidden="true">&raquo;</span> </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>

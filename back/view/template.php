@@ -265,6 +265,7 @@
         <script type="text/javascript" src="/back/view/js/bootstrap-native-v4.js"></script>
         <script type="text/javascript" src="/back/view/index.js"></script>
         <script type="text/javascript" src="/back/view/js/main.js"></script>
+        <script type="text/javascript" src="/back/view/js/Alert.js"></script>
         <?php
         $configurationTemplate = new ConfigurationTemplate();
         $configurationTemplate->addScripts();
