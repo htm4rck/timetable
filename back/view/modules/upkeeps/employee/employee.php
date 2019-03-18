@@ -17,22 +17,22 @@
                 <form id="FrmEmployee">
                     <div class="row mt-3">
                         <div class="form-group col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7">
-                            <input type="text" name="txtFilterEmployee" id="txtFilterEmployee" class="form-control form-control-sm" placeholder="INGRESE DATOS . . .">
+                            <input type="text" name="txtFilterEmployeeSearch" id="txtFilterEmployeeSearch" class="form-control form-control-sm" placeholder="INGRESE DATOS . . .">
                         </div>
                         <div class="form-group col-9 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-                            <select type="text" name="slcGenderEmployee" id="slcGenderEmployee" class="form-control form-control-sm">
+                            <select type="text" name="slcGenderEmployeeSearch" id="slcGenderEmployeeSearch" class="form-control form-control-sm">
                                 <option value="-1">SELECCIONAR</option>
                                 <option value="M">MASCULINO</option>
                                 <option value="F">FEMENINO</option>
                             </select>
                         </div>
                         <div class="form-group col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1">
-                            <button type="submit" id="btnBuscarEmployee" class="btn btn-primary btn-sm mr-3" data-toggle="tooltip" title="Buscar Employee"><i class="fa fa-search" aria-hidden="true"></i>
+                            <button type="submit" id="btnEmployeeSearch" class="btn btn-primary btn-sm mr-3" data-toggle="tooltip" title="Buscar Employee"><i class="fa fa-search" aria-hidden="true"></i>
                             </button>
 
                         </div>
                         <div class="form-group col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 ">
-                            <button type="button" id="btnAbrirEmployee" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Agregar Employee"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
+                            <button type="button" id="btnCreateEmployee" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Agregar Employee"><i class="fa fa-plus-square" aria-hidden="true"></i></button>
                         </div>
                     </div>
                 </form>
@@ -88,66 +88,73 @@
 
 <div class="modal" id="modalman" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
+        <form class="modal-content" id="formularioModal">
             <div class="modal-header">
                 <h5 class="modal-title">REGISTRO PERSONAL</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-
             </div>
             <div class="modal-body">
                 <div class="form-row" id="demo">
+
                     <div class="col-6 mb-3">
-                        <label for="txtDniEmployeeER">N° DNI</label>
-                        <input type="text" id="txtDniEmployeeER" name="txtDniEmployeeER" class="form-control form-control-sm" maxlength="8" placeholder="N° DOCUMENTO" required>
+                        <label for="txtDniEmployee">N° DNI</label>
+                        <input type="text" id="txtDniEmployee" name="txtDniEmployee" class="form-control form-control-sm" maxlength="8" placeholder="N° DOCUMENTO" required>
                         <div class="invalid-feedback">
                             Por favor ingrese un N° de DNI.
                         </div>
                     </div>
                     <div class="col-6 mb-3">
-                        <label for="txtNombreEmployeeER" id="lblNombreEmployeeER">NOMBRES</label>
-                        <input type="text" id="txtNombreEmployeeER" name="txtNombreEmployeeER" class="form-control form-control-sm" maxlength="30" placeholder="NOMBRES" required>
+                        <label for="txtNamesEmployee" id="lblNombreEmployee">NOMBRES</label>
+                        <input type="text" id="txtNamesEmployee" name="txtNamesEmployee" class="form-control form-control-sm" maxlength="30" placeholder="NOMBRES" required>
                         <div class="invalid-feedback">
                             Por favor ingrese los Nombres.
                         </div>
                     </div>
                     <div class="col-6 mb-3">
-                        <label for="txtApellido_PatEmployeeER">APELLIDO PATERNO</label>
-                        <input type="text" id="txtApellido_PatEmployeeER" name="txtApellido_PatEmployeeER" class="form-control form-control-sm" maxlength="30" placeholder="APELLIDO PATERNO">
+                        <label for="txtPaternalEmployee">APELLIDO PATNO</label>
+                        <input type="text" id="txtPaternalEmployee" name="txtPaternalEmployee" class="form-control form-control-sm" maxlength="30" placeholder="APELLIDO PATNO">
                         <div class="invalid-feedback">
                             Por favor ingrese el Apellido Paterno.
                         </div>
                     </div>
                     <div class="col-6 mb-3">
-                        <label for="txtApellido_MatEmployeeER">APELLIDO MATERNO</label>
-                        <input type="text" id="txtApellido_MatEmployeeER" name="txtApellido_MatEmployeeER" class="form-control form-control-sm" maxlength="30" placeholder="APELLIDO MATERNO">
+                        <label for="txtMaternalEmployee">APELLIDO MATNO</label>
+                        <input type="text" id="txtMaternalEmployee" name="txtMaternalEmployee" class="form-control form-control-sm" maxlength="30" placeholder="APELLIDO MATNO">
                         <div class="invalid-feedback">
                             Por favor ingrese el Apellido Materno.
                         </div>
                     </div>
                     <div class="col-6 mb-3">
-                        <label for="slcSexoEmployeeER">SEXO</label>
-                        <select id="slcSexoEmployeeER" name="slcSexoEmployeeER" class="form-control form-control-sm">
+                        <label for="slcGenderEmployee">SEXO</label>
+                        <select id="slcGenderEmployee" name="slcGenderEmployee" class="form-control form-control-sm">
                             <option value="M">MASCULINO</option>
                             <option value="F">FEMENINO</option>
                         </select>
                     </div>
                     <div class="col-6 mb-3">
-                        <label for="txtCelularEmployeeER">CELULAR</label>
-                        <input type="text" maxlength="9" id="txtCelularEmployeeER" name="txtCelularEmployeeER" class="form-control form-control-sm" placeholder="CELULAR">
+                        <label for="txtMobileEmployee">CELULAR</label>
+                        <input type="text" maxlength="9" id="txtMobileEmployee" name="txtMobileEmployee" class="form-control form-control-sm" placeholder="CELULAR">
+                        <div class="invalid-feedback">
+                            Por favor ingrese el n° Celular.
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="txtWeekly_HoursEmployee">HORAS SEMANALES</label>
+                        <input type="text" maxlength="9" id="txtWeekly_HoursEmployee" name="txtWeekly_HoursEmployee" class="form-control form-control-sm" placeholder="CELULAR">
                         <div class="invalid-feedback">
                             Por favor ingrese el n° Celular.
                         </div>
                     </div>
                 </div>
-                <input type="hidden" id="txtIdEmployeeER" name="txtIdEmployeeER" value="">
+                <input type="hidden" id="txtIdEmployee" name="txtIdEmployee" value="">
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
-                <button type="button" class="btn btn-primary">GUARDAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CRAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR</button>
             </div>
-        </div>
+        </form>
     </div>
 </div> 

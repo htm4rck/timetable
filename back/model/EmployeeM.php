@@ -4,20 +4,21 @@ class EmployeeM
 
     public static function insertM(Employee $t)
     {
+        $capsule = new Capsule();
+        $query = "INSERT INTO ";
+        $query .= "HAPPYLAND";
+        $query .= ".EMPLOYEE(";
+        $query .= "PATERNAL, MATERNAL, NAMES, LOGIN, PASS,";
+        $query .= "WEEKLY_HOURS, EXTRA_HOURS, EXTRA_MINUTES, GENDER, DNI,";
+        $query .= "MOBILE";
+        $query .= ") VALUES(";
+        $query .= ":PATERNAL, :MATERNAL, :NAMES, :LOGIN, :PASS,";
+        $query .= ":WEEKLY_HOURS, :EXTRA_HOURS, :EXTRA_MINUTES, :GENDER, :DNI, ";
+        $query .= ":MOBILE";
+        $query .= ")";
         try {
             $cn = new conexion;
-            $sql = "INSERT INTO ";
-            $sql .= "HAPPYLAND";
-            $sql .= ".EMPLOYEE(";
-            $sql .= "PATERNAL, MATERNAL, NAMES, LOGIN, PASS,";
-            $sql .= "WEEKLY_HOURS, EXTRA_HOURS, EXTRA_MINUTES, GENDER, DNI,";
-            $sql .= "MOBILE";
-            $sql .= ") VALUES(";
-            $sql .= ":PATERNAL, :MATERNAL, :NAMES, :LOGIN, :PASS,";
-            $sql .= ":WEEKLY_HOURS, :EXTRA_HOURS, :EXTRA_MINUTES, :GENDER, :DNI";
-            $sql .= ":MOBILE";
-            $sql .= ")";
-            $stmt = $cn->conectar()->prepare($sql);
+            $stmt = $cn->conectar()->prepare($query);
             $stmt->bindParam(':PATERNAL', $t->getPaternal(), PDO::PARAM_STR);
             $stmt->bindParam(':MATERNAL', $t->getMaternal(), PDO::PARAM_STR);
             $stmt->bindParam(':NAMES', $t->getNames(), PDO::PARAM_STR);
@@ -29,9 +30,18 @@ class EmployeeM
             $stmt->bindParam(':GENDER', $t->getGender(), PDO::PARAM_STR);
             $stmt->bindParam(':DNI', $t->getDni(), PDO::PARAM_STR);
             $stmt->bindParam(':MOBILE', $t->getMobile(), PDO::PARAM_STR);
-            return $stmt->execute();
+            $stmt->execute();
+
+            $parameters['filter'] = '';
+            $parameters['gender'] = '';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $capsule = EmployeeM::listarM($parameters);
+            $capsule->setQuery($query);
+            return $capsule->getResponse();
+
         } catch (Exception $e) {
-            return false;
+            return $e;
         } finally {
             $stmt = null;
             $cn->closeCn();
@@ -95,14 +105,14 @@ class EmployeeM
     public static function listarM($parameters)
     {
         $capsule = new Capsule();
-        $query='';
-        $query.='SELECT * FROM HAPPYLAND.EMPLOYEE';
-        $query.=' WHERE ';
-        $query.=" (LOWER(DNI) LIKE :DNI OR LOWER(NAMES) LIKE :NAMES ";
-        $query.=" OR LOWER(PATERNAL) LIKE :PATERNAL OR LOWER(MATERNAL) LIKE :MATERNAL) ";
-        $query.=$parameters['gender'];
-        $query.=$parameters['orderby'];
-        $query.=$parameters['paginate'];
+        $query = '';
+        $query .= 'SELECT * FROM HAPPYLAND.EMPLOYEE';
+        $query .= ' WHERE ';
+        $query .= " (LOWER(DNI) LIKE :DNI OR LOWER(NAMES) LIKE :NAMES ";
+        $query .= " OR LOWER(PATERNAL) LIKE :PATERNAL OR LOWER(MATERNAL) LIKE :MATERNAL) ";
+        $query .= $parameters['gender'];
+        $query .= $parameters['orderby'];
+        $query .= $parameters['paginate'];
         try {
             $cn = new Conexion;
             $stmt = $cn->conectar()->prepare($query);
@@ -133,7 +143,6 @@ class EmployeeM
             $capsule->setCounter(count($lista));
             $capsule->setContent($lista);
             $capsule->setAux($parameters);
-            
         } catch (Exception $e) {
             $capsule->setError(true);
             $capsule->setMessage($e);
@@ -143,7 +152,7 @@ class EmployeeM
             $stmt = null;
             $cn->closeCn();
         }
-        return $capsule->getResponse();
+        return $capsule;
     }
 
     public static function getPersonal($id)

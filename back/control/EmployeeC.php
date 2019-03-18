@@ -3,10 +3,12 @@ class EmployeeC
 {
     private $data;
     private $parameters;
+    private $employee;
     public function __construct()
     {
         $this->data = file_get_contents('php://input');
-        $this->data = json_decode($this->data, true);
+        $this->data = json_decode($this->data);
+        $this->employee=Employee::getEmployee($this->data);
         $this->parameters = array();
         //echo ($data['idcliente']);
     }
@@ -20,16 +22,31 @@ class EmployeeC
         }
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ORDER BY PATERNAL ';
-        echo json_encode(EmployeeM::listarM($this->parameters));
+        echo json_encode(EmployeeM::listarM($this->parameters)->getResponse());
+    }
+
+    public function insert()
+    {
+        echo json_encode(EmployeeM::insertM($this->employee));
+    }
+    public function imprimir()
+    {
+        try {
+            echo json_encode($this->employee);
+        } catch (Exception $th) {
+            echo json_encode($th);
+        }
     }
 }
-$action = "paginate";
-$data = file_get_contents('php://input');
+$action = $_GET['action'];
+$e = new EmployeeC();
 switch ($action) {
     case 'paginate':
 
-        $e = new EmployeeC();
         $e->listar();
+        break;
+    case 'insert':
+        $e->insert();
         break;
 
     default:

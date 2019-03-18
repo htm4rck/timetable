@@ -14,11 +14,27 @@ class Employee implements JsonSerializable
     private $dni;
     private $mobile;
 
-    public function __construct($idemployee=0)
+    public function __construct($idemployee = 0)
     {
-        $this->idemployee=$idemployee;
+        $this->idemployee = $idemployee;
     }
-
+    public static function getEmployee($std)
+    {
+        $empleado = new Employee();
+        $empleado->setIdemployee(@$std->idemployee);
+        $empleado->setPaternal(@$std->paternal);
+        $empleado->setMaternal(@$std->maternal);
+        $empleado->setNames(@$std->names);
+        $empleado->setLogin(@$std->login);
+        $empleado->setPass(@$std->pass);
+        $empleado->setWeekly_hours(@$std->weekly_hours);
+        $empleado->setExtra_hours(@$std->extra_hours);
+        $empleado->setExtra_minutes(@$std->extra_minutes);
+        $empleado->setGender(@$std->gender);
+        $empleado->setDni(@$std->dni);
+        $empleado->setMobile(@$std->mobile);
+        return $empleado;
+    }
     public function getIdemployee()
     {
         return $this->idemployee;
@@ -138,24 +154,24 @@ class Employee implements JsonSerializable
     {
         $this->mobile = $mobile;
     }
-    
+
     public function jsonSerialize()
     {
-        return 
-        [
-            'idemployee'   => $this->idemployee,
-            'paternal' => $this->paternal,
-            'maternal' => $this->maternal,
-            'names' => $this->names,
-            'login' => $this->login,
-            'pass' => $this->pass,
-            'weekly_hours' => $this->weekly_hours,
-            'extra_hours' => $this->extra_hours,
-            'extra_minutes' => $this->extra_minutes,
-            'gender' => $this->gender,
-            'dni' => $this->dni,
-            'mobile' => $this->mobile
+        return
+            [
+                'idemployee'   => $this->idemployee,
+                'paternal' => $this->paternal,
+                'maternal' => $this->maternal,
+                'names' => $this->names,
+                'login' => $this->login,
+                'pass' => $this->pass,
+                'weekly_hours' => $this->weekly_hours,
+                'extra_hours' => $this->extra_hours,
+                'extra_minutes' => $this->extra_minutes,
+                'gender' => $this->gender,
+                'dni' => $this->dni,
+                'mobile' => $this->mobile
 
-        ];
+            ];
     }
 }
