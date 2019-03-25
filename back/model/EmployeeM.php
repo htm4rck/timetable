@@ -39,7 +39,6 @@ class EmployeeM
             $capsule = EmployeeM::listarM($parameters);
             $capsule->setQuery($query);
             return $capsule->getResponse();
-
         } catch (Exception $e) {
             return $e;
         } finally {
@@ -140,7 +139,7 @@ class EmployeeM
                 $lista[$i] = $t;
             }
             $capsule->setMessage('Solicitud Completada');
-            $capsule->setCounter(count($lista));
+            $capsule->setCounter(EmployeeM::TotalM($cn,$parameters));
             $capsule->setContent($lista);
             $capsule->setAux($parameters);
         } catch (Exception $e) {
@@ -153,6 +152,35 @@ class EmployeeM
             $cn->closeCn();
         }
         return $capsule;
+    }
+
+    public static function TotalM($cn, $parameters)
+    {
+        $count = 0;
+        $query = '';
+        $query .= 'SELECT COUNT(HAPPYLAND.EMPLOYEE.IDEMPLOYEE) AS TOTAL FROM HAPPYLAND.EMPLOYEE';
+        $query .= ' WHERE ';
+        $query .= " (LOWER(DNI) LIKE :DNI OR LOWER(NAMES) LIKE :NAMES ";
+        $query .= " OR LOWER(PATERNAL) LIKE :PATERNAL OR LOWER(MATERNAL) LIKE :MATERNAL) ";
+        $query .= $parameters['gender'];
+        try {
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->bindParam(':DNI', $parameters["filter"]);
+            $stmt->bindParam(':NAMES', $parameters['filter'], PDO::PARAM_STR);
+            $stmt->bindParam(':PATERNAL', $parameters['filter'], PDO::PARAM_STR);
+            $stmt->bindParam(':MATERNAL', $parameters['filter'], PDO::PARAM_STR);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            $lista = array();
+            for ($i = 0; $i < count($array); $i++) {
+                $count = $array[$i]['total'];
+            }
+        } catch (Exception $e) {
+            echo $e;
+        } finally {
+            $stmt = null;
+        }
+        return $count;
     }
 
     public static function getPersonal($id)

@@ -266,6 +266,7 @@
         <script type="text/javascript" src="/back/view/index.js"></script>
         <script type="text/javascript" src="/back/view/js/main.js"></script>
         <script type="text/javascript" src="/back/view/js/Alert.js"></script>
+        <script type="text/javascript" src="/back/view/js/Pagination.js"></script>
         <?php
         $configurationTemplate = new ConfigurationTemplate();
         $configurationTemplate->addScripts();

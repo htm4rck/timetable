@@ -2,7 +2,7 @@ class Crud {
   constructor() {
     this.action = 'paginate';
     this.typeRequest = 'POST'
-    this.numberPage = '1';
+    this.numberPage = '5';
     this.sizePage = '10';
   }
 }
