@@ -8,12 +8,13 @@ class EmployeeC
     {
         $this->data = file_get_contents('php://input');
         $this->data = json_decode($this->data);
-        $this->employee=Employee::getEmployee($this->data);
+        $this->employee = Employee::getEmployee($this->data);
         $this->parameters = array();
         //echo ($data['idcliente']);
     }
     public function listar()
     {
+        $_GET['filter']!=''?$this->parameters['filter'] = '%' . $_GET['filter'] . '%':$this->parameters['filter'] = '';
         $this->parameters['filter'] = '%' . $_GET['filter'] . '%';
         if ($_GET['gender'] != -1) {
             $this->parameters['gender'] = " AND GENDER = '" . $_GET["gender"] . "' ";
@@ -28,6 +29,9 @@ class EmployeeC
     public function insert()
     {
         echo json_encode(EmployeeM::insertM($this->employee));
+        echo '<script>';
+        echo 'console.log('+'aaa'+')';
+        echo '</script>';
     }
     public function imprimir()
     {

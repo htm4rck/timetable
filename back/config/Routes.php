@@ -16,7 +16,7 @@ class Routes
     $resource = new BeanResource('upkeeps', 'upkeeps/upkeeps.html');
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('upkeeps/employee', 'upkeeps/employee/employee.php', array($this->path_resource . 'upkeeps/employee/employee.js'));
+    $resource = new BeanResource('upkeeps/employee', 'upkeeps/employee/employee.html', array($this->path_resource . 'upkeeps/employee/employee.js'));
     array_push($this->list_pages, $resource);
   }
 

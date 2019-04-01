@@ -1,75 +1,99 @@
 class Pagination {
-    constructor(total, size, id) {
+
+    constructor(total, crud, id, modal) {
         this.total = total;
-        this.size = size;
-        if (total % size == 0) {
-            this.npage = parseInt(total / size);
+        this.crud = crud;
+        this.size = crud.sizePage;
+        this.page = crud.numberPage;
+        this.id = id;
+        this.modal = modal;
+        if (total % this.size == 0) {
+            this.npage = parseInt(total / this.size);
         } else {
-            this.npage = parseInt(total / size) + 1;
+            this.npage = parseInt(total / this.size) + 1;
         }
-        this.page=1;
-        this.id=id;
-        document.querySelector('#'+id).innerHTML=this.html();
+        document.querySelector('#' + id).innerHTML = this.html();
         this.default();
+        this.disabledLR()
         this.events();
     }
 
-    html(){
-        let pages='';
-        let disabled='';
-        this.npage==0?disabled='disabled':false;
+    html() {
+        let pages = '';
+        let disabled = '';
+        this.npage == 0 ? disabled = 'disabled' : false;
         for (let it = 0; it < this.npage; it++) {
-            pages +='<li class="page-item page-select" id="'+this.id+'-page-'+(it+1)+'"><a class="page-link">'+(it+1)+'</a></li>'
+            pages += '<li class="page-item page-select" page="' + (it + 1) + '" id="' + this.id + '-page-' + (it + 1) + '"><a class="page-link">' + (it + 1) + '</a></li>'
         }
-        let html =`
-                    <li class="page-item disabled" id="`+this.id+`-page-back">
+        let html = `
+                    <li class="page-item disabled" id="` + this.id + `-page-back">
                         <a class="page-link"><span aria-hidden="true">&laquo;</span></a>
-                    </li>
-                    `
-                    + pages +
-                    `
-                    <li class="page-item `+disabled+`" id="`+this.id+`-page-next">
+                    </li>` + pages + `
+                    <li class="page-item ` + disabled + `" id="` + this.id + `-page-next">
                         <a class="page-link"><span aria-hidden="true">&raquo;</span> </a>
                     </li>
                 `
         return html;
     }
-    default(){
-        document.querySelector('#'+this.id+'-page-'+1).classList.add('active');
+
+    default () {
+        document.querySelector('#' + this.id + '-page-' + this.page).classList.add('active');
     }
-    events(){
-        let pageback = document.querySelector('#'+this.id+'-page-back');
-        let pagenext = document.querySelector('#'+this.id+'-page-next');
+
+    events() {
+        let pageback = document.querySelector('#' + this.id + '-page-back');
+        let pagenext = document.querySelector('#' + this.id + '-page-next');
         let clase = this;
         document.querySelectorAll('.page-select').forEach(item => {
-            item.onclick=function (e) {
-                document.querySelectorAll('.page-item').forEach(item => {
-                    item.classList.remove('active');
-                });
+            item.onclick = function () {
+                clase.page = parseInt(item.getAttribute('page'));
+                clase.crud.numberPage = clase.page;
+                clase.disabledLR();
+                cleanActive();
+                clase.modal.show();
                 this.classList.add('active');
-                if(parseInt(this.children[0].innerHTML)>1){
-                    pageback.classList.remove('disabled');
-                    pageback.addEventListener('click',back);
-                }else{
-                    pageback.classList.add('disabled');
-                    pageback.removeEventListener('click',back);
-                }
-                if(parseInt(this.children[0].innerHTML)==clase.npage){
-                    pagenext.classList.add('disabled');
-                }else{
-                    pagenext.classList.remove('disabled');
-                }
-            }
-            function back(e) {
-                alert();
             }
         });
-        function next() {
-            alert();
+        pageback.onclick = function () {
+            if (!pageback.classList.contains('disabled')) {
+                clase.page = clase.page - 1;
+                clase.crud.numberPage = clase.page;
+                cleanActive();
+                clase.disabledLR();
+                clase.modal.show();
+                document.querySelector('#' + clase.id + '-page-' + clase.page).classList.add('active')
+            }
+        }
+        pagenext.onclick = function () {
+            if (!pagenext.classList.contains('disabled')) {
+                clase.page = clase.page + 1;
+                clase.crud.numberPage = clase.page;
+                cleanActive();
+                clase.disabledLR();
+                clase.modal.show();
+                document.querySelector('#' + clase.id + '-page-' + clase.page).classList.add('active')
+            }
+        }
+
+        function cleanActive() {
+            document.querySelectorAll('.page-select').forEach(item => {
+                item.classList.remove('active');
+            });
         }
     }
 
+    disabledLR() {
+        let pageback = document.querySelector('#' + this.id + '-page-back');
+        let pagenext = document.querySelector('#' + this.id + '-page-next');
+        if (this.page > 1) {
+            pageback.classList.remove('disabled');
+        } else {
+            pageback.classList.add('disabled');
+        }
+        if (this.page == this.npage) {
+            pagenext.classList.add('disabled');
+        } else {
+            pagenext.classList.remove('disabled');
+        }
+    }
 }
-
-let test = new Pagination(40, 10, 'paginationEmployee');
-console.info(test.npage);
