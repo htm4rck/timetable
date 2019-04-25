@@ -26,7 +26,8 @@ class Employee {
 class CRUD {
 
   constructor() {
-    this.api = 'http://timetables-app.herokuapp.com/back/api/employee';
+    this.settingsGlobal = new Settings();
+    this.api = this.settingsGlobal.api+'employee';
     this.send = new Send();
     this.parameters = '';
     this.json = '';
@@ -141,7 +142,8 @@ class CRUD {
     this.parameters += '&gender=' + document.querySelector('#slcGenderEmployeeSearch').value;
     this.parameters += '&size=' + document.querySelector('#sizePageEmployee').value;
     this.parameters += '&page=' + this.send.numberPage;
-
+    console.log(this.api + this.actionurl + this.parameters);
+    console.log(this.send.method);
     let clase = this;
     fetch(this.api + this.actionurl + this.parameters, {
       method: this.send.method,
