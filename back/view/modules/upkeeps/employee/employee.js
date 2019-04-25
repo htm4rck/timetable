@@ -26,7 +26,7 @@ class Employee {
 class CRUD {
 
   constructor() {
-    this.api = 'http://localhost/back/api/employee';
+    this.api = 'http://timetables-app.herokuapp.com/back/api/employee';
     this.send = new Send();
     this.parameters = '';
     this.json = '';
