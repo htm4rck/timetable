@@ -32,7 +32,7 @@ class Pagination {
                     <li class="page-item ` + disabled + `" id="` + this.id + `-page-next">
                         <a class="page-link"><span aria-hidden="true">&raquo;</span> </a>
                     </li>
-                `
+                `;
         return html;
     }
 

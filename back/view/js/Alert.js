@@ -1,47 +1,80 @@
-class Alert {
-    constructor(state = 'succes', id = 'modalAlert', content = '') {
+class ModalAlert {
+    constructor(content = '', state = 'success', id = 'modalAlert') {
         this.state = state;
-        this.html = '';
         this.id = id;
-        this.succes = '<img src="/back/view/images/check.svg" width="100" class="mt-3 mb-5">'
+        this.html = '';
+        this.icon = '';
+        this.setIcon();
         this.content = content;
-        this.getAlert();
-        this.setModal();
+        this.createModal();
+        this.modal = document.querySelector('#' + this.id);
+        this.setHTML();
+        this.modalObject = new Modal(this.modal, { backdrop: 'static' });
+        this.events();
+        this.modalObject.show();
 
     }
-    getAlert() {
-        this.html += '<div id="' + this.id + '" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">';
+    createModal() {
+        let modal = document.createElement('div');
+        modal.setAttribute('id', this.id);
+        modal.setAttribute('class', 'modal fade');
+        modal.setAttribute('tabindex', -1);
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-hidden', true);
+        document.body.insertBefore(modal, null);
+    }
+    setIcon() {
+        switch (this.state) {
+            case 'warning':
+                this.icon = `
+                <div class="f-modal-icon f-modal-warning scaleWarning">
+                    <span class="f-modal-body pulseWarningIns"></span>
+                    <span class="f-modal-dot pulseWarningIns"></span>
+                </div>`;
+                break;
+            case 'error':
+                this.icon = `
+                <div class="f-modal-icon f-modal-error animate">
+                    <span class="f-modal-x-mark">
+                        <span class="f-modal-line f-modal-left animateXLeft"></span>
+                        <span class="f-modal-line f-modal-right animateXRight"></span>
+                    </span>
+                    <div class="f-modal-placeholder"></div>
+                    <div class="f-modal-fix"></div>
+                </div>`;
+                break;
+            case 'success':
+            default:
+                this.icon = `
+                <div class="f-modal-icon f-modal-success animate">
+                    <span class="f-modal-line f-modal-tip animateSuccessTip"></span>
+                    <span class="f-modal-line f-modal-long animateSuccessLong"></span>
+                    <div class="f-modal-placeholder"></div>
+                    <div class="f-modal-fix"></div>
+                </div>`;
+                break;
+        }
+    }
+    events() {
+        this.modal.addEventListener("hide.bs.modal", function (event) {
+            this.remove();
+        });
+    }
+    setHTML() {
         this.html += '<div class="modal-dialog modal-dialog-centered">';
         this.html += '<div class="modal-content">';
-        //this.html += '<div class="modal-header">';
-        //this.html += '<h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>';
-        //this.html += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-        //this.html += '  <span aria-hidden="true">&times;</span>';
-        //this.html += '</button>';
-        //this.html += '</div>';
         this.html += '<div class="modal-body text-center justify-content-center align-items-center">';
-        this.html += this.succes;
-        this.html += '<p><strong><em>';
+        this.html += '<div class="f-modal-alert">';
+        this.html += this.icon;
+        this.html += '<p class="m-5"><strong><em>';
         this.html += this.content;
         this.html += '</em></strong></p>';
-        this.html += '</div>';
-        this.html += '<div class="modal-footer justify-content-center mt-2 mb-2">';
         this.html += '<button type="button" class="btn btn-primary" data-dismiss="modal">ACEPTAR</button>';
         this.html += '</div>';
         this.html += '</div>';
         this.html += '</div>';
         this.html += '</div>';
-        document.write(this.html);
+        this.modal.innerHTML = this.html;
     }
-    setModal() {
-        let modal = document.querySelector('#' + this.id);
-        this.modal = new Modal(modal, {
-            //content: this.content, // sets modal content
-            backdrop: 'static', // we don't want to dismiss Modal when Modal or backdrop is the click event target
-            //keyboard: false // we don't want to dismiss Modal on pressing Esc key
-        });
-    }
-    showAlert() {
-        this.modal.show();
-    }
+
 }

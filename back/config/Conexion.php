@@ -4,7 +4,7 @@ class Conexion
     private $host = "localhost";
     private $usuario = "postgres";
     private $pass = "root";
-    private $bd = "dbtimetable";
+    private $bd = "timetable";
 
     private $cn;
 
