@@ -192,10 +192,10 @@ class CRUD {
       row = '<tr>'
       row += '<td class="align-middle text-center"><i class="far fa-id-card mr-1"></i>' + employee.dni + '</td>';
       row += '<td><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</td>';
-      row += '<td><i class="far fa-clock mr-1"></i>' + employee.weekly_hours + ':00</td>';
-      row += '<td><i class="fas fa-history mr-1"></i>' + employee.extra_hours + ':' + 0 + '</td>';
-      row += '<td><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-warning updateEmployee"><i class="far fa-edit"></i></button></td>';
-      row += '<td><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-danger deleteEmployee"><i class="far fa-trash-alt"></i></button></td>';
+      row += '<td class="text-center align-middle"><i class="far fa-clock mr-1"></i>' + employee.weekly_hours + ':00</td>';
+      row += '<td class="text-center align-middle"><i class="fas fa-history mr-1"></i>' + employee.extra_hours + ':' + 0 + '</td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-warning updateEmployee"><i class="far fa-edit"></i></button></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-danger deleteEmployee"><i class="far fa-trash-alt"></i></button></td>';
       row += '</tr>';
       document.getElementById("tbodyEmployee").innerHTML += row;
     });

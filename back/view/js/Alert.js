@@ -58,7 +58,11 @@ class ModalAlert {
     events() {
         this.modal.addEventListener("hide.bs.modal", function (event) {
             this.remove();
+            document.querySelectorAll('.fade').forEach(show => {
+                show.remove();
+            });
         });
+
     }
     setHTML() {
         this.html += '<div class="modal-dialog modal-dialog-centered">';
