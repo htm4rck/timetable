@@ -1,33 +1,8 @@
-class Send {
-  constructor() {
-    this.action = 'paginate';
-    this.method = 'POST'
-    this.numberPage = 1;
-    this.sizePage = 10;
-  }
-}
-class Employee {
-  constructor() {
-    this.idemployee = 0;
-    this.paternal = '';
-    this.maternal = '';
-    this.names = '';
-    this.login = '';
-    this.pass = '';
-    this.weekly_hours = 0;
-    this.extra_hours = 0;
-    this.extra_minutes = 0;
-    this.gender = '';
-    this.dni = '';
-    this.mobile = '';
-  }
-}
-
-class CRUD {
+class CRUDEmployee {
 
   constructor() {
     this.settingsGlobal = new Settings();
-    this.api = this.settingsGlobal.api+'employee';
+    this.api = this.settingsGlobal.api + 'employee';
     this.send = new Send();
     this.parameters = '';
     this.json = '';
@@ -41,6 +16,9 @@ class CRUD {
     this.frmUpkeep = document.querySelector('#frmUpkeepEmployee');
     this.modalUpkeep = document.querySelector('#modalUpkeepEmployee');
     this.modalUpkeepObject = new Modal(this.modalUpkeep);
+    this.modalChangePass = document.querySelector('#modalChangePassEmployee');
+    this.modalChangePassObject = new Modal(this.modalChangePass);
+    this.frmChangePass = document.querySelector('#frmChangePassEmployee');
     this.list = [];
     this.employee = new Employee();
     this.eventsDefault();
@@ -68,8 +46,24 @@ class CRUD {
       clase.json = '';
     });
 
+    this.modalChangePass.addEventListener("hide.bs.modal", function (event) {
+      clase.send.action = 'paginate';
+      clase.json = '';
+    });
+
     this.frmUpkeep.onsubmit = function () {
       clase.setObject();
+      return false;
+    };
+    this.frmChangePass.onsubmit = function () {
+      try {
+        clase.send.action = 'changepass';
+        clase.employee.pass = this.txtPassEmployee.value;
+        clase.json = clase.employee;
+        clase.modalCargandoObject.show();
+      } catch (error) {
+        console.error(error);
+      }
       return false;
     };
 
@@ -108,6 +102,7 @@ class CRUD {
     this.parameters = '';
   }
   update() {
+    this.json = this.employee;
     this.frmUpkeep.txtPaternalEmployee.value = this.employee.paternal;
     this.frmUpkeep.txtMaternalEmployee.value = this.employee.maternal;
     this.frmUpkeep.txtNamesEmployee.value = this.employee.names;
@@ -120,7 +115,9 @@ class CRUD {
     this.parameters = '';
   }
   delete() {
-
+    this.send.action = 'delete';
+    this.parameters = '';
+    this.json = this.employee;
   }
 
   setObject() {
@@ -138,12 +135,12 @@ class CRUD {
   run() {
     this.actionurl = '?action=' + this.send.action;
     this.parameters = '';
-    this.parameters += '&filter=' + document.querySelector('#txtFilterEmployeeSearch').value;
-    this.parameters += '&gender=' + document.querySelector('#slcGenderEmployeeSearch').value;
-    this.parameters += '&size=' + document.querySelector('#sizePageEmployee').value;
-    this.parameters += '&page=' + this.send.numberPage;
-    console.log(this.api + this.actionurl + this.parameters);
-    console.log(this.send.method);
+    if (this.send.action == 'paginate') {
+      this.parameters += '&filter=' + document.querySelector('#txtFilterEmployeeSearch').value;
+      this.parameters += '&gender=' + document.querySelector('#slcGenderEmployeeSearch').value;
+      this.parameters += '&size=' + document.querySelector('#sizePageEmployee').value;
+      this.parameters += '&page=' + this.send.numberPage;
+    }
     let clase = this;
     fetch(this.api + this.actionurl + this.parameters, {
       method: this.send.method,
@@ -181,7 +178,7 @@ class CRUD {
       }
       clase.modalCargandoObject.hide();
     }).catch(function (error) {
-      new ModalAlert(error,'error')
+      new ModalAlert(error, 'error')
       clase.modalCargandoObject.hide();
     });
   }
@@ -194,6 +191,8 @@ class CRUD {
       row += '<td style="white-space: nowrap;"><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</td>';
       row += '<td class="text-center align-middle"><i class="far fa-clock mr-1"></i>' + employee.weekly_hours + ':00</td>';
       row += '<td class="text-center align-middle"><i class="fas fa-history mr-1"></i>' + employee.extra_hours + ':' + 0 + '</td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-info changepassEmployee"><i class="fas fa-key"></i></button></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-success resetEmployee"><i class="fas fa-redo-alt"></i></button></td>';
       row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-warning updateEmployee"><i class="far fa-edit"></i></button></td>';
       row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-danger deleteEmployee"><i class="far fa-trash-alt"></i></button></td>';
       row += '</tr>';
@@ -204,6 +203,22 @@ class CRUD {
 
   eventsList() {
     let clase = this;
+    document.querySelectorAll('.changepassEmployee').forEach(btnUpdate => {
+      btnUpdate.onclick = function () {
+        clase.setEmployee(parseInt(this.getAttribute('idemployee')));
+        clase.frmChangePass.txtPassEmployee.value = '';
+        clase.modalChangePassObject.show();
+      }
+    });
+
+    document.querySelectorAll('.resetEmployee').forEach(btnUpdate => {
+      btnUpdate.onclick = function () {
+        clase.setEmployee(parseInt(this.getAttribute('idemployee')));
+        clase.update();
+        new ModalAction(clase.modalCargandoObject, 'Seguro que desea Reestablecer la contraseña para ' + clase.employee.names + ' ' + clase.employee.paternal + ' ' + clase.employee.maternal, 'update');
+      }
+    });
+
     document.querySelectorAll('.updateEmployee').forEach(btnUpdate => {
       btnUpdate.onclick = function () {
         clase.setEmployee(parseInt(this.getAttribute('idemployee')));
@@ -212,7 +227,15 @@ class CRUD {
       }
     });
 
+    document.querySelectorAll('.deleteEmployee').forEach(btnUpdate => {
+      btnUpdate.onclick = function () {
+        clase.setEmployee(parseInt(this.getAttribute('idemployee')));
+        clase.delete();
+        new ModalAction(clase.modalCargandoObject, 'Seguro que desea Eliminar a ' + clase.employee.names + ' ' + clase.employee.paternal + ' ' + clase.employee.maternal);
+      }
+    });
+
   }
 
 }
-let a = new CRUD();
+new CRUDEmployee();

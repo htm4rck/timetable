@@ -37,15 +37,15 @@
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-md-12 col-lg-12 col-xl-12">
-                        <table class="table table-responsive table-hover table-sm" style="width: 100%">
+                    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <table class="table table-responsive-md table-hover table-sm" style="width: 100%">
                             <thead class="bg-primary text-white border border-info">
                                 <tr>
-                                    <th class="text-center align-middle" style="width: 20%">DNI/LOGIN</th>
+                                    <th class="text-center align-middle" style="width: 10%">DNI/LOGIN</th>
                                     <th class="align-middle">NOMBRE</th>
                                     <th class="align-middle text-center" style="width: 10%; white-space: nowrap;"><i class="far fa-clock mr-1"></i>SEMANALES</th>
                                     <th class="align-middle text-center" style="width: 10%;white-space: nowrap;"><i class="far fa-clock mr-1"></i>EXTRAS</th>
-                                    <th class="align-middle text-center" style="width: 10%" colspan="2">OPCIONES
+                                    <th class="align-middle text-center" style="width: 10%" colspan="4">OPCIONES
                                     </th>
                                 </tr>
                             </thead>
@@ -143,11 +143,42 @@
                         </div>
                     </div>
                 </div>
-                <input type="hidden" id="txtIdEmployee" name="txtIdEmployee" value="">
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">CRAR</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="modalChangePassEmployee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" id="frmChangePassEmployee">
+            <div class="modal-header">
+                <h5 class="modal-title">CAMBIAR CONTRASEÑA</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row" id="demo">
+
+                    <div class="col-12 mb-3">
+                        <label for="txtPassEmployee">CONTRASEÑA NUEVA</label>
+                        <input type="password" id="txtPassEmployee" name="txtPassEmployee"
+                            class="form-control form-control-sm" maxlength="8" placeholder="********" required>
+                        <div class="invalid-feedback">
+                            Por favor ingrese un N° de DNI.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
                 <button type="submit" class="btn btn-primary">GUARDAR</button>
             </div>
         </form>

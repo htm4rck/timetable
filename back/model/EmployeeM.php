@@ -130,7 +130,7 @@ class EmployeeM
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"hola":'.$count.'}';
+            return '{"hola":' . $count . '}';
             #return $e;
         } finally {
             $stmt = null;
@@ -138,20 +138,118 @@ class EmployeeM
         }
     }
 
-    public static function eliminarM($idemployee)
+    public static function changePassM(Employee $t)
     {
+        $count = 0;
+        $query  = 'SELECT COUNT(HAPPYLAND.EMPLOYEE.IDEMPLOYEE) AS TOTAL FROM HAPPYLAND.EMPLOYEE';
+        $query .= ' WHERE ';
+        $query .= " DNI = '" . $t->getDni() . "' AND IDEMPLOYEE != " . $t->getIdemployee();
         try {
-            $cn = new Conexion;
-            $sql = "DELETE FROM ";
-            $sql .= "HAPPYLAND.";
-            $sql .= "EMPLOYEE ";
-            $sql .= " WHERE";
-            $sql .= "IDEMPLOYEE = :IDEMPLOYEE";
-            $stmt = $cn->conectar()->prepare("DELETE FROM personal WHERE :");
-            $stmt->bindParam(':IDEMPLOYEE', $idemployee, PDO::PARAM_INT);
-            return $stmt->execute();
+            $cn = new conexion;
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
         } catch (Exception $e) {
-            return false;
+            return $e;
+        } finally {
+            $stmt = null;
+        }
+
+        $capsule = new Capsule();
+        $sql = "UPDATE ";
+        $sql .= "HAPPYLAND";
+        $sql .= ".EMPLOYEE SET ";
+        $sql .= "PASS = :PASS";
+        $sql .= " WHERE ";
+        $sql .= " IDEMPLOYEE = :IDEMPLOYEE";
+        try {
+            if ($count == 0) {
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':PASS', crypt($t->getPass(), '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$'), PDO::PARAM_STR);
+                $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('La Contraseña se Modifico con Exito!');
+            } else {
+                $capsule->setError(true);
+                $capsule->setMessage("Error en el Cambio de Contraseña");
+            }
+
+            $parameters['filter'] = '%%';
+            $parameters['gender'] = '';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $listar = EmployeeM::listarM($parameters);
+            $capsule->setContent($listar->getContent());
+            $capsule->setCounter($listar->getCounter());
+            $capsule->setQueryExec($query);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"hola":' . $e . '}';
+            #return $e;
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function deleteM(Employee $t)
+    {
+        $count = 0;
+        $query  = 'SELECT COUNT(E.IDEMPLOYEE) AS TOTAL FROM ';
+        $query .= ' HAPPYLAND.EMPLOYEE E ';
+
+        $query .= ' FULL JOIN ';
+        $query .= ' HAPPYLAND.TIMETABLE_EMPLOYEE  TE';
+        $query .= ' ON E.IDEMPLOYEE = TE.IDEMPLOYEE';
+
+        $query .= ' FULL JOIN ';
+        $query .= ' HAPPYLAND.TIMETABLE_WORK  TW';
+        $query .= ' ON E.IDEMPLOYEE = TW.IDEMPLOYEE';
+
+        $query .= ' WHERE ';
+        $query .= " TE.IDEMPLOYEE = " . $t->getIdemployee();
+        $query .= " OR TW.IDEMPLOYEE = " . $t->getIdemployee();
+        try {
+            $cn = new conexion;
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
+        } catch (Exception $e) {
+            return $e;
+        } finally {
+            $stmt = null;
+        }
+
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.EMPLOYEE ";
+        $sql .= " WHERE ";
+        $sql .= " IDEMPLOYEE = :IDEMPLOYEE";
+        try {
+            if ($count == 0) {
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('El Empleado se Elimino con Exito!');
+            } else {
+                $capsule->setError(true);
+                $capsule->setMessage("Existe una o más acciones asociadas a este Empleado.");
+            }
+
+            $parameters['filter'] = '%%';
+            $parameters['gender'] = '';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $listar = EmployeeM::listarM($parameters);
+            $capsule->setContent($listar->getContent());
+            $capsule->setCounter($listar->getCounter());
+            $capsule->setQueryExec($query);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"hola":' . $e . '}';
+            #return $e;
         } finally {
             $stmt = null;
             $cn->closeCn();

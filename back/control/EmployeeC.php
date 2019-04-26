@@ -27,6 +27,12 @@ class EmployeeC
             case 'update':
                 $this->update();
                 break;
+            case 'delete':
+                $this->delete();
+                break;
+            case 'changepass':
+                $this->changePass();
+                break;
             default:
                 # code...
                 break;
@@ -48,6 +54,14 @@ class EmployeeC
     public function update()
     {
         echo json_encode(EmployeeM::updateM($this->employee));
+    }
+    public function delete()
+    {
+        echo json_encode(EmployeeM::deleteM($this->employee));
+    }
+    public function changePass()
+    {
+        echo json_encode(EmployeeM::changePassM($this->employee));
     }
 }
 new EmployeeC();
