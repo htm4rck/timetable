@@ -1,16 +1,16 @@
 <?php
-class EmployeeC
+class TimetableWeeklyC
 {
     private $data;
     private $parameters;
-    private $employee;
+    private $timetableweekly;
     private $action;
 
     public function __construct()
     {
         $this->data = file_get_contents('php://input');
         $this->data = json_decode($this->data);
-        $this->employee = Employee::getEmployee($this->data);
+        $this->timetableweekly = Timetableweekly::getTimetableWeekly($this->data);
         $this->parameters = array();
         $this->action = $_GET['action'];
         $this->main();
@@ -30,12 +30,6 @@ class EmployeeC
             case 'delete':
                 $this->delete();
                 break;
-            case 'changepass':
-                $this->changePass();
-                break;
-            default:
-                # code...
-                break;
         }
     }
     public function read()
@@ -44,24 +38,20 @@ class EmployeeC
         $_GET['gender'] != -1 ? $this->parameters['gender'] = " AND GENDER = '" . $_GET["gender"] . "' " : $this->parameters['gender'] = '';
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ORDER BY PATERNAL ';
-        echo json_encode(EmployeeM::readM($this->parameters)->getResponse());
+        echo json_encode(TimetableWeeklyM::readM($this->parameters)->getResponse());
     }
 
     public function create()
     {
-        echo json_encode(EmployeeM::createM($this->employee));
+        echo json_encode(TimetableWeeklyM::createM($this->timetableweekly));
     }
     public function update()
     {
-        echo json_encode(EmployeeM::updateM($this->employee));
+        echo json_encode(TimetableWeeklyM::updateM($this->timetableweekly));
     }
     public function delete()
     {
-        echo json_encode(EmployeeM::deleteM($this->employee));
-    }
-    public function changePass()
-    {
-        echo json_encode(EmployeeM::changePassM($this->employee));
+        echo json_encode(TimetableWeeklyM::deleteM($this->timetableweekly));
     }
 }
-new EmployeeC();
+new TimetableWeeklyC();

@@ -58,9 +58,9 @@ class EmployeeM
             $parameters['gender'] = '';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $listar = EmployeeM::listarM($parameters);
-            $capsule->setContent($listar->getContent());
-            $capsule->setCounter($listar->getCounter());
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
@@ -124,9 +124,9 @@ class EmployeeM
             $parameters['gender'] = '';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $listar = EmployeeM::listarM($parameters);
-            $capsule->setContent($listar->getContent());
-            $capsule->setCounter($listar->getCounter());
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
@@ -179,9 +179,9 @@ class EmployeeM
             $parameters['gender'] = '';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $listar = EmployeeM::listarM($parameters);
-            $capsule->setContent($listar->getContent());
-            $capsule->setCounter($listar->getCounter());
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
@@ -242,9 +242,9 @@ class EmployeeM
             $parameters['gender'] = '';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $listar = EmployeeM::listarM($parameters);
-            $capsule->setContent($listar->getContent());
-            $capsule->setCounter($listar->getCounter());
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
@@ -256,7 +256,7 @@ class EmployeeM
         }
     }
 
-    public static function listarM($parameters)
+    public static function readM($parameters)
     {
         $capsule = new Capsule();
         $count = 0;

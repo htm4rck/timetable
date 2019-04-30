@@ -18,7 +18,10 @@ class ConfigurationTemplate
     }
 
     public function getView(){
+        
+        #echo $this->res_resources[2];
         return $this->res_resources[2];
+
     }
 
     public function addScripts()

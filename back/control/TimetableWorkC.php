@@ -18,7 +18,7 @@ class EmployeeC
     public function main()
     {
         switch ($this->action) {
-            case 'read':
+            case 'paginate':
                 $this->read();
                 break;
             case 'create':

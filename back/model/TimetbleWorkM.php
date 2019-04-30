@@ -1,210 +1,235 @@
 <?php
 class TimetableWorkM
 {
-    public function insertarM(TimetableWork $t)
+    public static function createM(TimetableWork $t)
     {
+        $count = 0;
+        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYE.IDTIMETABLE_EMPLOYE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYE';
+        $query .= ' WHERE ';
+        $query .= " DNI = '" . $t->getLogin() . "'";
+
+        try {
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
+        } catch (Exception $e) {
+            return $e;
+        } finally {
+            $stmt = null;
+        }*/
+
+        $capsule = new Capsule();
+        $query = "INSERT INTO ";
+        $query .= "HAPPYLAND";
+        $query .= ".TIMETABLE_WORK(";
+        $query .= "DAY, START_HOUR, START_MINUTE, NUMBER_HOURS, NUMBER_MINUTES, IDEMPLOYEE, IDTIMETABLE_WEEKLY ";
+        $query .= ") VALUES(";
+        $query .= ":DAY, :START_HOUR, :START_MINUTE, :NUMBER_HOURS, :NUMBER_MINUTES, :IDEMPLOYEE, :IDTIMETABLE_WEEKLY ";
+        $query .= ")";
+        try {
+            $cn = new conexion;
+            if ($count == 0) {
+                $stmt = $cn->conectar()->prepare($query);
+                $stmt->bindParam(':DAY', $t->getDay(), PDO::PARAM_STR);
+                $stmt->bindParam(':START_HOUR', $t->getStart_hour(), PDO::PARAM_STR);
+                $stmt->bindParam(':START_MINUTE', $t->getStart_minute(), PDO::PARAM_STR);
+                $stmt->bindParam(':NUMBER_HOURS', $t->getNumber_hours(), PDO::PARAM_STR);
+                $stmt->bindParam(':NUMBER_MINUTES', $t->getNumber_minutes(), PDO::PARAM_STR);
+                $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_STR);
+                $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_weekly(), PDO::PARAM_STR);
+                $stmt->execute();
+                $capsule->setMessage('El Horario se Registro con Exito!');
+            } else {
+                $capsule->setError(true);
+                $capsule->setMessage("Existe otro Horario Con el DNI Ingresado");
+            }
+
+            $parameters['filter'] = '%%';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $read = TimetableEmployeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            $capsule->setQueryExec($query);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return $e;
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function updateM(TimetableEmployee $t)
+    {
+        $count = 0;
+        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYEE.IDTIMETABLE_EMPLOYEE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYEE';
+        $query .= ' WHERE ';
+        $query .= " LOGIN = '" . $t->getLogin() . "' AND IDTIMETABLE_EMPLOYEE != " . $t->getIDTIMETABLE_EMPLOYE();
+        try {
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
+        } catch (Exception $e) {
+            return $e;
+        } finally {
+            $stmt = null;
+        }*/
+
+        $capsule = new Capsule();
+        $sql = "UPDATE ";
+        $sql .= " HAPPYLAND.TIMETABLE_WORK SET ";
+        $sql .= " DAY = :DAY, START_HOUR = :START_HOUR, START_MINUTE = :START_MINUTE, NUMBER_HOURS = :NUMBER_HOURS, NUMBER_MINUTES = :NUMBER_MINUTES, ";
+        $sql .= " WHERE ";
+        $sql .= " IDTIMETABLE_EMPLOYEE = :IDTIMETABLE_EMPLOYEE";
+        try {
+            if ($count == 0) {
+                $cn = new conexion;
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':DAY', $t->getDay(), PDO::PARAM_STR);
+                $stmt->bindParam(':START_HOUR', $t->getStart_hour(), PDO::PARAM_STR);
+                $stmt->bindParam(':START_MINUTE', $t->getStart_minute(), PDO::PARAM_STR);
+                $stmt->bindParam(':NUMBER_HOURS', $t->getNumber_hours(), PDO::PARAM_STR);
+                $stmt->bindParam(':NUMBER_MINUTES', $t->getNumber_minutes(), PDO::PARAM_STR);
+                $stmt->bindParam(':IDTIMETABLE_EMPLOYE', $t->getIdtimetable_employee(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('El Horario se Actualizo con Exito!');
+            } else {
+                $capsule->setError(true);
+                $capsule->setMessage("Existe otro Horario Con el DNI Ingresado");
+            }
+
+            $parameters['filter'] = '%%';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $read = TimetableEmployeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            $capsule->setQueryExec($query);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $count . '}';
+            #return $e;
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function deleteM(TimetableWork $t)
+    {
+        $count = 0;
+        /*$query  = 'SELECT COUNT(E.IDTIMETABLE_EMPLOYE) AS TOTAL FROM ';
+        $query .= ' HAPPYLAND.TIMETABLE_EMPLOYE E ';
+
+        $query .= ' FULL JOIN ';
+        $query .= ' HAPPYLAND.TIMETABLE_WEEKLY  TW';
+        $query .= ' ON E.IDTIMETABLE_EMPLOYE = TE.IDTIMETABLE_EMPLOYE';;
+
+        $query .= ' WHERE ';
+        $query .= " TW.IDTIMETABLE_EMPLOYE = " . $t->getIDTIMETABLE_EMPLOYE();
+        try {
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
+        } catch (Exception $e) {
+            return $e;
+        } finally {
+            $stmt = null;
+        }*/
+        
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.TIMETABLE_WORK ";
+        $sql .= " WHERE ";
+        $sql .= " IDTIMETABLE_WORK = :IDTIMETABLE_WORK";
+        try {
+            if ($count == 0) {
+                $cn = new conexion;
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':IDTIMETABLE_WORK', $t->getIdtimetablework(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('El Horario se Elimino con Exito!');
+            } else {
+                $capsule->setError(true);
+                $capsule->setMessage("Existe una o más acciones asociadas a este Horario.");
+            }
+
+            $parameters['filter'] = '%%';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $read = TimetableEmployeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $e . '}';
+            #return $e;
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function readM($parameters)
+    {
+        $capsule = new Capsule();
+        $count = 0;
+        $query = '';
+        $query .= 'SELECT COUNT(IDTIMETABLE_WORK) AS TOTAL FROM HAPPYLAND.TIMETABLE_WORK';
+        
         try {
             $cn = new Conexion;
-            $stmt = $cn->Conectar()->prepare("INSERT INTO HAPPYLAND.TIMETABLE_WORK
-            (ID_TRABAJO,DIA,HORA_INICIO,MIN_INICIO,CANTIDAD_HORAS,CANTIDAD_MIN,ID_PERSONAL,ID_SEMANAL)
-            VALUES (NULL,:DIA,:HORA_INICIO,:MIN_INICIO,:CANTIDAD_HORAS,:CANTIDAD_MIN,:ID_PERSONAL,:ID_SEMANAL)");
-            $stmt->bindParam(':DIA', $t->getdias(), PDO::PARAM_INT);
-            $stmt->bindParam(':HORA_INICIO', $t->gethora_inicio(), PDO::PARAM_INT);
-            $stmt->bindParam(':MIN_INICIO', $t->getmin_inicio(), PDO::PARAM_INT);
-            $stmt->bindParam(':CANTIDAD_HORAS', $t->getcantidad_horas(), PDO::PARAM_INT);
-            $stmt->bindParam(':CANTIDAD_MIN', $t->getcantidad_min(), PDO::PARAM_INT);
-            $stmt->bindParam(':ID_PERSONAL', $t->getpersonal()->getid_personal(), PDO::PARAM_INT);
-            $stmt->bindParam(':ID_SEMANAL', $t->getSemanal()->getId_semanal(), PDO::PARAM_INT);
-            return $stmt->execute();
+            $stmt = $cn->conectar()->prepare($query);
+            $stmt->execute();
+            $array = $stmt->fetchAll();
+            $lista = array();
+            for ($i = 0; $i < count($array); $i++) {
+                $count = $array[$i]['total'];
+            }
+            $capsule->setCounter($count);
         } catch (Exception $e) {
             echo $e;
-        }
-        finally {
-            $cn->closeCn();
-            $stmt = null;
-
-        }
-    }
-
-    public function editarM(TimetableWork $t)
-    {
-        try {
-            $cn = new Conexion;
-            $stmt = $cn->Conectar()->prepare("UPDATE HAPPYLAND.TIMETABLE_WORK SET DIA=:DIA,HORA_INICIO=:HORA_INICIO,MIN_INICIO=:MIN_INICIO,CANTIDAD_HORAS=:CANTIDAD_HORAS,CANTIDAD_MIN=:CANTIDAD_MIN,ID_PERSONAL,ID_SEMANAL=:ID_PERSONAL WHERE ID_TRABAJO=:ID_TRABAJO");
-            $stmt->bindParam(':DIA', $t->getdias(), PDO::PARAM_INT);
-            $stmt->bindParam(':HORA_INICIO', $t->gethora_inicio(), PDO::PARAM_INT);
-            $stmt->bindParam(':MIN_INICIO', $t->getmin_inicio(), PDO::PARAM_INT);
-            $stmt->bindParam(':CANTIDAD_HORAS', $t->getcantidad_horas(), PDO::PARAM_INT);
-            $stmt->bindParam(':CANTIDAD_MIN', $t->getcantidad_min(), PDO::PARAM_INT);
-            $stmt->bindParam(':ID_PERSONAL', $t->getpersonal()->getid_personal(), PDO::PARAM_INT);
-            $stmt->bindParam(':ID_SEMANAL', $t->getSemanal()->getid_semanal(), PDO::PARAM_INT);
-            $stmt->bindParam(':ID_TRABAJO', $t->getid_trabajo(), PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            echo $e;
-        }
-        finally {
-            $cn->closeCn();
+        } finally {
             $stmt = null;
         }
-    }
 
-    public function eliminarM(TimetableWork $t)
-    {
+        $query = '';
+        $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_WORK';
+        $query .= $parameters['orderby'];
+        $query .= $parameters['paginate'];
         try {
-            $cn = new Conexion;
-            $stmt = $cn->Conectar()->prepare("DELETE FROM HAPPYLAND.TIMETABLE_WORK WHERE ID_TRABAJO=:ID_TRABAJO");
-            $stmt->bindParam(':ID_TRABAJO', $t->getid_trabajo(), PDO::PARAM_INT);
-            return $stmt->execute();
-        } catch (Exception $e) {
-            echo $e;
-        }
-        finally {
-            $cn->closeCn();
-            $stmt = null;
-
-        }
-    }
-
-    public function listarIdSemanalM($id_semanal)
-    {
-        try {
-            $cn = new Conexion;
-            $stmt = $cn->conectar()->prepare("SELECT * FROM HAPPYLAND.TIMETABLE_WORK WHERE ID_SEMANAL = :ID_SEMANAL");
-            $stmt->bindParam(":ID_SEMANAL",$id_semanal,PDO::PARAM_INT);
+            $stmt = $cn->conectar()->prepare($query);
+            $capsule->setQueryList($stmt);
             $stmt->execute();
             $array = $stmt->fetchAll();
             $lista = array();
             for ($i = 0; $i < count($array); $i++) {
-                $t = new TimetableWork;
-                $t->setid_trabajo($array[$i]['id_trabajo']);
-                $t->setdias($array[$i]['dias']);
-                $t->sethora_inicio($array[$i]['hora_inicio']);
-                $t->setmin_inicio($array[$i]['min_inicio']);
-                $t->setcantidad_horas($array[$i]['cantidad_horas']);
-                $t->setcantidad_min($array[$i]['cantidad_min']);
-                $personalM = new PersonalM;
-                $semanalM = new semanalM;
-                $personal = $personalM->getPersonal($array[$i]['id_personal']);
-                $semanal = $semanalM->getSemanalM($array[$i]['id_semanal']);
-                $t->setpersonal($personal);
-                $t->setSemanal($semanal);
+                $t = new TimetableWork($array[$i]['idtimetable_work']);
+                $t->setStart_hour($array[$i]['start_hour']);
+                $t->setStart_minute($array[$i]['start_minute']);
+                $t->setNumber_hours($array[$i]['number_hours']);
+                $t->setNumber_minutes($array[$i]['number_minutes']);
+                $t->setNumber_minutes($array[$i]['number_minutes']);
+                $t->setIdemployee($array[$i]['idemployee']);
+                $t->setIdtimetable_weekly($array[$i]['idtimetable_weekly']);
                 $lista[$i] = $t;
             }
-            return $lista;
+            $capsule->setMessage('ok');
+            $capsule->setContent($lista);
+            $capsule->setAux($parameters);
         } catch (Exception $e) {
-            return array();
-        }
-        finally {
-            $cn->closeCn();
+            $capsule->setError(true);
+            $capsule->setMessage($e);
+            $capsule->setQueryList($stmt);
+        } finally {
             $stmt = null;
-
+            $cn->closeCn();
         }
+        return $capsule;
     }
 
-    public function listarIdSemanalyDiaM($id_semanal,$dia)
-    {
-        try {
-            $cn = new Conexion;
-            $stmt = $cn->conectar()->prepare("SELECT * FROM HAPPYLAND.TIMETABLE_WORK WHERE ID_SEMANAL = :ID_SEMANAL AND DIA =:DIA");
-            $stmt->bindParam(":ID_SEMANAL",$id_semanal,PDO::PARAM_INT);
-            $stmt->bindParam(":DIA",$dia,PDO::PARAM_STR);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            $lista = array();
-            for ($i = 0; $i < count($array); $i++) {
-                $t = new TimetableWork;
-                $t->setid_trabajo($array[$i]['id_trabajo']);
-                $t->setdias($array[$i]['dia']);
-                $t->sethora_inicio($array[$i]['hora_inicio']);
-                $t->setmin_inicio($array[$i]['min_inicio']);
-                $t->setcantidad_horas($array[$i]['cantidad_horas']);
-                $t->setcantidad_min($array[$i]['cantidad_min']);
-                $personalM = new PersonalM;
-                $semanalM = new semanalM;
-                $personal = $personalM->getPersonal($array[$i]['id_personal']);
-                $semanal = $semanalM->getSemanalM($array[$i]['id_semanal']);
-                $t->setpersonal($personal);
-                $t->setSemanal($semanal);
-                $lista[$i] = $t;
-            }
-            return $lista;
-        } catch (Exception $e) {
-            return array();
-        }
-        finally {
-            $cn->closeCn();
-            $stmt = null;
-
-        }
-    }
-
-    public function listarM()
-    {
-        try {
-            $cn = new Conexion;
-            $stmt = $cn->conectar()->prepare("SELECT * FROM HAPPYLAND.TIMETABLE_WORK");
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            $lista = array();
-            for ($i = 0; $i < count($array); $i++) {
-                $t = new TimetableWork;
-                $t->setid_trabajo($array[$i]['id_trabajo']);
-                $t->setdias($array[$i]['dias']);
-                $t->sethora_inicio($array[$i]['hora_inicio']);
-                $t->setmin_inicio($array[$i]['min_inicio']);
-                $t->setcantidad_horas($array[$i]['cantidad_horas']);
-                $t->setcantidad_min($array[$i]['cantidad_min']);
-                $personalM = new PersonalM;
-                $semanalM = new semanalM;
-                $personal = $personalM->getPersonal($array[$i]['id_personal']);
-                $semanal = $semanalM->getSemanal($array[$i]['id_semanal']);
-                $t->setpersonal($personal);
-                $t->setSemanal($semanal);
-                $lista[$i] = $t;
-            }
-            return $lista;
-        } catch (Exception $e) {
-            return array();
-        }
-        finally {
-            $cn->closeCn();
-            $stmt = null;
-
-        }
-    }
-
-    public function getTrabajo($id_trabajo)
-    {
-        try {
-            $cn = new Conexion;
-            $stmt = $cn->conectar()->prepare("SELECT * FROM HAPPYLAND.TIMETABLE_WORK WHERE HAPPYLAND.TIMETABLE_WORK.id_trabajo=:id_trabajo");
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            $lista = array();
-            for ($i = 0; $i < count($array); $i++) {
-                $t = new TimetableWork;
-                $t->setid_trabajo($array[$i]['id_trabajo']);
-                $t->setdias($array[$i]['dias']);
-                $t->sethora_inicio($array[$i]['hora_inicio']);
-                $t->setmin_inicio($array[$i]['min_inicio']);
-                $t->setcantidad_horas($array[$i]['cantidad_horas']);
-                $t->setcantidad_min($array[$i]['cantidad_min']);
-                $personalM = new PersonalM;
-                $semanalM = new SemanalM;
-                $personal = $personalM->getPersonal($array[$i]['id_personal']);
-                $semanal = $semanalM->getSemanal($array[$i]['id_semanal']);
-                $t->setpersonal($personal);
-                $t->setSemanal($semanal);
-                $lista[$i] = $personal;
-            }
-            return $t;
-        } catch (Exception $e) {
-            return array();
-        }
-        finally {
-            $cn->closeCn();
-            $stmt = null;
-        }
-    }
 }

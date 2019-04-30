@@ -8,10 +8,39 @@ class Routes
   {
     $this->path_resource = "view/modules/";
     $this->list_pages = array();
+    
+    //TODO : INICIO
+    $resource = new BeanResource('index', 'index/index.html');
+    array_push($this->list_pages, $resource);
+    $resource = new BeanResource('', 'index/index.html');
+    array_push($this->list_pages, $resource);
+
     //TODO: API
     $resource = new BeanResource('api/employee', 'EmployeeC.php');
     $resource->viewApi();
     array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('api/manager', 'ManagerC.php');
+    $resource->viewApi();
+    array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('api/timetbemployee', 'TimetableEmployeeC.php');
+    $resource->viewApi();
+    array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('api/timetbweekly', 'EmployeeC.php');
+    $resource->viewApi();
+    array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('api/timetbwork', 'EmployeeC.php');
+    $resource->viewApi();
+    array_push($this->list_pages, $resource);
+    
+    //TODO : Free
+    $resource = new BeanResource('api', 'free/blank/blank.html');
+    $resource->viewFree();
+    array_push($this->list_pages, $resource);
+    
     //TODO : MANTENIMIENTOS
     $resource = new BeanResource('upkeeps', 'upkeeps/upkeeps.html');
     array_push($this->list_pages, $resource);
@@ -48,10 +77,12 @@ class Routes
         }
       }
       if (!$exists) {
-        $this->path_resource .= 'index.html';
+        $this->path_resource .= 'free/error/404.html';
+        $view='free';
       }
     } else {
-      $this->path_resource .= 'index.html';
+      $this->path_resource .= 'free/error/404.html';
+      $view='free';
     }
     $resources = array($this->path_resource, $path_scripts, $view);
     return $resources;

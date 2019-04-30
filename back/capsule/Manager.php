@@ -1,6 +1,7 @@
 <?php
 
-class Manager{
+class Manager implements JsonSerializable
+{
     private $idmanager;
     private $paternal;
     private $maternal;
@@ -8,9 +9,36 @@ class Manager{
     private $login;
     private $pass;
 
-    public function __construct($idmanager=0)
+    public static function getManager($std)
     {
-        $this->idmanager=$idmanager;
+        $manager = new Manager();
+        $manager->setIdManager(@$std->idmanager);
+        $manager->setPaternal(@$std->paternal);
+        $manager->setMaternal(@$std->maternal);
+        $manager->setNames(@$std->names);
+        $manager->setLogin(@$std->login);
+        $manager->setPass(@$std->pass);
+        return $manager;
+    }
+
+    public function __construct($idmanager = 0)
+    {
+        $this->idmanager = $idmanager;
+        $this->paternal = '';
+        $this->maternal = '';
+        $this->names = '';
+        $this->login='';
+        $this->pass='';
+    }
+
+    public function getIdManager()
+    {
+        return $this->idmanager;
+    }
+
+    public function setIdManager($idmanager)
+    {
+        $this->idmanager = $idmanager;
     }
 
     public function getPaternal()
@@ -61,5 +89,18 @@ class Manager{
     public function setPass($pass)
     {
         $this->pass = $pass;
+    }
+
+    public function jsonSerialize()
+    {
+        return
+            [
+                'idmanager'   => $this->idmanager,
+                'paternal' => $this->paternal,
+                'maternal' => $this->maternal,
+                'names' => $this->names,
+                'login' => $this->login,
+                'pass' => $this->pass
+            ];
     }
 }

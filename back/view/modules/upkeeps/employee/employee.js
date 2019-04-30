@@ -42,12 +42,12 @@ class CRUDEmployee {
     });
 
     this.modalUpkeep.addEventListener("hide.bs.modal", function (event) {
-      clase.send.action = 'paginate';
+      clase.send.action = 'read';
       clase.json = '';
     });
 
     this.modalChangePass.addEventListener("hide.bs.modal", function (event) {
-      clase.send.action = 'paginate';
+      clase.send.action = 'read';
       clase.json = '';
     });
 
@@ -85,7 +85,7 @@ class CRUDEmployee {
   }
 
   read() {
-    this.send.action = 'paginate';
+    this.send.action = 'read';
     this.json = '';
     this.modalCargandoObject.show();
   }
@@ -135,7 +135,7 @@ class CRUDEmployee {
   run() {
     this.actionurl = '?action=' + this.send.action;
     this.parameters = '';
-    if (this.send.action == 'paginate') {
+    if (this.send.action == 'read') {
       this.parameters += '&filter=' + document.querySelector('#txtFilterEmployeeSearch').value;
       this.parameters += '&gender=' + document.querySelector('#slcGenderEmployeeSearch').value;
       this.parameters += '&size=' + document.querySelector('#sizePageEmployee').value;
