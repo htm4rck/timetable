@@ -1,6 +1,6 @@
 <?php
-#error_reporting(E_ALL);
-#ini_set('display_errors', '1');
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Credentials: true");
@@ -18,10 +18,14 @@ require_once "capsule/Capsule.php";
 require_once "capsule/Employee.php";
 require_once "capsule/Manager.php";
 require_once "capsule/TimetableEmployee.php";
+require_once "capsule/TimetableWeekly.php";
+require_once "capsule/TimetableWork.php";
 
 require_once "model/EmployeeM.php";
 require_once "model/ManagerM.php";
 require_once "model/TimetableEmployeeM.php";
+require_once "model/TimetableWeeklyM.php";
+require_once "model/TimetableWorkM.php";
 
 $configurationTemplate = new ConfigurationTemplate();
 if ($configurationTemplate->getView() == 'view') {

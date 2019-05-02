@@ -4,37 +4,23 @@ class TimetableWeeklyM
     public static function createM(TimetableWeekly $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYE.IDTIMETABLE_EMPLOYE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYE';
-        $query .= ' WHERE ';
-        $query .= " DNI = '" . $t->getLogin() . "'";
-
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
-
+        
         $capsule = new Capsule();
         $query = "INSERT INTO ";
         $query .= "HAPPYLAND";
         $query .= ".TIMETABLE_WEEKLY(";
-        $query .= " DESCRIPCION, DATE, ESTATE, IDMANAGER ";
+        $query .= " DESCRIPTION, DATE, ESTATE, IDMANAGER ";
         $query .= ") VALUES(";
-        $query .= " :DESCRIPCION, :DATE, :ESTATE, :IDMANAGER ";
+        $query .= " :DESCRIPTION, :DATE, :ESTATE, :IDMANAGER ";
         $query .= ")";
         try {
             $cn = new conexion;
             if ($count == 0) {
                 $stmt = $cn->conectar()->prepare($query);
-                $stmt->bindParam(':DESCRIPCION', $t->getDay(), PDO::PARAM_STR);
-                $stmt->bindParam(':DATE', $t->getStart_hour(), PDO::PARAM_STR);
-                $stmt->bindParam(':ESTATE', $t->getStart_minute(), PDO::PARAM_STR);
-                $stmt->bindParam(':IDMANAGER', $t->getNumber_hours(), PDO::PARAM_STR);
+                $stmt->bindParam(':DESCRIPTION', $t->getDescription(), PDO::PARAM_STR);
+                $stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
+                $stmt->bindParam(':ESTATE', $t->getEstate(), PDO::PARAM_STR);
+                $stmt->bindParam(':IDMANAGER', $t->getIdmanager(), PDO::PARAM_INT);
                 $stmt->execute();
                 $capsule->setMessage('El Horario Semanal se Registro con Exito!');
             } else {
@@ -42,10 +28,10 @@ class TimetableWeeklyM
                 $capsule->setMessage("Existe otro Horario Semanal Con el DNI Ingresado");
             }
 
-            $parameters['filter'] = '%%';
+            #$parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWeeklyM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
@@ -58,37 +44,23 @@ class TimetableWeeklyM
         }
     }
 
-    public static function updateM(TimetableEmployee $t)
+    public static function updateM(TimetableWeekly $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_WEEKLY.IDTIMETABLE_WEEKLY) AS TOTAL FROM HAPPYLAND.TIMETABLE_WEEKLY';
-        $query .= ' WHERE ';
-        $query .= " LOGIN = '" . $t->getLogin() . "' AND IDTIMETABLE_WEEKLY != " . $t->getIDTIMETABLE_EMPLOYE();
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
 
         $capsule = new Capsule();
         $sql = "UPDATE ";
         $sql .= " HAPPYLAND.TIMETABLE_WEEKLY SET ";
-        $sql .= " DAY = :DAY, START_HOUR = :START_HOUR, START_MINUTE = :START_MINUTE, NUMBER_HOURS = :NUMBER_HOURS, NUMBER_MINUTES = :NUMBER_MINUTES, ";
+        $sql .= " DESCRIPTION = :DESCRIPTION, DATE = :DATE, ESTATE = :ESTATE ";
         $sql .= " WHERE ";
         $sql .= " IDTIMETABLE_WEEKLY = :IDTIMETABLE_WEEKLY";
         try {
             if ($count == 0) {
                 $cn = new conexion;
                 $stmt = $cn->conectar()->prepare($sql);
-                $stmt->bindParam(':DESCRIPCION', $t->getDay(), PDO::PARAM_STR);
-                $stmt->bindParam(':DATE', $t->getStart_hour(), PDO::PARAM_STR);
-                $stmt->bindParam(':ESTATE', $t->getStart_minute(), PDO::PARAM_STR);
-                $stmt->bindParam(':IDMANAGER', $t->getNumber_hours(), PDO::PARAM_STR);
+                $stmt->bindParam(':DESCRIPTION', $t->getDescription(), PDO::PARAM_STR);
+                $stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
+                $stmt->bindParam(':ESTATE', $t->getEstate(), PDO::PARAM_STR);
                 $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_WEEKLY(), PDO::PARAM_INT);
                 $stmt->execute();
                 $capsule->setMessage('El Horario Semanal se Actualizo con Exito!');
@@ -99,8 +71,8 @@ class TimetableWeeklyM
 
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWeeklyM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($sql);
@@ -114,39 +86,20 @@ class TimetableWeeklyM
         }
     }
 
-    public static function deleteM(TimetableEmployee $t)
+    public static function deleteM(TimetableWeekly $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(E.IDTIMETABLE_EMPLOYE) AS TOTAL FROM ';
-        $query .= ' HAPPYLAND.TIMETABLE_EMPLOYE E ';
-
-        $query .= ' FULL JOIN ';
-        $query .= ' HAPPYLAND.TIMETABLE_WEEKLY  TW';
-        $query .= ' ON E.IDTIMETABLE_EMPLOYE = TE.IDTIMETABLE_EMPLOYE';;
-
-        $query .= ' WHERE ';
-        $query .= " TW.IDTIMETABLE_EMPLOYE = " . $t->getIDTIMETABLE_EMPLOYE();
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
         
         $capsule = new Capsule();
         $sql  = "DELETE FROM ";
-        $sql .= " HAPPYLAND.TIMETABLE_EMPLOYE ";
+        $sql .= " HAPPYLAND.TIMETABLE_WEEKLY ";
         $sql .= " WHERE ";
-        $sql .= " IDTIMETABLE_EMPLOYE = :IDTIMETABLE_EMPLOYE";
+        $sql .= " IDTIMETABLE_WEEKLY = :IDTIMETABLE_WEEKLY";
         try {
             if ($count == 0) {
                 $cn = new conexion;
                 $stmt = $cn->conectar()->prepare($sql);
-                $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_WEEKLY(), PDO::PARAM_INT);
+                $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_weekly(), PDO::PARAM_INT);
                 $stmt->execute();
                 $capsule->setMessage('El Horario Semanal se Elimino con Exito!');
             } else {
@@ -156,8 +109,8 @@ class TimetableWeeklyM
 
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWeeklyM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
             return $capsule->getResponse();
@@ -175,7 +128,7 @@ class TimetableWeeklyM
         $capsule = new Capsule();
         $count = 0;
         $query = '';
-        $query .= 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYE.IDTIMETABLE_WEEKLY) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYE';
+        $query .= 'SELECT COUNT(HAPPYLAND.TIMETABLE_WEEKLY.IDTIMETABLE_WEEKLY) AS TOTAL FROM HAPPYLAND.TIMETABLE_WEEKLY';
         
         try {
             $cn = new Conexion;
@@ -194,7 +147,7 @@ class TimetableWeeklyM
         }
 
         $query = '';
-        $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_EMPLOYE';
+        $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_WEEKLY';
         $query .= $parameters['orderby'];
         $query .= $parameters['paginate'];
         try {
@@ -204,7 +157,7 @@ class TimetableWeeklyM
             $array = $stmt->fetchAll();
             $lista = array();
             for ($i = 0; $i < count($array); $i++) {
-                $t = new TimetableWeekly($array[$i]['idtimetable weekly']);
+                $t = new TimetableWeekly($array[$i]['idtimetable_weekly']);
                 $t->setDescription($array[$i]['description']);
                 $t->setDate($array[$i]['date']);
                 $t->setEstate($array[$i]['estate']);

@@ -108,7 +108,6 @@ class TimetableEmployee implements JsonSerializable
                 'day' => $this->day,
                 'start_hour' => $this->start_hour,
                 'start_minute' => $this->start_minute,
-                'extra_minutes' => $this->extra_minutes,
                 'number_hours' => $this->number_hours,
                 'number_minutes' => $this->number_minutes,
                 'idemployee' => $this->idemployee

@@ -28,7 +28,7 @@ class Routes
     $resource->viewApi();
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('api/timetbweekly', 'EmployeeC.php');
+    $resource = new BeanResource('api/timetbweekly', 'TimetableWeeklyC.php');
     $resource->viewApi();
     array_push($this->list_pages, $resource);
 

@@ -12,7 +12,6 @@ class TimetableEmployeeC
             $this->data = file_get_contents('php://input');
             $this->data = json_decode($this->data);
             $this->timetableEmployee = TimetableEmployee::getTimetableEmployee($this->data);
-            echo 'hola';
             $this->parameters = array();
             $this->action = $_GET['action'];
             $this->main();
@@ -24,7 +23,6 @@ class TimetableEmployeeC
     {
         switch ($this->action) {
             case 'read':
-            echo 1;
                 $this->read();
                 break;
             case 'create':
@@ -35,6 +33,9 @@ class TimetableEmployeeC
                 break;
             case 'delete':
                 $this->delete();
+                break;
+            default:
+                echo '{"error": "Metodo no permitido"}';
                 break;
         }
     }
@@ -47,7 +48,8 @@ class TimetableEmployeeC
 
     public function create()
     {
-        echo json_encode(timetableEmployeeM::createM($this->timetableEmployee));
+        echo json_encode(timetableEmployeeM::createM($this->timetableEmployee));        
+        echo '1';
     }
     public function update()
     {
@@ -59,4 +61,3 @@ class TimetableEmployeeC
     }
 }
 new TimetableEmployeeC();
-echo 1;

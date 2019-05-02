@@ -4,21 +4,6 @@ class TimetableWorkM
     public static function createM(TimetableWork $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYE.IDTIMETABLE_EMPLOYE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYE';
-        $query .= ' WHERE ';
-        $query .= " DNI = '" . $t->getLogin() . "'";
-
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
-
         $capsule = new Capsule();
         $query = "INSERT INTO ";
         $query .= "HAPPYLAND";
@@ -64,20 +49,6 @@ class TimetableWorkM
     public static function updateM(TimetableEmployee $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYEE.IDTIMETABLE_EMPLOYEE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYEE';
-        $query .= ' WHERE ';
-        $query .= " LOGIN = '" . $t->getLogin() . "' AND IDTIMETABLE_EMPLOYEE != " . $t->getIDTIMETABLE_EMPLOYE();
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
-
         $capsule = new Capsule();
         $sql = "UPDATE ";
         $sql .= " HAPPYLAND.TIMETABLE_WORK SET ";
@@ -121,26 +92,6 @@ class TimetableWorkM
     public static function deleteM(TimetableWork $t)
     {
         $count = 0;
-        /*$query  = 'SELECT COUNT(E.IDTIMETABLE_EMPLOYE) AS TOTAL FROM ';
-        $query .= ' HAPPYLAND.TIMETABLE_EMPLOYE E ';
-
-        $query .= ' FULL JOIN ';
-        $query .= ' HAPPYLAND.TIMETABLE_WEEKLY  TW';
-        $query .= ' ON E.IDTIMETABLE_EMPLOYE = TE.IDTIMETABLE_EMPLOYE';;
-
-        $query .= ' WHERE ';
-        $query .= " TW.IDTIMETABLE_EMPLOYE = " . $t->getIDTIMETABLE_EMPLOYE();
-        try {
-            $stmt = $cn->conectar()->prepare($query);
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            count($array) > 0 ? $count = $array[0]['total'] : $count = 0;
-        } catch (Exception $e) {
-            return $e;
-        } finally {
-            $stmt = null;
-        }*/
-        
         $capsule = new Capsule();
         $sql  = "DELETE FROM ";
         $sql .= " HAPPYLAND.TIMETABLE_WORK ";

@@ -1,5 +1,6 @@
 <?php
-class TimetableWork{
+class TimetableWork implements JsonSerializable
+{
 
     private $idtimetablework;
     private $day;
@@ -13,6 +14,39 @@ class TimetableWork{
     public function __construct($idtimetablework=0)
     {
         $this->idtimetablework=$idtimetablework;
+    }
+    public static function getTimetableWork($std)
+    {
+        $timetableWork = new TimetableWork();
+        try {
+            $timetableWork->setIdtimetablework(@$std->idtimetable_work);
+            $timetableWork->setDay(@$std->day);
+            $timetableWork->setStart_hour(@$std->start_hour);
+            $timetableWork->setStart_minute(@$std->start_minute);
+            $timetableWork->setNumber_hours(@$std->number_hours);
+            $timetableWork->setNumber_minutes(@$std->number_minutes);
+            $timetableWork->setIdemployee(@$std->idemployee);
+            $timetableWork->setIdtimetable_weekly(@$std->getIdtimetable_weekly);
+            return $timetableWork;
+        } catch (\Throwable $th) {
+            echo $th;
+        }
+    }
+
+    public function jsonSerialize()
+    {
+        return
+            [
+                'idtimetable_work' => $this->idtimetable_work,
+                'day' => $this->day,
+                'start_hour' => $this->start_hour,
+                'start_minute' => $this->start_minute,
+                'number_hours' => $this->number_hours,
+                'number_minutes' => $this->number_minutes,
+                'idemployee' => $this->idemployee,
+                'idtimetable_weekly' => $this->idtimetable_weekly
+
+            ];
     }
 
     public function getIdtimetablework()
