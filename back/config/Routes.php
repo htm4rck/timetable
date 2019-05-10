@@ -32,7 +32,7 @@ class Routes
     $resource->viewApi();
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('api/timetbwork', 'EmployeeC.php');
+    $resource = new BeanResource('api/timetbwork', 'TimetableWorkC.php');
     $resource->viewApi();
     array_push($this->list_pages, $resource);
     
@@ -46,6 +46,10 @@ class Routes
     array_push($this->list_pages, $resource);
 
     $resource = new BeanResource('upkeeps/employee', 'upkeeps/employee/employee.html', array($this->path_resource . 'upkeeps/employee/employee.js'));
+    array_push($this->list_pages, $resource);
+
+    //TODO : HORARIOS
+    $resource = new BeanResource('process/employee', 'process/employee/employee.html', array($this->path_resource . 'process/employee/employee.js',$this->path_resource . 'process/employee/tmtbemployee.js'));
     array_push($this->list_pages, $resource);
   }
 

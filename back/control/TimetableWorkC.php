@@ -1,16 +1,16 @@
 <?php
-class EmployeeC
+class TimetableWorkC
 {
     private $data;
     private $parameters;
-    private $employee;
+    private $timetablework;
     private $action;
 
     public function __construct()
     {
         $this->data = file_get_contents('php://input');
         $this->data = json_decode($this->data);
-        $this->employee = Employee::getEmployee($this->data);
+        $this->timetablework = TimetableWork::getTimetableWork($this->data);
         $this->parameters = array();
         $this->action = $_GET['action'];
         $this->main();
@@ -18,7 +18,7 @@ class EmployeeC
     public function main()
     {
         switch ($this->action) {
-            case 'paginate':
+            case 'read':
                 $this->read();
                 break;
             case 'create':
@@ -30,38 +30,29 @@ class EmployeeC
             case 'delete':
                 $this->delete();
                 break;
-            case 'changepass':
-                $this->changePass();
-                break;
             default:
-                # code...
+                echo json_encode('{"Error": "Metodo no permitido"}');
                 break;
         }
     }
     public function read()
     {
-        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . $_GET['filter'] . '%' : $this->parameters['filter'] = '%%';
-        $_GET['gender'] != -1 ? $this->parameters['gender'] = " AND GENDER = '" . $_GET["gender"] . "' " : $this->parameters['gender'] = '';
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
-        $this->parameters['orderby'] = ' ORDER BY PATERNAL ';
-        echo json_encode(EmployeeM::readM($this->parameters)->getResponse());
+        $this->parameters['orderby'] = ' ';
+        echo json_encode(TimetableWorkM::readM($this->parameters)->getResponse());
     }
 
     public function create()
     {
-        echo json_encode(EmployeeM::createM($this->employee));
+        echo json_encode(TimetableWorkM::createM($this->timetablework));
     }
     public function update()
     {
-        echo json_encode(EmployeeM::updateM($this->employee));
+        echo json_encode(TimetableWorkM::updateM($this->timetablework));
     }
     public function delete()
     {
-        echo json_encode(EmployeeM::deleteM($this->employee));
-    }
-    public function changePass()
-    {
-        echo json_encode(EmployeeM::changePassM($this->employee));
+        echo json_encode(TimetableWorkM::deleteM($this->timetablework));
     }
 }
-new EmployeeC();
+new TimetableWorkC();

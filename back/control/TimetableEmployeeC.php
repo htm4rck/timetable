@@ -43,6 +43,7 @@ class TimetableEmployeeC
     {
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ';
+        $this->parameters['idemployee'] = (int)$_GET['idemployee'];
         echo json_encode(TimetableEmployeeM::readM($this->parameters)->getResponse());
     }
 

@@ -131,6 +131,7 @@ class TimetableEmployeeM
         $count = 0;
         $query = '';
         $query .= 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYEE.IDTIMETABLE_EMPLOYEE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYEE';
+        $query .= ' WHERE IDEMPLOYEE = ' . $parameters['idemployee'];
         
         try {
             $cn = new Conexion;
@@ -150,6 +151,7 @@ class TimetableEmployeeM
 
         $query = '';
         $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_EMPLOYEE';
+        $query .= ' WHERE IDEMPLOYEE = ' . $parameters['idemployee'];
         $query .= $parameters['orderby'];
         $query .= $parameters['paginate'];
         try {

@@ -2,7 +2,7 @@
 class TimetableWork implements JsonSerializable
 {
 
-    private $idtimetablework;
+    private $idtimetable_work;
     private $day;
     private $start_hour;
     private $start_minute;
@@ -11,22 +11,22 @@ class TimetableWork implements JsonSerializable
     private $idemployee;
     private $idtimetable_weekly;
 
-    public function __construct($idtimetablework=0)
+    public function __construct($idtimetable_work=0)
     {
-        $this->idtimetablework=$idtimetablework;
+        $this->idtimetable_work=$idtimetable_work;
     }
     public static function getTimetableWork($std)
     {
         $timetableWork = new TimetableWork();
         try {
-            $timetableWork->setIdtimetablework(@$std->idtimetable_work);
+            $timetableWork->setIdtimetable_work(@$std->idtimetable_work);
             $timetableWork->setDay(@$std->day);
             $timetableWork->setStart_hour(@$std->start_hour);
             $timetableWork->setStart_minute(@$std->start_minute);
             $timetableWork->setNumber_hours(@$std->number_hours);
             $timetableWork->setNumber_minutes(@$std->number_minutes);
             $timetableWork->setIdemployee(@$std->idemployee);
-            $timetableWork->setIdtimetable_weekly(@$std->getIdtimetable_weekly);
+            $timetableWork->setIdtimetable_weekly(@$std->idtimetable_weekly);
             return $timetableWork;
         } catch (\Throwable $th) {
             echo $th;
@@ -45,18 +45,17 @@ class TimetableWork implements JsonSerializable
                 'number_minutes' => $this->number_minutes,
                 'idemployee' => $this->idemployee,
                 'idtimetable_weekly' => $this->idtimetable_weekly
-
             ];
     }
 
-    public function getIdtimetablework()
+    public function getIdtimetable_work()
     {
-        return $this->idtimetablework;
+        return $this->idtimetable_work;
     }
 
-    public function setIdtimetablework($idtimetablework)
+    public function setIdtimetable_work($idtimetable_work)
     {
-        $this->idtimetablework = $idtimetablework;
+        $this->idtimetable_work = $idtimetable_work;
     }
 
     public function getDay()

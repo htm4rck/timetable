@@ -28,7 +28,20 @@ class Employee {
 		this.mobile = '';
 	}
 }
-
+class Dia {
+	constructor(id = 0, nombre = 'LUNES', abr = 'L') {
+		this.id = id;
+		this.nombre = nombre;
+		this.abr = abr;
+	}
+}
+listDia = [new Dia()];
+listDia.push(new Dia(1, 'MARTES', 'M'));
+listDia.push(new Dia(2, 'MIERCOLES', 'X'));
+listDia.push(new Dia(3, 'JUEVES', 'J'));
+listDia.push(new Dia(4, 'VIERNES', 'V'));
+listDia.push(new Dia(5, 'SABADO', 'S'));
+listDia.push(new Dia(6, 'DOMINGO', 'D'));
 document.querySelector('#sidenavToggler').addEventListener('click', function (e) {
 	e.preventDefault();
 	document.querySelector('body').classList.toggle('sidenav-toggled');

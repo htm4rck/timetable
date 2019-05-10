@@ -24,16 +24,16 @@ class TimetableWorkM
                 $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_STR);
                 $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_weekly(), PDO::PARAM_STR);
                 $stmt->execute();
-                $capsule->setMessage('El Horario se Registro con Exito!');
+                $capsule->setMessage('El Horario de Trabajo se Registro con Exito!');
             } else {
                 $capsule->setError(true);
-                $capsule->setMessage("Existe otro Horario Con el DNI Ingresado");
+                $capsule->setMessage("Existe otro Horario de Trabajo Con el DNI Ingresado");
             }
 
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWorkM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
             $capsule->setQueryExec($query);
@@ -46,15 +46,15 @@ class TimetableWorkM
         }
     }
 
-    public static function updateM(TimetableEmployee $t)
+    public static function updateM(TimetableWork $t)
     {
         $count = 0;
         $capsule = new Capsule();
         $sql = "UPDATE ";
         $sql .= " HAPPYLAND.TIMETABLE_WORK SET ";
-        $sql .= " DAY = :DAY, START_HOUR = :START_HOUR, START_MINUTE = :START_MINUTE, NUMBER_HOURS = :NUMBER_HOURS, NUMBER_MINUTES = :NUMBER_MINUTES, ";
+        $sql .= " DAY = :DAY, START_HOUR = :START_HOUR, START_MINUTE = :START_MINUTE, NUMBER_HOURS = :NUMBER_HOURS, NUMBER_MINUTES = :NUMBER_MINUTES ";
         $sql .= " WHERE ";
-        $sql .= " IDTIMETABLE_EMPLOYEE = :IDTIMETABLE_EMPLOYEE";
+        $sql .= " IDTIMETABLE_WORK = :IDTIMETABLE_WORK";
         try {
             if ($count == 0) {
                 $cn = new conexion;
@@ -64,25 +64,25 @@ class TimetableWorkM
                 $stmt->bindParam(':START_MINUTE', $t->getStart_minute(), PDO::PARAM_STR);
                 $stmt->bindParam(':NUMBER_HOURS', $t->getNumber_hours(), PDO::PARAM_STR);
                 $stmt->bindParam(':NUMBER_MINUTES', $t->getNumber_minutes(), PDO::PARAM_STR);
-                $stmt->bindParam(':IDTIMETABLE_EMPLOYE', $t->getIdtimetable_employee(), PDO::PARAM_INT);
+                $stmt->bindParam(':IDTIMETABLE_WORK', $t->getIdtimetable_work(), PDO::PARAM_INT);
                 $stmt->execute();
-                $capsule->setMessage('El Horario se Actualizo con Exito!');
+                $capsule->setMessage('El Horario de Trabajo se Actualizo con Exito!');
             } else {
                 $capsule->setError(true);
-                $capsule->setMessage("Existe otro Horario Con el DNI Ingresado");
+                $capsule->setMessage("Existe otro Horario de Trabajo Con el DNI Ingresado");
             }
 
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWorkM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
-            $capsule->setQueryExec($query);
+            $capsule->setQueryExec($sql);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"error":' . $count . '}';
-            #return $e;
+            #return '{"error":' . $e . '}';
+            return $e;
         } finally {
             $stmt = null;
             $cn->closeCn();
@@ -101,18 +101,18 @@ class TimetableWorkM
             if ($count == 0) {
                 $cn = new conexion;
                 $stmt = $cn->conectar()->prepare($sql);
-                $stmt->bindParam(':IDTIMETABLE_WORK', $t->getIdtimetablework(), PDO::PARAM_INT);
+                $stmt->bindParam(':IDTIMETABLE_WORK', $t->getIdtimetable_work(), PDO::PARAM_INT);
                 $stmt->execute();
-                $capsule->setMessage('El Horario se Elimino con Exito!');
+                $capsule->setMessage('El Horario de Trabajo se Elimino con Exito!');
             } else {
                 $capsule->setError(true);
-                $capsule->setMessage("Existe una o más acciones asociadas a este Horario.");
+                $capsule->setMessage("Existe una o más acciones asociadas a este Horario de Trabajo.");
             }
 
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
-            $parameters['orderby'] = ' ORDER BY PATERNAL ';
-            $read = TimetableEmployeM::readM($parameters);
+            $parameters['orderby'] = ' ';
+            $read = TimetableWorkM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
             return $capsule->getResponse();
@@ -160,6 +160,7 @@ class TimetableWorkM
             $lista = array();
             for ($i = 0; $i < count($array); $i++) {
                 $t = new TimetableWork($array[$i]['idtimetable_work']);
+                $t->setDay($array[$i]['day']);
                 $t->setStart_hour($array[$i]['start_hour']);
                 $t->setStart_minute($array[$i]['start_minute']);
                 $t->setNumber_hours($array[$i]['number_hours']);
