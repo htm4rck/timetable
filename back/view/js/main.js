@@ -42,6 +42,49 @@ listDia.push(new Dia(3, 'JUEVES', 'J'));
 listDia.push(new Dia(4, 'VIERNES', 'V'));
 listDia.push(new Dia(5, 'SABADO', 'S'));
 listDia.push(new Dia(6, 'DOMINGO', 'D'));
+function getDia(id) {
+	let d = new Dia()
+	listDia.forEach(dia => {
+		if (dia.id == id) {
+			d = dia;
+		}
+	});
+	return d;
+}
+class TimeTableEmployee {
+	constructor() {
+		this.idtimetable_employee = 0;
+		this.day = 0;
+		this.start_hour = 0;
+		this.start_minute = 0;
+		this.number_hours = 0;
+		this.number_minutes = 0;
+		this.idemployee = 0;
+	}
+}
+class Hour {
+	constructor(hour = 0, min = 0) {
+		this.hour = hour;
+		this.min = min;
+	}
+}
+class Hours {
+	constructor(TimeTableEmployee) {
+		this.tmtbE = TimeTableEmployee;
+		this.arrayHours = [];
+		this.setArrayHours();
+	}
+	setArrayHours() {
+		let iterator = this.tmtbE.number_hours * 2;
+		this.tmtbE.number_minutes == 0 ? iterator += 0 : iterator++;
+		let hour = this.tmtbE.start_hour;
+		let min = this.tmtbE.start_minute;
+		for (let i = 0; i < iterator; i++) {
+			this.arrayHours.push(new Hour(hour, min));
+			min == 0 ? (min = 30) : (hour++ , min = 0);
+		}
+	}
+}
 document.querySelector('#sidenavToggler').addEventListener('click', function (e) {
 	e.preventDefault();
 	document.querySelector('body').classList.toggle('sidenav-toggled');

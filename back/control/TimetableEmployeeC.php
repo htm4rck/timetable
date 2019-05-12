@@ -50,7 +50,6 @@ class TimetableEmployeeC
     public function create()
     {
         echo json_encode(timetableEmployeeM::createM($this->timetableEmployee));        
-        echo '1';
     }
     public function update()
     {

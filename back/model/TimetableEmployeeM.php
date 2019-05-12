@@ -8,14 +8,16 @@ class TimetableEmployeeM
         $query = "INSERT INTO ";
         $query .= "HAPPYLAND";
         $query .= ".TIMETABLE_EMPLOYEE(";
-        $query .= "DAY, START_HOUR, START_MINUTE, NUMBER_HOURS, NUMBER_MINUTES, IDEMPLOYEE ";
+        $query .= "IDTIMETABLE_EMPLOYEE, DAY, START_HOUR, START_MINUTE, NUMBER_HOURS, NUMBER_MINUTES, IDEMPLOYEE ";
         $query .= ") VALUES(";
-        $query .= ":DAY, :START_HOUR, :START_MINUTE, :NUMBER_HOURS, :NUMBER_MINUTES, :IDEMPLOYEE ";
+        $query .= ":IDTIMETABLE_EMPLOYEE, :DAY, :START_HOUR, :START_MINUTE, :NUMBER_HOURS, :NUMBER_MINUTES, :IDEMPLOYEE ";
         $query .= ")";
         try {
             $cn = new conexion;
             if ($count == 0) {
                 $stmt = $cn->conectar()->prepare($query);
+                $var = (int)($t->getIdemployee() . $t->getDay());
+                $stmt->bindParam(':IDTIMETABLE_EMPLOYEE', $var, PDO::PARAM_INT);
                 $stmt->bindParam(':DAY', $t->getDay(), PDO::PARAM_STR);
                 $stmt->bindParam(':START_HOUR', $t->getStart_hour(), PDO::PARAM_STR);
                 $stmt->bindParam(':START_MINUTE', $t->getStart_minute(), PDO::PARAM_STR);
@@ -28,10 +30,11 @@ class TimetableEmployeeM
                 $capsule->setError(true);
                 $capsule->setMessage("Existe otro Horario Con el DNI Ingresado");
             }
-            
+
             #$parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ';
+            $parameters['idemployee'] = $t->getIdemployee();
             $read = TimetableEmployeeM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
@@ -112,6 +115,7 @@ class TimetableEmployeeM
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ';
+            $parameters['idemployee'] = $t->getIdemployee();
             $read = TimetableEmployeeM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
@@ -132,7 +136,7 @@ class TimetableEmployeeM
         $query = '';
         $query .= 'SELECT COUNT(HAPPYLAND.TIMETABLE_EMPLOYEE.IDTIMETABLE_EMPLOYEE) AS TOTAL FROM HAPPYLAND.TIMETABLE_EMPLOYEE';
         $query .= ' WHERE IDEMPLOYEE = ' . $parameters['idemployee'];
-        
+
         try {
             $cn = new Conexion;
             $stmt = $cn->conectar()->prepare($query);
@@ -184,5 +188,4 @@ class TimetableEmployeeM
         }
         return $capsule;
     }
-
 }

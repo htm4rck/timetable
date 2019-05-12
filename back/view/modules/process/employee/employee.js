@@ -244,8 +244,8 @@ class CRUDEmployee {
       }
     });
 
-    document.querySelectorAll('.deleteEmployee').forEach(btnUpdate => {
-      btnUpdate.onclick = function () {
+    document.querySelectorAll('.deleteEmployee').forEach(btnDelete => {
+      btnDelete.onclick = function () {
         clase.setEmployee(parseInt(this.getAttribute('idemployee')));
         clase.delete();
         new ModalAction(clase.modalCargandoObject, 'Seguro que desea Eliminar a ' + clase.employee.names + ' ' + clase.employee.paternal + ' ' + clase.employee.maternal);
