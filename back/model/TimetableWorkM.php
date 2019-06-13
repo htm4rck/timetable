@@ -131,7 +131,9 @@ class TimetableWorkM
         $count = 0;
         $query = '';
         $query .= 'SELECT COUNT(IDTIMETABLE_WORK) AS TOTAL FROM HAPPYLAND.TIMETABLE_WORK';
-        
+        $query .= ' WHERE IDTIMETABLE_WEEKLY = ';
+        $query .= $parameters['idtimetable_weekly'];
+
         try {
             $cn = new Conexion;
             $stmt = $cn->conectar()->prepare($query);
@@ -150,6 +152,8 @@ class TimetableWorkM
 
         $query = '';
         $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_WORK';
+        $query .= ' WHERE IDTIMETABLE_WEEKLY = ';
+        $query .= $parameters['idtimetable_weekly'];
         $query .= $parameters['orderby'];
         $query .= $parameters['paginate'];
         try {
@@ -183,5 +187,4 @@ class TimetableWorkM
         }
         return $capsule;
     }
-
 }

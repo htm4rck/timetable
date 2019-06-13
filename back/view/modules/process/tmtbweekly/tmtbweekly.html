@@ -1,0 +1,189 @@
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a class="text-primary" href="/back/process">Horarios</a>
+    </li>
+    <li class="breadcrumb-item active text-primary">Horarios Semanales</li>
+</ol>
+
+<div class="row" id="listUpkeeptTmtbWeekly" style="display: none">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" id="titleTmtbWeekly">[ 0 ] HORARIOS</h5>
+                <form id="FrmSearchTmtbWeekly">
+                    <div class="row mt-3">
+                        <div class="form-group col-12 col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            <input type="text" name="txtFilterTmtbWeeklySearch" id="txtFilterTmtbWeeklySearch"
+                                class="form-control form-control-sm" placeholder="INGRESE DATOS . . .">
+                        </div>
+                        <div class="form-group col-12 col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="input-group mb-2">
+                                <select type="text" name="slcEstateTmtbWeeklySearch" id="slcEstateTmtbWeeklySearch"
+                                    class="form-control form-control-sm searchTmtbWeekly mr-2">
+                                    <option value="-1">SELECCIONAR</option>
+                                    <option value="V">VIGENTE</option>
+                                    <option value="P">PROXIMO</option>
+                                    <option value="A">ANTERIOR</option>
+                                </select>
+                                <button type="submit" id="btnTmtbWeeklySearch" class="btn btn-primary btn-sm mr-3"
+                                    data-toggle="tooltip" title="Buscar TmtbWeekly"><i class="fa fa-search"
+                                        aria-hidden="true"></i>
+                                </button>
+                                <button type="button" id="btnCreateTmtbWeekly" class="btn btn-primary btn-sm"
+                                    data-toggle="tooltip" title="Agregar TmtbWeekly"><i class="fa fa-plus-square"
+                                        aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <table class="table table-responsive-md table-hover table-sm" style="width: 100%">
+                            <thead class="bg-primary text-white border border-info">
+                                <tr>
+                                    <th class="text-center align-middle" style="width: 10%; white-space: nowrap;">FECHA
+                                        DE ALTA</th>
+                                    <th class="align-middle">DESCRIPCION</th>
+                                    <th class="align-middle text-center" style="width: 10%; white-space: nowrap;"><i
+                                            class="far fa-clock mr-1"></i>ESTADO</th>
+                                    <th class="align-middle text-center" style="width: 10%" colspan="2">OPCIONES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="border border-info" id="tbodyTmtbWeekly">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-2 col-sm-3 col-4">
+                        <select id="sizePageTmtbWeekly" name="sizePageTmtbWeekly"
+                            class="form-control form-control-sm searchTmtbWeekly sendSize">
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    <div class="col-md-10 col-sm-9 col-8">
+                        <nav aria-label="Page navigation TmtbWeekly">
+                            <ul id="paginationTmtbWeekly" class="pagination pagination-sm justify-content-end"></ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalUpkeepTmtbWeekly" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <form class="modal-content" id="frmUpkeepTmtbWeekly">
+            <div class="modal-header">
+                <h5 class="modal-title">REGISTRO DE HORARIOS SEMANALES</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="col-12 mb-3">
+                        <label for="txtDescriptionTmtbWeekly">DESCRIPCION</label>
+                        <input type="text" id="txtDescriptionTmtbWeekly" name="txtDescriptionTmtbWeekly"
+                            class="form-control form-control-sm" required>
+                        <div class="invalid-feedback">
+                            Por favor ingrese un N° de DNI.
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="txtSemanaTmtbWeekly">SEMANA</label>
+                        <input type="date" id="txtSemanaTmtbWeekly" name="txtSemanaTmtbWeekly"
+                            class="form-control form-control-sm">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="slcEstateTmtbWeekly">ESTADO</label>
+                        <select type="text" id="slcEstateTmtbWeekly" name="slcEstateTmtbWeekly"
+                            class="form-control form-control-sm">
+                            <option value="P">PROXIMO</option>
+                            <option value="V">VIGENTE</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="modalLoadingTmtbWeekly" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ANCHOR: ñsañs-->
+<div class="row" id="listTimetableWork" style="">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" id="titleTimetableWork">HORARIO PERSONAL</h5>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="card border-left-primary shadow h-100">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <table
+                                        class="table table-responsive-lg table-hover table-sm mt-3 border border-success">
+                                        <thead class="text-white bg-success">
+                                            <tr id="listTimetableWorkHead" class="border border-info">
+                                            </tr>
+                                        </thead>
+                                        <tbody id="listTimetableWorkBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalLoadingTimetableWork" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalCargandoEmployee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

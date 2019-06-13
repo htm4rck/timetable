@@ -37,6 +37,7 @@ class TimetableWorkC
     }
     public function read()
     {
+        $this->parameters['idtimetable_weekly']=$_GET['idtimetable_weekly'];
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ';
         echo json_encode(TimetableWorkM::readM($this->parameters)->getResponse());

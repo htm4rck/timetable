@@ -41,7 +41,7 @@ listDia.push(new Dia(2, 'MIERCOLES', 'X'));
 listDia.push(new Dia(3, 'JUEVES', 'J'));
 listDia.push(new Dia(4, 'VIERNES', 'V'));
 listDia.push(new Dia(5, 'SABADO', 'S'));
-listDia.push(new Dia(6, 'DOMINGO', 'D'));
+listDia.push(new Dia(6, 'DOMINGO ', 'D'));
 function getDia(id) {
 	let d = new Dia()
 	listDia.forEach(dia => {
@@ -60,6 +60,27 @@ class TimeTableEmployee {
 		this.number_hours = 0;
 		this.number_minutes = 0;
 		this.idemployee = 0;
+	}
+}
+class TimeTableWeekly {
+	constructor() {
+		this.idtimetable_weekly = 0;
+		this.description = '';
+		this.date = '';
+		this.estate = '';
+		this.idmanager = 0;
+	}
+}
+class TimeTableWork {
+	constructor() {
+		this.idtimetable_work = 0;
+		this.day = 0;
+		this.start_hour = 0;
+		this.start_minute = 0;
+		this.number_hours = 0;
+		this.number_minutes = 0;
+		this.idemployee = 0;
+		this.idtimetable_weekly = 0;
 	}
 }
 class Hour {
@@ -83,6 +104,77 @@ class Hours {
 			this.arrayHours.push(new Hour(hour, min));
 			min == 0 ? (min = 30) : (hour++ , min = 0);
 		}
+	}
+}
+class UtilDate {
+	constructor(date) {
+		this.date = date;
+		this.format = ''
+	}
+	getDate() {
+		let array = this.date.split('-');
+		for (let index = array.length - 1; index >= 0; index--) {
+			index == 0 ? this.format += array[index] : this.format += array[index] + '/';
+		}
+		return this.format;
+	}
+	getDateGuion() {
+		let array = this.date.split('/');
+		return array[2] + '-' + array[1] + '-' + array[0];
+	}
+}
+
+class UtilDateWeek {
+	constructor(yyyy, m, d) {
+		this.date = new Date(yyyy, m, d);
+		this.dateStart = '';
+		this.dateEnd = '';
+		switch (this.date.getDay()) {
+			case 0:
+				this.date.setDate(this.date.getDate() - 6);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 1:
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 2:
+				this.date.setDate(this.date.getDate() - 1);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 3:
+				this.date.setDate(this.date.getDate() - 2);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 4:
+				this.date.setDate(this.date.getDate() - 3);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 5:
+				this.date.setDate(this.date.getDate() - 4);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+			case 6:
+				this.date.setDate(this.date.getDate() - 5);
+				this.dateStart = 'Lunes ' + this.date.toLocaleDateString();
+				this.date.setDate(this.date.getDate() + 6);
+				this.dateEnd = 'Domingo ' + this.date.toLocaleDateString();
+				break;
+		}
+	}
+	getWeek() {
+		return 'Del ' + this.dateStart + ' al ' + this.dateEnd;
 	}
 }
 document.querySelector('#sidenavToggler').addEventListener('click', function (e) {

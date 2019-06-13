@@ -57,7 +57,7 @@
                             <a href="/back/process/employee">Empleados</a>
                         </li>
                         <li>
-                            <a href="cards.html">Cards</a>
+                            <a href="/back/process/tmtbweekly">semanales</a>
                         </li>
                     </ul>
                 </li>

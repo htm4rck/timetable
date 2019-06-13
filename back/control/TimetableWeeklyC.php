@@ -41,8 +41,10 @@ class TimetableWeeklyC
     }
     public function read()
     {
+        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . $_GET['filter'] . '%' : $this->parameters['filter'] = '%%';
+        $_GET['estate'] != -1 ? $this->parameters['estate'] = " AND ESTATE = '" . $_GET["estate"] . "' " : $this->parameters['estate'] = '';
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
-        $this->parameters['orderby'] = ' ';
+        $this->parameters['orderby'] = ' ORDER BY ESTATE DESC';
         echo json_encode(TimetableWeeklyM::readM($this->parameters)->getResponse());
     }
 

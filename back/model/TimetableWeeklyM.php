@@ -4,7 +4,7 @@ class TimetableWeeklyM
     public static function createM(TimetableWeekly $t)
     {
         $count = 0;
-        
+        $queryEstate = "UPDATE HAPPYLAND.TIMETABLE_WEEKLY SET ESTATE = 'A' WHERE ESTATE = 'V'";
         $capsule = new Capsule();
         $query = "INSERT INTO ";
         $query .= "HAPPYLAND";
@@ -16,6 +16,11 @@ class TimetableWeeklyM
         try {
             $cn = new conexion;
             if ($count == 0) {
+                if ($t->getEstate() == 'V') {
+                    $stmt = $cn->conectar()->prepare($queryEstate);
+                    $stmt->execute();
+                }
+
                 $stmt = $cn->conectar()->prepare($query);
                 $stmt->bindParam(':DESCRIPTION', $t->getDescription(), PDO::PARAM_STR);
                 $stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
@@ -49,17 +54,22 @@ class TimetableWeeklyM
         $count = 0;
 
         $capsule = new Capsule();
+        $queryEstate = "UPDATE HAPPYLAND.TIMETABLE_WEEKLY SET ESTATE = 'A' WHERE ESTATE = 'V'";
         $sql = "UPDATE ";
         $sql .= " HAPPYLAND.TIMETABLE_WEEKLY SET ";
-        $sql .= " DESCRIPTION = :DESCRIPTION, DATE = :DATE, ESTATE = :ESTATE ";
+        $sql .= " DESCRIPTION = :DESCRIPTION, ESTATE = :ESTATE ";
         $sql .= " WHERE ";
         $sql .= " IDTIMETABLE_WEEKLY = :IDTIMETABLE_WEEKLY";
         try {
             if ($count == 0) {
                 $cn = new conexion;
+                if ($t->getEstate() == 'V') {
+                    $stmt = $cn->conectar()->prepare($queryEstate);
+                    $stmt->execute();
+                }
                 $stmt = $cn->conectar()->prepare($sql);
                 $stmt->bindParam(':DESCRIPTION', $t->getDescription(), PDO::PARAM_STR);
-                $stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
+                //$stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
                 $stmt->bindParam(':ESTATE', $t->getEstate(), PDO::PARAM_STR);
                 $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_WEEKLY(), PDO::PARAM_INT);
                 $stmt->execute();
@@ -89,7 +99,7 @@ class TimetableWeeklyM
     public static function deleteM(TimetableWeekly $t)
     {
         $count = 0;
-        
+
         $capsule = new Capsule();
         $sql  = "DELETE FROM ";
         $sql .= " HAPPYLAND.TIMETABLE_WEEKLY ";
@@ -129,10 +139,13 @@ class TimetableWeeklyM
         $count = 0;
         $query = '';
         $query .= 'SELECT COUNT(HAPPYLAND.TIMETABLE_WEEKLY.IDTIMETABLE_WEEKLY) AS TOTAL FROM HAPPYLAND.TIMETABLE_WEEKLY';
-        
+        $query .= ' WHERE ';
+        $query .= " (LOWER(DESCRIPTION) LIKE :DESCRIPTION) ";
+        $query .= $parameters['estate'];
         try {
             $cn = new Conexion;
             $stmt = $cn->conectar()->prepare($query);
+            $stmt->bindParam(':DESCRIPTION', $parameters['filter'], PDO::PARAM_STR);
             $stmt->execute();
             $array = $stmt->fetchAll();
             $lista = array();
@@ -148,11 +161,15 @@ class TimetableWeeklyM
 
         $query = '';
         $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_WEEKLY';
+        $query .= ' WHERE ';
+        $query .= " (LOWER(DESCRIPTION) LIKE :DESCRIPTION) ";
+        $query .= $parameters['estate'];
         $query .= $parameters['orderby'];
         $query .= $parameters['paginate'];
         try {
             $stmt = $cn->conectar()->prepare($query);
             $capsule->setQueryList($stmt);
+            $stmt->bindParam(':DESCRIPTION', $parameters['filter'], PDO::PARAM_STR);
             $stmt->execute();
             $array = $stmt->fetchAll();
             $lista = array();
@@ -177,5 +194,4 @@ class TimetableWeeklyM
         }
         return $capsule;
     }
-
 }

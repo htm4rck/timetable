@@ -49,7 +49,13 @@ class Routes
     array_push($this->list_pages, $resource);
 
     //TODO : HORARIOS
+    $resource = new BeanResource('process', 'process/process.html');
+    array_push($this->list_pages, $resource);
+
     $resource = new BeanResource('process/employee', 'process/employee/employee.html', array($this->path_resource . 'process/employee/employee.js',$this->path_resource . 'process/employee/tmtbemployee.js'));
+    array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('process/tmtbweekly', 'process/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js'));
     array_push($this->list_pages, $resource);
   }
 
