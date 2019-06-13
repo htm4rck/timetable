@@ -109,7 +109,7 @@ class CRUDTmtbWeekly {
         this.TmtbWeekly.description = this.frmUpkeep.txtDescriptionTmtbWeekly.value;
         this.TmtbWeekly.date = new Date().toLocaleDateString();
         this.TmtbWeekly.estate = this.frmUpkeep.slcEstateTmtbWeekly.value;
-        this.TmtbWeekly.idmanager = 15;
+        this.TmtbWeekly.idmanager = 0;
         this.json = this.TmtbWeekly;
         this.modalCargandoObject.show();
     }
