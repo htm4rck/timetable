@@ -1,6 +1,6 @@
 class CRUDTmtbWeekly {
 
-    constructor(listempleados) {
+    constructor() {
         this.settingsGlobal = new Settings();
         this.api = this.settingsGlobal.api + 'timetbweekly';
         this.send = new Send();
@@ -12,8 +12,6 @@ class CRUDTmtbWeekly {
             backdrop: false
         });
         this.ctimetablework = [];
-        this.listempleados=listempleados;
-        console.log(this.listempleados);
         this.frmSearch = document.querySelector('#FrmSearchTmtbWeekly');
         this.btnCreate = document.querySelector('#btnCreateTmtbWeekly');
         this.frmUpkeep = document.querySelector('#frmUpkeepTmtbWeekly');
@@ -134,7 +132,6 @@ class CRUDTmtbWeekly {
             //response.text().then(text => { console.info(text) });
             return response.json();
         }).then(function (jsonResponse) {
-            console.log(jsonResponse);
             if (jsonResponse.error == false) {
                 document.getElementById("tbodyTmtbWeekly").innerHTML = '';
                 if (jsonResponse.counter > 0) {
@@ -142,12 +139,12 @@ class CRUDTmtbWeekly {
                     document.querySelector('#titleTmtbWeekly').innerHTML = '[ ' + jsonResponse.counter + ' ] HORARIOS SEMANALES';
                     jsonResponse.content.forEach(element => {
                         clase.TmtbWeekly = element;
-                        element.estate == 'V' ? clase.TmtbWeeklyV = element : null;
+                        element.estate == 'V' ? (clase.TmtbWeeklyV = element, c.timetableweekly = element) : null;
+                        document.querySelector('#titleTimetableWork').innerHTML = 'HORARIO SEMANAL [ ' + c.timetableweekly.description + ' ]';
+                        c.read();
                         clase.list.push(clase.TmtbWeekly);
-                    });
-                    console.log(clase.listempleados);
-                    clase.ctimetablework = new CRUDTimetableWork(clase.TmtbWeeklyV,clase.listempleados);
 
+                    });
                     clase.print();
                     new Pagination(jsonResponse.counter, clase.send, 'paginationTmtbWeekly', clase.modalCargandoObject);
                     //TODO: UPDATE, CREATE, DELETE
@@ -192,6 +189,7 @@ class CRUDTmtbWeekly {
             row += '<td class="align-middle text-center" style="white-space: nowrap;"><i class="fas fa-calendar-day mr-1"></i>' + new UtilDate(TmtbWeekly.date).getDate() + '</td>';
             row += '<td class="align-middle" style="white-space: nowrap;"><i class="far fa-file mr-1"></i>' + TmtbWeekly.description + '</td>';
             row += '<td class="text-center align-middle">' + state + '</td>';
+            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-success updateTmtbWork"><i class="far fa-calendar-alt"></i></button></td>';
             row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-warning updateTmtbWeekly"><i class="far fa-edit"></i></button></td>';
             row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-danger deleteTmtbWeekly"><i class="far fa-trash-alt"></i></button></td>';
             row += '</tr>';
@@ -202,6 +200,17 @@ class CRUDTmtbWeekly {
 
     eventsList() {
         let clase = this;
+        document.querySelectorAll('.updateTmtbWork').forEach(btnUpdate => {
+            btnUpdate.onclick = function () {
+
+                clase.setTmtbWeekly(parseInt(this.getAttribute("idtmtbweekly")));
+                document.querySelector('#titleTimetableWork').innerHTML = 'HORARIO SEMANAL [ ' + this.parentElement.parentElement.children[1].innerHTML + ' ]';
+                c.timetableweekly = clase.TmtbWeekly;
+                c.read();
+                document.querySelector('#listTimetableWork').style.display = 'block';
+                document.querySelector('#listUpkeeptTmtbWeekly').style.display = 'none';
+            }
+        });
 
         document.querySelectorAll('.updateTmtbWeekly').forEach(btnUpdate => {
             btnUpdate.onclick = function () {
@@ -222,3 +231,5 @@ class CRUDTmtbWeekly {
     }
 
 }
+
+let b = new CRUDTmtbWeekly();

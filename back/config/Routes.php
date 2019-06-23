@@ -55,10 +55,10 @@ class Routes
     $resource = new BeanResource('process/employee', 'process/employee/employee.html', array($this->path_resource . 'process/employee/employee.js',$this->path_resource . 'process/employee/tmtbemployee.js'));
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('process/tmtbweekly', 'process/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js'));
+    $resource = new BeanResource('process/tmtbweekly', 'process/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js',$this->path_resource . 'process/tmtbweekly/tmtbemployee.js'));
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('process/tmtbwork', 'process/tmtbwork/tmtbwork.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js'));
+    $resource = new BeanResource('process/tmtbwork', 'process/tmtbwork/tmtbwork.html', array($this->path_resource . 'process/tmtbwork/tmtbweekly.js',$this->path_resource . 'process/tmtbwork/tmtbwork.js',$this->path_resource . 'process/tmtbwork/employee.js'));
     array_push($this->list_pages, $resource);
   }
 

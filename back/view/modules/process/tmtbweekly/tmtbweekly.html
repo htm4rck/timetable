@@ -47,7 +47,7 @@
                                     <th class="align-middle">DESCRIPCION</th>
                                     <th class="align-middle text-center" style="width: 10%; white-space: nowrap;"><i
                                             class="far fa-clock mr-1"></i>ESTADO</th>
-                                    <th class="align-middle text-center" style="width: 10%" colspan="2">OPCIONES
+                                    <th class="align-middle text-center" style="width: 10%" colspan="3">OPCIONES
                                     </th>
                                 </tr>
                             </thead>
@@ -133,12 +133,26 @@
     </div>
 </div>
 
+<div class="modal" id="modalLoadingTmtbWork" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--ANCHOR: ñsañs-->
 <div class="row" id="listTimetableWork" style="display: none">
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title" id="titleTimetableWork">HORARIO PERSONAL</h5>
+                <div class="row justify-content-end">
+                    <h5 class="card-title col-11" id="titleTimetableWork">HORARIO SEMANAL []</h5>
+                    <div class="col-1 text-left justify-content-end align-items-left"><button class="btn btn-sm btn-success" id="btnBackTmtbWork"><i class="fas fa-arrow-circle-left mr-1"></i>VOLVER</button></div>
+                </div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="card border-left-primary shadow h-100">
@@ -164,7 +178,18 @@
     </div>
 </div>
 
-<div class="modal" id="modalLoadingTimetableWork" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+<div class="modal" id="modalLoadingTimetableWorkR" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalLoadingTimetableWorkCRUD" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content bg-transparent">
@@ -185,5 +210,123 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!--ANCHOR : HORARIO DE EMPLEADO-->
+
+<div class="row" id="listTimetableEmploye" style="display: none">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" id="titleTimetableEmployee">HORARIO DE TRABAJO</h5>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                            <div class="card border-left-primary shadow py-2 h-100">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center mt-4">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                                                id="nameEmployee">_________, ___________</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="mobileEmployee">
+                                                999999999</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user-tie fa-2x text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters align-items-center mt-3">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                                                id="hrSemanalesEmployee">HORAS SEMANALES: 00:00</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="hrExtraEmployee">HORAS
+                                                EXTRA: 00:00</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="far fa-clock fa-2x text-info"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters align-items-center mt-3">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                                                id="hrSemanalesEmployee">
+                                                <button class="btn btn-outline-success" id="btnBackListEmployee">SALIR</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-arrow-circle-left fa-2x text-info "></i>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8">
+                            <div class="card border-left-primary shadow h-100">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <table
+                                            class="table table-responsive-lg table-hover table-sm mt-3 border border-success">
+                                            <thead class="text-white bg-success">
+                                                <tr id="listTimetableEmployeeHead" class="border border-info">
+                                                </tr>
+                                            </thead>
+                                            <tbody id="listTimetableEmployeeBody"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalCargandoTimetableEmployee" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content bg-transparent">
+            <div class="modal-body text-center">
+                <div class="lds-hourglass">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalAddTimetableWork" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" id="frmAddTimetableWork">
+            <div class="modal-header">
+                <h6 class="modal-title" id="title-modalAddTimetableWork">REGISTRAR HORARIO EN LUNES</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row" id="demo">
+                    <div class="col-6 mb-3">
+                        <label for="txtNumberHoursTimetableWork">CANTIDAD DE HORAS</label>
+                        <input type="number" id="txtNumberHoursTimetableWork" class="form-control form-control-sm">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="slcNumberMinutesTimetableWork">CANTIDAD DE MINUTOS</label>
+                        <select id="slcNumberMinutesTimetableWork" class="form-control form-control-sm">
+                            <option value="0">00</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR</button>
+            </div>
+        </form>
     </div>
 </div>

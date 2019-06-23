@@ -53,7 +53,7 @@ class CRUDTimetableWork {
             this.parameters += '&filter=' + '';
             this.parameters += '&size=' + 1000;
             this.parameters += '&page=' + 1;
-            this.parameters += '&idemployee=' + 1;
+            this.parameters += '&idemployee=' + this.timetableweekly.idemployee;
         }
         let clase = this;
         fetch(this.api + this.actionurl + this.parameters, {

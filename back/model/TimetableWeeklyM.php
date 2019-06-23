@@ -11,7 +11,7 @@ class TimetableWeeklyM
         $query .= ".TIMETABLE_WEEKLY(";
         $query .= " DESCRIPTION, DATE, ESTATE, IDMANAGER ";
         $query .= ") VALUES(";
-        $query .= " :DESCRIPTION, :DATE, :ESTATE, :IDMANAGER ";
+        $query .= " :DESCRIPTION, NOW(), :ESTATE, :IDMANAGER ";
         $query .= ")";
         try {
             $cn = new conexion;
@@ -23,7 +23,7 @@ class TimetableWeeklyM
 
                 $stmt = $cn->conectar()->prepare($query);
                 $stmt->bindParam(':DESCRIPTION', $t->getDescription(), PDO::PARAM_STR);
-                $stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
+                //$stmt->bindParam(':DATE', $t->getDate(), PDO::PARAM_STR);
                 $stmt->bindParam(':ESTATE', $t->getEstate(), PDO::PARAM_STR);
                 $stmt->bindParam(':IDMANAGER', $t->getIdmanager(), PDO::PARAM_INT);
                 $stmt->execute();

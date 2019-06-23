@@ -1,7 +1,7 @@
 class Settings {
 	constructor() {
 		this.api = 'http://timetables-app.herokuapp.com/back/api/';
-		//this.api = 'http://localhost/back/api/';
+		this.api = 'http://localhost/back/api/';
 	}
 }
 class Send {
@@ -42,6 +42,7 @@ listDia.push(new Dia(3, 'JUEVES', 'J'));
 listDia.push(new Dia(4, 'VIERNES', 'V'));
 listDia.push(new Dia(5, 'SABADO', 'S'));
 listDia.push(new Dia(6, 'DOMINGO ', 'D'));
+
 function getDia(id) {
 	let d = new Dia()
 	listDia.forEach(dia => {
@@ -84,9 +85,11 @@ class TimeTableWork {
 	}
 }
 class Hour {
-	constructor(hour = 0, min = 0) {
+	constructor(hour = 0, min = 0, maxH = 0, maxM = 0) {
 		this.hour = hour;
 		this.min = min;
+		this.maxH = maxH; //MAXIMO DE HORAS
+		this.maxM = maxM; //0:DISABLED;1:ENABLED
 	}
 }
 class Hours {
@@ -100,9 +103,12 @@ class Hours {
 		this.tmtbE.number_minutes == 0 ? iterator += 0 : iterator++;
 		let hour = this.tmtbE.start_hour;
 		let min = this.tmtbE.start_minute;
+		let maxH = parseInt(this.tmtbE.number_hours);
+		let maxM = this.tmtbE.number_minutes;
 		for (let i = 0; i < iterator; i++) {
-			this.arrayHours.push(new Hour(hour, min));
-			min == 0 ? (min = 30) : (hour++ , min = 0);
+			this.arrayHours.push(new Hour(hour, min, maxH,maxM));
+			min == 0 ? (min = 30) : (hour++, min = 0);
+			maxM == 0 ? (maxM = 30, maxH--) : ( maxM = 0);
 		}
 	}
 }

@@ -33,6 +33,8 @@ class TimetableWorkM
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ';
+            $parameters['idtimetable_weekly'] = $t->getIdtimetable_weekly();
+            $parameters['idemployee'] = ' AND IDEMPLOYEE ='.$t->getIdemployee();
             $read = TimetableWorkM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
@@ -112,6 +114,9 @@ class TimetableWorkM
             $parameters['filter'] = '%%';
             $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
             $parameters['orderby'] = ' ';
+            $parameters['idtimetable_weekly'] = $t->getIdtimetable_weekly();
+            $parameters['idemployee'] = ' AND IDEMPLOYEE ='.$t->getIdemployee();
+
             $read = TimetableWorkM::readM($parameters);
             $capsule->setContent($read->getContent());
             $capsule->setCounter($read->getCounter());
@@ -133,6 +138,8 @@ class TimetableWorkM
         $query .= 'SELECT COUNT(IDTIMETABLE_WORK) AS TOTAL FROM HAPPYLAND.TIMETABLE_WORK';
         $query .= ' WHERE IDTIMETABLE_WEEKLY = ';
         $query .= $parameters['idtimetable_weekly'];
+        $query .= $parameters['idemployee'];
+
 
         try {
             $cn = new Conexion;
@@ -154,6 +161,7 @@ class TimetableWorkM
         $query .= 'SELECT * FROM HAPPYLAND.TIMETABLE_WORK';
         $query .= ' WHERE IDTIMETABLE_WEEKLY = ';
         $query .= $parameters['idtimetable_weekly'];
+        $query .= $parameters['idemployee'];
         $query .= $parameters['orderby'];
         $query .= $parameters['paginate'];
         try {
