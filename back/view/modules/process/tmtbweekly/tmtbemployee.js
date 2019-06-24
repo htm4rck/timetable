@@ -37,6 +37,9 @@ class CRUDTimetableEmployee {
             clase.setObject();
             return false;
         }*/
+        document.querySelector('#btnBackListEmployee').onclick=function () {
+            document.querySelector('#listTimetableEmploye').style.display = 'none';
+        }
     }
 
     read() {
