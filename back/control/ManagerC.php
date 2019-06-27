@@ -31,6 +31,12 @@ class ManagerC
             case 'delete':
                 $this->delete();
                 break;
+            case 'login':
+                $this->login();
+                break;
+            default:
+                echo json_encode('{"Error": "Metodo no permitido"}');
+                break;
         }
     }
     public function read()
@@ -58,6 +64,11 @@ class ManagerC
     public function changePass()
     {
         echo json_encode(ManagerM::changePassM($this->manager));
+    }
+    public function login()
+    {
+        echo json_encode(ManagerM::loginM($this->manager));
+        
     }
 }
 new ManagerC();

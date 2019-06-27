@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>.::TimeTables::Login::.</title>
+  <link rel="stylesheet" href="/back/view/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/back/view/css/all.css">
+  <link rel="stylesheet" href="/back/view/css/landing.page.css">
+</head>
+
+<body>
+  <header class="masthead text-primary text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5"><i class="fas fa-user-circle"></i></h1>
+        </div>
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+          <form>
+            <div class="row">
+              <div class="col-10 mx-auto">
+                <input id="txtLogin" type="text" class="form-control form-control-lg text-center" placeholder="Ingresa Tu Usuario" required>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-10 mx-auto">
+                <input id="txtPass" type="password" class="form-control form-control-lg text-center" placeholder="Ingresa Tu Clave" required>
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-6 mx-auto">
+                <button id="btnLogin" type="submit" class="btn btn-block btn-lg btn-primary">Ingresar!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="#">About</a>
+            </li>
+            <li class="list-inline-item">⋅</li>
+            <li class="list-inline-item">
+              <a href="#">Contact</a>
+            </li>
+            <li class="list-inline-item">⋅</li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+            <li class="list-inline-item">⋅</li>
+            <li class="list-inline-item">
+              <a href="#">Privacy Policy</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">© Your Website 2019. All Rights Reserved.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-facebook fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <i class="fab fa-instagram fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="modal" id="modalLoadingManager" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content bg-transparent">
+        <div class="modal-body text-center">
+          <div class="lds-hourglass">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/back/view/js/bootstrap-native-v4.js"></script>
+  <script type="text/javascript" src="/back/view/js/main.js"></script>
+  <script type="text/javascript" src="/back/view/js/Alert.js"></script>
+  <script type="text/javascript" src="/back/view/modules/free/login/manager.js"></script>
+</body>
+
+</html>

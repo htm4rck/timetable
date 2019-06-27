@@ -57,10 +57,10 @@
                             <a href="/back/process/employee">Empleados</a>
                         </li>
                         <li>
-                            <a href="/back/process/tmtbweekly">semanales</a>
+                            <a href="/back/process/tmtbweekly">H. Semanales</a>
                         </li>
                         <li>
-                            <a href="/back/process/tmtbwork">vigente</a>
+                            <a href="/back/process/tmtbvalid">Vigente</a>
                         </li>
                     </ul>
                 </li>

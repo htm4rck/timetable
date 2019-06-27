@@ -28,6 +28,16 @@ class Employee {
 		this.mobile = '';
 	}
 }
+class Manager {
+    constructor() {
+        this.idmanager = 0;
+        this.paternal = '';
+        this.maternal = '';
+        this.names = '';
+        this.login = '';
+        this.pass = '';
+    }
+}
 class Dia {
 	constructor(id = 0, nombre = 'LUNES', abr = 'L') {
 		this.id = id;
@@ -183,15 +193,19 @@ class UtilDateWeek {
 		return 'Del ' + this.dateStart + ' al ' + this.dateEnd;
 	}
 }
-document.querySelector('#sidenavToggler').addEventListener('click', function (e) {
-	e.preventDefault();
-	document.querySelector('body').classList.toggle('sidenav-toggled');
-	document.querySelector('.navbar-sidenav .nav-link-collapse').classList.add('collapsed');
-	document.querySelector(
-		'.navbar-sidenav .sidenav-second-level, .navbar-sidenav .sidenav-third-level'
-	).classList.remove('show')
-});
-document.querySelector('.navbar-sidenav .nav-link-collapse').addEventListener('click', function (e) {
-	e.preventDefault();
-	document.querySelector('body').classList.remove('sidenav-toggled');
-});
+if(document.querySelector('#sidenavToggler')!=null){
+	document.querySelector('#sidenavToggler').addEventListener('click', function (e) {
+		e.preventDefault();
+		document.querySelector('body').classList.toggle('sidenav-toggled');
+		document.querySelector('.navbar-sidenav .nav-link-collapse').classList.add('collapsed');
+		document.querySelector(
+			'.navbar-sidenav .sidenav-second-level, .navbar-sidenav .sidenav-third-level'
+		).classList.remove('show')
+	});
+}
+if(document.querySelector('.navbar-sidenav .nav-link-collapse')!=null){
+	document.querySelector('.navbar-sidenav .nav-link-collapse').addEventListener('click', function (e) {
+		e.preventDefault();
+		document.querySelector('body').classList.remove('sidenav-toggled');
+	});
+}

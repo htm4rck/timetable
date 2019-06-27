@@ -40,6 +40,10 @@ class Routes
     $resource = new BeanResource('api', 'free/blank/blank.html');
     $resource->viewFree();
     array_push($this->list_pages, $resource);
+
+    $resource = new BeanResource('login', 'free/login/login.html');
+    $resource->viewFree();
+    array_push($this->list_pages, $resource);
     
     //TODO : MANTENIMIENTOS
     $resource = new BeanResource('upkeeps', 'upkeeps/upkeeps.html');
@@ -58,8 +62,9 @@ class Routes
     $resource = new BeanResource('process/tmtbweekly', 'process/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js',$this->path_resource . 'process/tmtbweekly/tmtbemployee.js'));
     array_push($this->list_pages, $resource);
 
-    $resource = new BeanResource('process/tmtbwork', 'process/tmtbwork/tmtbwork.html', array($this->path_resource . 'process/tmtbwork/tmtbweekly.js',$this->path_resource . 'process/tmtbwork/tmtbwork.js',$this->path_resource . 'process/tmtbwork/employee.js'));
+    $resource = new BeanResource('process/tmtbvalid', 'process/tmtbvalid/tmtbvalid.html', array($this->path_resource . 'process/tmtbvalid/tmtbweekly.js',$this->path_resource . 'process/tmtbvalid/tmtbwork.js',$this->path_resource . 'process/tmtbvalid/employee.js'));
     array_push($this->list_pages, $resource);
+
   }
 
   public function getResourceForContainer()

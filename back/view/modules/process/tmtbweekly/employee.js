@@ -16,6 +16,7 @@ class CRUDEmployee {
     this.eventsDefault();
     this.read();
   }
+
   setEmployee(id) {
     let clase = this;
     this.employee = new Employee();
@@ -26,6 +27,7 @@ class CRUDEmployee {
       }
     })
   }
+  
   getEmployee(id) {
     let clase = this;
     this.list.forEach(function (element, index) {
@@ -39,11 +41,9 @@ class CRUDEmployee {
 
   eventsDefault() {
     let clase = this;
-
     this.modalCargando.addEventListener("show.bs.modal", function (event) {
       clase.run();
     });
-
   }
 
   read() {
@@ -95,6 +95,5 @@ class CRUDEmployee {
       clase.modalCargandoObject.hide();
     });
   }
-
 }
 let a = new CRUDEmployee();

@@ -9,7 +9,6 @@ class RTimetableWork {
         this.timetableweekly = new TimeTableWeekly();
         this.timetablework = new TimeTableWork();
         this.employee = new Employee()
-        this.cemployeelist = [];
         this.actionurl = '?action=' + this.send.action;
         this.modalCargando = document.querySelector('#modalLoadingTimetableWorkR');
         this.modalCargandoObject = new Modal(this.modalCargando, {
@@ -41,6 +40,7 @@ class RTimetableWork {
     }
 
     run() {
+        let clase = this;
         this.actionurl = '?action=' + this.send.action;
         this.parameters = '';
         if (this.send.action == 'read') {
@@ -50,8 +50,6 @@ class RTimetableWork {
             this.parameters += '&page=' + 1;
             this.parameters += '&idemployee=';
         }
-        console.log(this.parameters);
-        let clase = this;
         fetch(this.api + this.actionurl + this.parameters, {
             method: this.send.method,
             body: JSON.stringify(this.json),
@@ -67,24 +65,19 @@ class RTimetableWork {
                 if (jsonResponse.counter > 0) {
                     jsonResponse.content.forEach(element => {
                         clase.list.push(element);
-                        //clase.list.push(new Hours(element));
                     });
                     //TODO: UPDATE, CREATE, DELETE
                     if (jsonResponse.message != 'ok') {
                         clase.read();
-                        //clase.modalUpkeepObject.hide();
                         new ModalAlert(jsonResponse.message);
                     }
-                } else {
-                    //new ModalAlert('Horarios sin Asignar a ');
                 }
             } else {
                 //TODO: ERROR(TRUE) DEL SERVIDOR
                 new ModalAlert(jsonResponse.message, 'warning');
             }
-            clase.modalCargandoObject.hide();
         }).then(function () {
-
+            clase.modalCargandoObject.hide();
             clase.print();
         }).catch(function (error) {
             new ModalAlert(error, 'error')
@@ -92,6 +85,7 @@ class RTimetableWork {
             clase.modalCargandoObject.hide();
         });
     }
+
     print() {
         //TODO : TABLA DE HORARIO
         let thead = document.querySelector('#listTimetableWorkHead');
@@ -111,16 +105,13 @@ class RTimetableWork {
                 let existe = -1
                 let lwork = ''
                 let hora = 0;
-
                 this.list.forEach(work => {
-
                     (dia.id == work.day && work.idemployee == employee.idemployee) ? (hora = work.start_hour + (work.start_minute == 0 ? 0 : 0.5) + work.number_hours + (work.number_minutes == 0 ? 0 : 0.5), existe = 1, lwork = work.start_hour + (work.start_minute == 0 ? ':00 - ' : ':30 - ')) : null;
                 })
-                if (existe == -1) {
-                    tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle"><i class="fas fa-calendar-day mr-1"></i>LIBRE</td>';
-                } else {
-                    tr += '<td style="white-space: nowrap;" class="text-center align-middle"><i class="far fa-user mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</td>';
-                }
+                existe == -1 ?
+                    tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle"><i class="fas fa-calendar-day mr-1"></i>LIBRE</td>' :
+                    tr += '<td style="white-space: nowrap;" class="text-center align-middle"><i class="fas fa-business-time mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</td>';
+
             })
             tr += '</tr>'
         })
@@ -136,7 +127,7 @@ class RTimetableWork {
                 d.setEmployee(clase.employee);
                 d.send.action = 'read';
                 d.modalCargandoObject.show();
-                document.querySelector('#listTimetableEmploye').style.display='block';
+                document.querySelector('#listTimetableEmploye').style.display = 'block';
             }
         })
 
@@ -148,7 +139,7 @@ class RTimetableWork {
 
     }
 }
-//##################################################################################################
+
 class CRUDTimetableWork {
 
     constructor() {
@@ -161,7 +152,6 @@ class CRUDTimetableWork {
         this.timetablework = new TimeTableWork();
         this.frmUpkeep = document.querySelector('#frmAddTimetableWork');
         this.employee = new Employee()
-        this.cemployeelist = [];
         this.actionurl = '?action=' + this.send.action;
         this.modalCargando = document.querySelector('#modalLoadingTimetableWorkCRUD');
         this.modalCargandoObject = new Modal(this.modalCargando, {
@@ -207,6 +197,7 @@ class CRUDTimetableWork {
     }
 
     run() {
+        let clase = this;
         this.actionurl = '?action=' + this.send.action;
         this.parameters = '';
         if (this.send.action == 'read') {
@@ -216,7 +207,6 @@ class CRUDTimetableWork {
             this.parameters += '&page=' + 1;
             this.parameters += '&idemployee=' + this.employee.idemployee;
         }
-        let clase = this;
         fetch(this.api + this.actionurl + this.parameters, {
             method: this.send.method,
             body: JSON.stringify(this.json),
@@ -227,23 +217,27 @@ class CRUDTimetableWork {
             //response.text().then(text => { console.info(text) });
             return response.json();
         }).then(function (jsonResponse) {
+            let hour = 0;
             if (jsonResponse.error == false) {
                 clase.list = [];
                 if (jsonResponse.counter > 0) {
                     jsonResponse.content.forEach(element => {
-                        //clase.list.push(element);
-                        console.log(element)
                         clase.list.push(new Hours(element));
+                        console.log(element);
+                        hour += element.number_hours;
+                        element.number_minutes == 30 ? hour += 0.5 : null;
                     });
-                } else {
-                    //new ModalAlert('Horarios sin Asignar a ');
+                    console.log(d.employee);
+                    console.log(hour);
+                    let hrSemanales = document.querySelector('#hrSemanalesEmployee');
+                    hrSemanales.innerHTML = 'HORAS SEMANALES: ' + (hour < 10 ? '0' + parseInt(hour) : parseInt(hour))+(Number.isInteger(hour)?':00':':30') + '/' + d.employee.weekly_hours + ':00';
+
                 }
                 //TODO: UPDATE, CREATE, DELETE
                 if (jsonResponse.message != 'ok') {
                     clase.read();
                     d.read();
                     c.read()
-                    //clase.modalUpkeepObject.hide();
                     new ModalAlert(jsonResponse.message);
                 }
             } else {
@@ -253,7 +247,6 @@ class CRUDTimetableWork {
             clase.modalCargandoObject.hide();
         }).then(function () {
             clase.setTimetable();
-            //clase.print();
         }).catch(function (error) {
             new ModalAlert(error, 'error')
             console.error(error);
@@ -271,7 +264,6 @@ class CRUDTimetableWork {
                     btnDel.setAttribute('idtimetable_weekly', itemHours.tmtbE.idtimetable_weekly);
                     btnDel.setAttribute('idemployee', itemHours.tmtbE.idemployee);
                     itemHours.arrayHours.forEach(hour => {
-                        console.log(hour);
                         btnItem.classList.remove('btn-success');
                         btnItem.disabled = true;
                         if (btnItem.getAttribute('hour') == hour.hour && btnItem.getAttribute('min') == hour.min) {
@@ -307,5 +299,4 @@ class CRUDTimetableWork {
 }
 
 let c = new RTimetableWork();
-//c.read();
 let c1 = new CRUDTimetableWork();

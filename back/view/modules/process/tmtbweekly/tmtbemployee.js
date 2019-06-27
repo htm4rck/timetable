@@ -19,7 +19,6 @@ class CRUDTimetableEmployee {
         });
         this.modalAddTimetableWork = document.querySelector('#modalAddTimetableWork');
         this.modalAddTimetableWorkObject = new Modal(this.modalAddTimetableWork);
-
         this.list = [];
         this.eventsDefault();
     }
@@ -33,10 +32,6 @@ class CRUDTimetableEmployee {
         this.modalCargando.addEventListener("show.bs.modal", function (event) {
             clase.run();
         });
-        /*this.frmUpkeep.onsubmit = function () {
-            clase.setObject();
-            return false;
-        }*/
         document.querySelector('#btnBackListEmployee').onclick=function () {
             document.querySelector('#listTimetableEmploye').style.display = 'none';
         }
@@ -47,6 +42,7 @@ class CRUDTimetableEmployee {
         this.json = '';
         this.modalCargandoObject.show();
     }
+
     create() {
         this.send.action = 'create';
         this.parameters = '';
@@ -68,8 +64,6 @@ class CRUDTimetableEmployee {
         this.actionurl = '?action=' + this.send.action;
         this.parameters = '';
         if (this.send.action == 'read') {
-            //this.parameters += '&filter=' + document.querySelector('#txtFilterEmployeeSearch').value;
-            //this.parameters += '&gender=' + document.querySelector('#slcGenderEmployeeSearch').value;
             this.parameters += '&size=' + 100;
             this.parameters += '&page=' + this.send.numberPage;
             this.parameters += '&idemployee=' + this.employee.idemployee;
@@ -93,7 +87,6 @@ class CRUDTimetableEmployee {
                     //TODO: UPDATE, CREATE, DELETE
                     if (jsonResponse.message != 'ok') {
                         clase.read();
-                        //clase.modalUpkeepObject.hide();
                         new ModalAlert(jsonResponse.message);
                     }
                 } else {
@@ -111,15 +104,16 @@ class CRUDTimetableEmployee {
             console.log(error);
         });
     }
+
     print() {
-        let clase = this;
         //TODO : PANEL USUARIO
         let nameEmployee = document.querySelector('#nameEmployee');
         nameEmployee.innerHTML = this.employee.paternal + ' ' + this.employee.maternal + ', ' + this.employee.names;
         let mobileEmployee = document.querySelector('#mobileEmployee');
         mobileEmployee.innerHTML = '<i class="fas fa-fw fa-phone-volume"></i>' + this.employee.mobile;
-        let hrSemanales = document.querySelector('#hrSemanalesEmployee');
+        /*let hrSemanales = document.querySelector('#hrSemanalesEmployee');
         hrSemanales.innerHTML = 'HORAS SEMANALES: ' + this.employee.weekly_hours + ':00';
+        */
         let hrExtra = document.querySelector('#hrExtraEmployee');
         let minExtra = '00'
         this.employee.extra_minutes == 0 ? minExtra = '00' : minExtra = '30'
@@ -143,7 +137,6 @@ class CRUDTimetableEmployee {
         });
         trDel += '</tr>';
         tbody.innerHTML = trDel;
-
         let tr = '';
         for (let i = this.hourStart; i < this.hourEnd; i++) {
             let hora = "";
@@ -185,9 +178,6 @@ class CRUDTimetableEmployee {
                             }
                         })
                     })
-                    if (existe != -1) {
-                        //document.querySelector('#delete-' + this.employee.idemployee + dia.id).disabled = false;
-                    }
                     if (existe == -1) {
                         tr += '<td class="text-center align-middle">';
                         tr += '<button class="btn btn-outline-info btn-sm addTimetableEmployee" disabled><i class="fas fa-battery-full"></i></button>'
@@ -225,7 +215,6 @@ class CRUDTimetableEmployee {
         document.querySelectorAll('.btn-item-work').forEach(btnWork => {
             btnWork.onclick = function () {
                 let title = document.querySelector('#title-modalAddTimetableWork');
-                console.log(this.getAttribute('day'));
                 let sTitle = 'REGISTRAR HORARIO EN ' +
                     getDia(this.getAttribute('day')).nombre + ' ' +
                     this.getAttribute('hour') + ':' + (this.getAttribute('min') == 0 ? '00' : '30');

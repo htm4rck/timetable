@@ -35,7 +35,6 @@ class CRUDTmtbWeekly {
     }
     eventsDefault() {
         let clase = this;
-
         this.modalCargando.addEventListener("show.bs.modal", function (event) {
             clase.run();
         });
@@ -59,6 +58,7 @@ class CRUDTmtbWeekly {
             clase.read();
             return false;
         }
+
         document.querySelectorAll('.searchTmtbWeekly').forEach(search => {
             search.onchange = function () {
                 search.classList.contains('sendSize') ? clase.send.sizePage = this.value : null;
@@ -68,6 +68,7 @@ class CRUDTmtbWeekly {
         })
 
         this.frmUpkeep.txtSemanaTmtbWeekly.setAttribute('min', new UtilDate(new Date().toLocaleDateString()).getDateGuion());
+
         this.frmUpkeep.txtSemanaTmtbWeekly.onchange = function () {
             let aux = this.value.split('-');
             clase.frmUpkeep.txtDescriptionTmtbWeekly.value = new UtilDateWeek(parseInt(aux[0]), parseInt(aux[1]) - 1, parseInt(aux[2])).getWeek();
@@ -79,6 +80,7 @@ class CRUDTmtbWeekly {
         this.json = '';
         this.modalCargandoObject.show();
     }
+
     create() {
         this.frmUpkeep.txtDescriptionTmtbWeekly.value = '';
         this.frmUpkeep.txtSemanaTmtbWeekly.value = '';
@@ -86,17 +88,18 @@ class CRUDTmtbWeekly {
         this.send.action = 'create';
         this.parameters = '';
     }
+
     update() {
         this.frmUpkeep.txtDescriptionTmtbWeekly.value = this.TmtbWeekly.description;
         this.TmtbWeekly.estate == 'A' ?
             this.frmUpkeep.slcEstateTmtbWeekly.value = 'P' :
             this.frmUpkeep.slcEstateTmtbWeekly.value = this.TmtbWeekly.estate;
-
         this.frmUpkeep.txtSemanaTmtbWeekly.value = '';
         this.json = this.TmtbWeekly;
         this.send.action = 'update';
         this.parameters = '';
     }
+
     delete() {
         this.send.action = 'delete';
         this.parameters = '';
@@ -139,11 +142,10 @@ class CRUDTmtbWeekly {
                     document.querySelector('#titleTmtbWeekly').innerHTML = '[ ' + jsonResponse.counter + ' ] HORARIOS SEMANALES';
                     jsonResponse.content.forEach(element => {
                         clase.TmtbWeekly = element;
-                        element.estate == 'V' ? (clase.TmtbWeeklyV = element, c.timetableweekly = element) : null;
+                        element.estate == 'V' ? (c.timetableweekly = element) : null;
                         document.querySelector('#titleTimetableWork').innerHTML = 'HORARIO SEMANAL [ ' + c.timetableweekly.description + ' ]';
                         c.read();
                         clase.list.push(clase.TmtbWeekly);
-
                     });
                     clase.print();
                     new Pagination(jsonResponse.counter, clase.send, 'paginationTmtbWeekly', clase.modalCargandoObject);
@@ -167,6 +169,7 @@ class CRUDTmtbWeekly {
             clase.modalCargandoObject.hide();
         });
     }
+
     print() {
         document.getElementById("tbodyTmtbWeekly").innerHTML = '';
         let row = '';
@@ -227,9 +230,7 @@ class CRUDTmtbWeekly {
                 new ModalAction(clase.modalCargandoObject, 'Seguro que desea Eliminar a ' + clase.TmtbWeekly.names + ' ' + clase.TmtbWeekly.paternal + ' ' + clase.TmtbWeekly.maternal);
             }
         });
-
     }
-
 }
 
 let b = new CRUDTmtbWeekly();
