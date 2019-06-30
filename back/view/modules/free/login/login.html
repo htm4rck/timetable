@@ -8,6 +8,7 @@
   <title>.::TimeTables::Login::.</title>
   <link rel="stylesheet" href="/back/view/css/bootstrap.min.css">
   <link rel="stylesheet" href="/back/view/css/all.css">
+  <link rel="stylesheet" href="/back/view/css/icons.css">
   <link rel="stylesheet" href="/back/view/css/landing.page.css">
 </head>
 
@@ -22,18 +23,18 @@
         <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
           <form>
             <div class="row">
-              <div class="col-10 mx-auto">
-                <input id="txtLogin" type="text" class="form-control form-control-lg text-center" placeholder="Ingresa Tu Usuario" required>
+              <div class="col-9 mx-auto">
+                <input id="txtLogin" type="text" class="form-control form-control-sm text-center" placeholder="Ingresa Tu Usuario" required>
               </div>
             </div>
             <div class="row mt-1">
-              <div class="col-10 mx-auto">
-                <input id="txtPass" type="password" class="form-control form-control-lg text-center" placeholder="Ingresa Tu Clave" required>
+              <div class="col-9 mx-auto">
+                <input id="txtPass" type="password" class="form-control form-control-sm text-center" placeholder="Ingresa Tu Clave" required>
               </div>
             </div>
             <div class="row mt-1">
-              <div class="col-6 mx-auto">
-                <button id="btnLogin" type="submit" class="btn btn-block btn-lg btn-primary">Ingresar!</button>
+              <div class="col-5 mx-auto">
+                <button id="btnLogin" type="submit" class="btn btn-block btn-lg btn-primary btn-sm">Ingresar!</button>
               </div>
             </div>
           </form>
@@ -101,6 +102,9 @@
   <script type="text/javascript" src="/back/view/js/main.js"></script>
   <script type="text/javascript" src="/back/view/js/Alert.js"></script>
   <script type="text/javascript" src="/back/view/modules/free/login/manager.js"></script>
+  <script type="text/javascript">
+sessionStorage.validate=='true'?window.location='index':null;  
+  </script>
 </body>
 
 </html>

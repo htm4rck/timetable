@@ -72,10 +72,15 @@ class CRUDManager {
         }).then(function (jsonResponse) {
             console.log(jsonResponse);
             if (jsonResponse.error == false) {
-                sessionStorage.manager=jsonResponse.content.names;
+                sessionStorage.validate=!jsonResponse.error;
+                sessionStorage.idmanager=jsonResponse.content.idmanager;
+                sessionStorage.paternal=jsonResponse.content.paternal;
+                sessionStorage.maternal=jsonResponse.content.maternal;
+                sessionStorage.names=jsonResponse.content.names;
+                sessionStorage.login=jsonResponse.content.login;
                 window.location='index';
             } else {
-                sessionStorage.manager='0';
+                sessionStorage.clear();
                 new ModalAlert(jsonResponse.message, 'error');
             }
             clase.modalCargandoObject.hide();

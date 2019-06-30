@@ -45,7 +45,6 @@ class CRUDTmtbWeekly {
         });
 
         this.frmUpkeep.onsubmit = function () {
-            alert();
             clase.setObject();
             return false;
         };
@@ -110,7 +109,7 @@ class CRUDTmtbWeekly {
         this.TmtbWeekly.description = this.frmUpkeep.txtDescriptionTmtbWeekly.value;
         this.TmtbWeekly.date = new Date().toLocaleDateString();
         this.TmtbWeekly.estate = this.frmUpkeep.slcEstateTmtbWeekly.value;
-        this.TmtbWeekly.idmanager = 0;
+        this.TmtbWeekly.idmanager = admin.idmanager;
         this.json = this.TmtbWeekly;
         this.modalCargandoObject.show();
     }
