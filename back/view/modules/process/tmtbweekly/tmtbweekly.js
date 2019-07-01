@@ -176,24 +176,22 @@ class CRUDTmtbWeekly {
             let state = ''
             switch (TmtbWeekly.estate) {
                 case 'V':
-                    state = 'VIGENTE';
-                    state = '<button type="button" class="btn btn-success disabled"><i class="far fa-clock mr-3"></i>VIGENTE</button>';
+                    state = '<button type="button" class="btn btn-sm btn-success disabled"><small><i class="far fa-clock mr-3"></i>VIGENTE</small></button>';
                     break;
                 case 'P':
-                    state = 'NUEVO';
-                    state = '<button type="button" class="btn btn-primary disabled"><i class="far fa-clock mr-2"></i>PROXIMO</button>';
+                    state = '<button type="button" class="btn btn-sm btn-primary disabled"><small><i class="far fa-clock mr-2"></i>PROXIMO</small></button>';
                     break;
                 case 'A':
-                    state = '<button type="button" class="btn btn-warning disabled"><i class="far fa-clock mr-1"></i>ANTERIOR</button>';
+                    state = '<button type="button" class="btn btn-sm btn-warning disabled"><small><i class="far fa-clock mr-1"></i>ANTERIOR</small></button>';
                     break;
             }
             row = '<tr>'
-            row += '<td class="align-middle text-center" style="white-space: nowrap;"><i class="fas fa-calendar-day mr-1"></i>' + new UtilDate(TmtbWeekly.date).getDate() + '</td>';
-            row += '<td class="align-middle" style="white-space: nowrap;"><i class="far fa-file mr-1"></i>' + TmtbWeekly.description + '</td>';
+            row += '<td class="align-middle text-center" style="white-space: nowrap;"><small><i class="fas fa-calendar-day mr-1"></i>' + new UtilDate(TmtbWeekly.date).getDate() + '</small></td>';
+            row += '<td class="align-middle" style="white-space: nowrap;"><small><i class="far fa-file mr-1"></i>' + TmtbWeekly.description + '</small></td>';
             row += '<td class="text-center align-middle">' + state + '</td>';
-            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-success updateTmtbWork"><i class="far fa-calendar-alt"></i></button></td>';
-            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-warning updateTmtbWeekly"><i class="far fa-edit"></i></button></td>';
-            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-outline-danger deleteTmtbWeekly"><i class="far fa-trash-alt"></i></button></td>';
+            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-sm btn-outline-success updateTmtbWork"><small><i class="far fa-calendar-alt"></i></small></button></td>';
+            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-sm btn-outline-warning updateTmtbWeekly"><small><i class="far fa-edit"></i></small></button></td>';
+            row += '<td class="align-middle text-center"><button idtmtbweekly="' + TmtbWeekly.idtimetable_weekly + '" type="button" class="btn btn-sm btn-outline-danger deleteTmtbWeekly"><small><i class="far fa-trash-alt"></i></small></button></td>';
             row += '</tr>';
             document.getElementById("tbodyTmtbWeekly").innerHTML += row;
         });

@@ -10,6 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/back/view/css/bootstrap.min.css">
     <link rel="stylesheet" href="/back/view/css/all.css">
+    <link rel="stylesheet" href="/back/view/css/icon.css">
     <link rel="stylesheet" href="/view/css/style.css">
 </head>
 
@@ -21,10 +22,10 @@
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <a class="navbar-brand" href="/"> <img src="/view/img/logo.png" alt="logo"> </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        <button class="navbar-toggler text-white" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="menu_icon"></span>
+                            <i class="fas fa-ellipsis-v"></i>
                         </button>
 
                         <div class="collapse navbar-collapse main-menu-item" id="navbarSupportedContent">
@@ -74,7 +75,7 @@
     <section class="about_part">
         <div class="container-fluid">
             <div class="row align-items-center">
-            <?php
+                <?php
                 //CONSTRUIMOS EL CONTAINER
                 $configurationTemplate = new ConfigurationTemplate();
                 $configurationTemplate->addContainer();
@@ -91,8 +92,15 @@
                     <div class="single-footer-widget footer_1">
                         <h4>Nosotros</h4>
                         <p>Somos la cadena de centros de entretención familiar líder en Latinoamérica,
-                        con más de 25 años de experiencia y 90 locales ubicados en los principales 
-                        centros comerciales de Chile, Perú, Colombia y México. </p>
+                            con más de 25 años de experiencia y 90 locales ubicados en los principales
+                            centros comerciales de Chile, Perú, Colombia y México. </p>
+                        <button id="btnBack" class="btn btn-sm btn-warning" onclick="goBack()"><i
+                                class="fas fa-sign-in-alt"></i></button>
+                        <script>
+                            function goBack() {
+                                window.location = '/back';
+                            }
+                        </script>
                     </div>
                 </div>
                 <div class="col-xl-6 col-sm-6 col-lg-6">

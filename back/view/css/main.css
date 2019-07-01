@@ -506,3 +506,37 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
+table.tb {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+@media (max-width: 575px) {
+  table.tb {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  table.tb {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  table.tb {
+    margin-left: 7%;
+    margin-right: 7%;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  table.tb {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+
+}

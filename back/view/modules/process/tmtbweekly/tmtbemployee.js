@@ -32,7 +32,7 @@ class CRUDTimetableEmployee {
         this.modalCargando.addEventListener("show.bs.modal", function (event) {
             clase.run();
         });
-        document.querySelector('#btnBackListEmployee').onclick=function () {
+        document.querySelector('#btnBackListEmployee').onclick = function () {
             document.querySelector('#listTimetableEmploye').style.display = 'none';
         }
     }
@@ -121,19 +121,19 @@ class CRUDTimetableEmployee {
         //TODO : TABLA DE HORARIO
         let thead = document.querySelector('#listTimetableEmployeeHead');
         let tbody = document.querySelector('#listTimetableEmployeeBody');
-        thead.innerHTML = '<th class="text-center align-middle" colspan="2" rowspan="2"><button class="btn btn-sm text-success bg-white"><i class="far fa-calendar-alt"></i></button></th>';
+        thead.innerHTML = '<th class="text-center align-middle" colspan="2" rowspan="2"><button class="btn btn-sm text-success bg-white"><small><i class="far fa-calendar-alt"></i></small></button></th>';
         listDia.forEach(dia => {
-            thead.innerHTML += '<th class="text-center align-middle" style="width: 12.50%"><button class="btn btn-sm text-success bg-white">' + dia.abr + '</button></th>';
+            thead.innerHTML += '<th class="text-center align-middle" style="width: 12.50%"><button class="btn btn-sm text-success bg-white"><small>' + dia.abr + '</small></button></th>';
         });
         let trDel = '';
         trDel += '<tr>';
-        trDel += '<td class="text-center align-middle"><button class="btn btn-sm btn-success">H</button></td>';
-        trDel += '<td class="text-center align-middle"><button class="btn btn-sm btn-success">M</button></td>';
+        trDel += '<td class="text-center align-middle"><button class="btn btn-sm btn-success"><small>H</small></button></td>';
+        trDel += '<td class="text-center align-middle"><button class="btn btn-sm btn-success"><small>M</small></button></td>';
 
         listDia.forEach(dia => {
             trDel += '<td class="text-center align-middle" style="width: 12.50%">';
             trDel += '<button class="btn btn-sm btn-danger btn-delete-work" id ="delete-' + dia.id + '" disabled>';
-            trDel += '<i class="far fa-trash-alt"></i></button></td>';
+            trDel += '<small><i class="far fa-trash-alt"></i></small></button></td>';
         });
         trDel += '</tr>';
         tbody.innerHTML = trDel;
@@ -152,11 +152,11 @@ class CRUDTimetableEmployee {
             tr += '  </td>';
             for (let j = 0; j < 2; j++) {
                 if (j == 0) {
-                    tr += '<td class="align-middle text-center"><button class="btn btn-outline-dark btn-sm">:00</button></td>'
+                    tr += '<td class="align-middle text-center"><button class="btn btn-outline-dark btn-sm"><small>:00</small></button></td>'
                 } else
                 if (j == 1) {
                     tr += '<tr>'
-                    tr += '<td class="align-middle text-center"><button class="btn btn-outline-dark btn-sm">:30</button></td>'
+                    tr += '<td class="align-middle text-center"><button class="btn btn-outline-dark btn-sm"><small>:30</small></button></td>'
                 }
                 listDia.forEach(dia => {
                     //TODO :BOTONES START
@@ -180,17 +180,19 @@ class CRUDTimetableEmployee {
                     })
                     if (existe == -1) {
                         tr += '<td class="text-center align-middle">';
-                        tr += '<button class="btn btn-outline-info btn-sm addTimetableEmployee" disabled><i class="fas fa-battery-full"></i></button>'
-                        tr += '</td>'
+                        tr += '<button class="btn btn-outline-info btn-sm addTimetableEmployee" disabled>';
+                        tr += '<small><i class="fas fa-battery-full"></i></small></button>';
+                        tr += '</td>';
                     } else if (existe == 1) {
                         tr += '<td class="text-center align-middle">';
-                        tr += '<button class="btn btn-success btn-item-work" maxh="' + maxH + '" maxm="' + maxM + '" day="' + dia.id + '" hour="' + i + '" min="' + (j == 0 ? 0 : 30) + '">';
-                        tr += '<i class="far fa-grin-squint-tears"></i></button>'
-                        tr += '</td>'
+                        tr += '<button class="btn btn-sm btn-success btn-item-work" maxh="' + maxH + '" maxm="' + maxM + '" day="' + dia.id + '" hour="' + i + '" min="' + (j == 0 ? 0 : 30) + '">';
+                        tr += '<small><i class="far fa-grin-squint-tears"></i></small></button>';
+                        tr += '</td>';
                     } else if (existe == 2) {
                         tr += '<td class="text-center align-middle">';
-                        tr += '<button class="btn btn-outline-info btn-sm" disabled><i class="fas fa-battery-full"></i></button>'
-                        tr += '</td>'
+                        tr += '<button class="btn btn-outline-info btn-sm" disabled>';
+                        tr += '<small><i class="fas fa-battery-full"></i></small></button>';
+                        tr += '</td>';
                     }
                     //TODO :BOTONES END
                 });

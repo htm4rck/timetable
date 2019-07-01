@@ -187,14 +187,14 @@ class CRUDEmployee {
     let row = '';
     this.list.forEach(function (employee) {
       row = '<tr>'
-      row += '<td class="align-middle text-center" style="white-space: nowrap;"><i class="far fa-id-card mr-1"></i>' + employee.dni + '</td>';
-      row += '<td style="white-space: nowrap;"><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</td>';
-      row += '<td class="text-center align-middle"><i class="far fa-clock mr-1"></i>' + employee.weekly_hours + ':00</td>';
-      row += '<td class="text-center align-middle"><i class="fas fa-history mr-1"></i>' + employee.extra_hours + ':' + 0 + '</td>';
-      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-info changepassEmployee"><i class="fas fa-key"></i></button></td>';
-      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-success resetEmployee"><i class="fas fa-redo-alt"></i></button></td>';
-      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-warning updateEmployee"><i class="far fa-edit"></i></button></td>';
-      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-outline-danger deleteEmployee"><i class="far fa-trash-alt"></i></button></td>';
+      row += '<td class="align-middle text-center" style="white-space: nowrap;"><small><i class="far fa-id-card mr-1"></i>' + employee.dni + '</small></td>';
+      row += '<td style="white-space: nowrap;"><small><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</small></td>';
+      row += '<td class="text-center align-middle"><small><i class="far fa-clock mr-1"></i>' + employee.weekly_hours + ':00</small></td>';
+      row += '<td class="text-center align-middle"><small><i class="fas fa-history mr-1"></i>' + employee.extra_hours + ':' + 0 + '</small></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-sm btn-outline-info changepassEmployee"><small><i class="fas fa-key"></i></small></button></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-sm btn-outline-success resetEmployee"><small><i class="fas fa-redo-alt"></i></small></button></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-sm btn-outline-warning updateEmployee"><small><i class="far fa-edit"></i></small></button></td>';
+      row += '<td class="align-middle text-center"><button idemployee="' + employee.idemployee + '" type="button" class="btn btn-sm btn-outline-danger deleteEmployee"><small><i class="far fa-trash-alt"></i></small></button></td>';
       row += '</tr>';
       document.getElementById("tbodyEmployee").innerHTML += row;
     });

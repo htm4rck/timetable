@@ -6,7 +6,7 @@ class Settings {
 }
 class Send {
 	constructor() {
-		this.action = 'paginate';
+		this.action = 'read';
 		this.method = 'POST'
 		this.numberPage = 1;
 		this.sizePage = 10;
@@ -201,11 +201,5 @@ if(document.querySelector('#sidenavToggler')!=null){
 		document.querySelector(
 			'.navbar-sidenav .sidenav-second-level, .navbar-sidenav .sidenav-third-level'
 		).classList.remove('show')
-	});
-}
-if(document.querySelector('.navbar-sidenav .nav-link-collapse')!=null){
-	document.querySelector('.navbar-sidenav .nav-link-collapse').addEventListener('click', function (e) {
-		e.preventDefault();
-		document.querySelector('body').classList.remove('sidenav-toggled');
 	});
 }

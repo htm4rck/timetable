@@ -85,27 +85,28 @@ class RTimetableWork {
         let thead = document.querySelector('#listTimetableWorkHead');
         let tbody = document.querySelector('#listTimetableWorkBody');
         tbody.innerHTML = ''
-        thead.innerHTML = '<th class="text-center align-middle" colspan="2" rowspan="2"><button class="btn btn-sm text-success bg-white"><i class="far fa-user mr-1"></i>COLABORADOR</button></th>';
+        thead.innerHTML = '<th class="text-center align-middle" colspan="2" rowspan="2"><button class="btn btn-sm text-success bg-white"><small><i class="far fa-user mr-1"></i>COLABORADOR</small></button></th>';
         listDia.forEach(dia => {
-            thead.innerHTML += '<th class="text-center align-middle" style="width: 12.50%"><button class="btn btn-sm text-success bg-white">' + dia.nombre + '</button></th>';
+            thead.innerHTML += '<th class="text-center align-middle" style="width: 12.50%"><button class="btn btn-sm text-success bg-white"><small>' + dia.nombre + '</small></button></th>';
         });
         let tr = '';
         a.list.forEach(employee => {
             tr += '<tr>'
-            tr += '<td colspan="2" style="white-space: nowrap;"><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</td>';
+            tr += '<td colspan="2" style="white-space: nowrap;"><small><i class="far fa-user mr-1"></i>' + employee.paternal + ' ' + employee.maternal + ' ' + employee.names.split(' ')[0] + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</small></td>';
             listDia.forEach(dia => {
                 let existe = -1
                 let lwork = ''
                 let hora = 0;
-
                 this.list.forEach(work => {
-
-                    (dia.id == work.day && work.idemployee == employee.idemployee) ? (hora = work.start_hour + (work.start_minute == 0 ? 0 : 0.5) + work.number_hours + (work.number_minutes == 0 ? 0 : 0.5), existe = 1, lwork = work.start_hour + (work.start_minute == 0 ? ':00 - ' : ':30 - ')) : null;
+                    (dia.id == work.day && work.idemployee == employee.idemployee) ?
+                    (hora = work.start_hour + (work.start_minute == 0 ? 0 : 0.5) + work.number_hours + (work.number_minutes == 0 ? 0 : 0.5), existe = 1, lwork = work.start_hour + (work.start_minute == 0 ? ':00-' : ':30-')) : null;
                 })
                 if (existe == -1) {
-                    tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle"><i class="fas fa-calendar-day mr-1"></i>LIBRE</td>';
+                    tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle">';
+                    tr += '<small><i class="fas fa-calendar-day mr-1"></i>LIBRE</small></td>';
                 } else {
-                    tr += '<td style="white-space: nowrap;" class="text-center align-middle"><i class="fas fa-business-time mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</td>';
+                    tr += '<td style="white-space: nowrap;" class="text-center align-middle">';
+                    tr += '<small><i class="fas fa-business-time mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</small></td>';
                 }
             })
             tr += '</tr>'
