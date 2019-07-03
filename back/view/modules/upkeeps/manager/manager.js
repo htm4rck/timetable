@@ -58,8 +58,8 @@ class CRUDManager {
         this.frmChangePass.onsubmit = function () {
             try {
                 clase.send.action = 'changepass';
-                clase.Manager.pass = this.txtPassManager.value;
-                clase.json = clase.Manager;
+                clase.manager.pass = this.txtPassManager.value;
+                clase.json = clase.manager;
                 clase.modalCargandoObject.show();
             } catch (error) {
                 console.error(error);
@@ -100,7 +100,6 @@ class CRUDManager {
     }
     update() {
         this.json = this.manager;
-        console.log(this.manager);
         this.frmUpkeep.txtLoginManager.value = this.manager.login;
         this.frmUpkeep.txtPaternalManager.value = this.manager.paternal;
         this.frmUpkeep.txtMaternalManager.value = this.manager.maternal;
@@ -115,20 +114,20 @@ class CRUDManager {
     }
 
     setObject() {
-        this.Manager.paternal = document.querySelector('#txtPaternalManager').value;
-        this.Manager.maternal = document.querySelector('#txtMaternalManager').value;
-        this.Manager.names = document.querySelector('#txtNamesManager').value;
-        this.Manager.gender = document.querySelector('#slcGenderManager').value;
-        this.json = this.Manager;
+        this.manager.login = this.frmUpkeep.txtLoginManager.value;
+        this.manager.paternal = document.querySelector('#txtPaternalManager').value;
+        this.manager.maternal = document.querySelector('#txtMaternalManager').value;
+        this.manager.names = document.querySelector('#txtNamesManager').value;
+        this.json = this.manager;
         this.modalCargandoObject.show();
     }
 
     run() {
+        console.log(this.json)
         this.actionurl = '?action=' + this.send.action;
         this.parameters = '';
         if (this.send.action == 'read') {
             this.parameters += '&filter=' + document.querySelector('#txtFilterManagerSearch').value;
-            this.parameters += '&gender=' + document.querySelector('#slcGenderManagerSearch').value;
             this.parameters += '&size=' + document.querySelector('#sizePageManager').value;
             this.parameters += '&page=' + this.send.numberPage;
         }
@@ -149,8 +148,8 @@ class CRUDManager {
                     clase.list = [];
                     document.querySelector('#titleManager').innerHTML = '[ ' + jsonResponse.counter + ' ] COLABORADORES';
                     jsonResponse.content.forEach(element => {
-                        clase.Manager = element;
-                        clase.list.push(clase.Manager);
+                        clase.manager = element;
+                        clase.list.push(clase.manager);
                     });
                     clase.print();
                     new Pagination(jsonResponse.counter, clase.send, 'paginationManager', clase.modalCargandoObject);
@@ -209,19 +208,22 @@ class CRUDManager {
         });
 
         document.querySelectorAll('.updateManager').forEach(btnUpdate => {
-            console.log(btnUpdate);
             btnUpdate.onclick = function () {
-                clase.setManager(parseInt(this.getAttribute('idmanager')));
-                clase.update();
-                clase.modalUpkeepObject.show();
+                parseInt(this.getAttribute('idmanager'))!=0?
+                (clase.setManager(parseInt(this.getAttribute('idmanager'))),
+                clase.update(),
+                clase.modalUpkeepObject.show()):
+                new ModalAlert('NO ES POSIBLE EDITAR EL ADMINISTRADOR PRINCIPAL', 'error')
             }
         });
 
         document.querySelectorAll('.deleteManager').forEach(btnUpdate => {
             btnUpdate.onclick = function () {
-                clase.setManager(parseInt(this.getAttribute('idmanager')));
-                clase.delete();
-                new ModalAction(clase.modalCargandoObject, 'Seguro que desea Eliminar a ' + clase.manager.names + ' ' + clase.manager.paternal + ' ' + clase.manager.maternal);
+                parseInt(this.getAttribute('idmanager'))!=0?
+                (clase.setManager(parseInt(this.getAttribute('idmanager'))),
+                clase.delete(),
+                new ModalAction(clase.modalCargandoObject, 'Seguro que desea Eliminar a ' + clase.manager.names + ' ' + clase.manager.paternal + ' ' + clase.manager.maternal)):
+                new ModalAlert('NO ES POSIBLE ELIMINAR EL ADMINISTRADOR PRINCIPAL', 'error')
             }
         });
 

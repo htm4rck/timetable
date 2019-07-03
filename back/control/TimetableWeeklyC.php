@@ -34,6 +34,12 @@ class TimetableWeeklyC
             case 'delete':
                 $this->delete();
                 break;
+            case 'delclean':
+                $this->delClean();
+                break;
+            case 'delall':
+                $this->delAll();
+                break;
             default:
                 echo '{"error": "Metodo no Permitido}';
                 break;
@@ -59,6 +65,14 @@ class TimetableWeeklyC
     public function delete()
     {
         echo json_encode(TimetableWeeklyM::deleteM($this->timetableweekly));
+    }
+    public function delClean()
+    {
+        echo json_encode(TimetableWeeklyM::delCleanM($this->timetableweekly));
+    }
+    public function delAll()
+    {
+        echo json_encode(TimetableWeeklyM::delAllM($this->timetableweekly));
     }
 }
 new TimetableWeeklyC();

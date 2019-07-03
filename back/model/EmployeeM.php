@@ -130,7 +130,7 @@ class EmployeeM
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"hola":' . $count . '}';
+            return '{"error":' . $count . '}';
             #return $e;
         } finally {
             $stmt = null;
@@ -185,7 +185,7 @@ class EmployeeM
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"hola":' . $e . '}';
+            return '{"error":' . $e . '}';
             #return $e;
         } finally {
             $stmt = null;
@@ -248,8 +248,71 @@ class EmployeeM
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"hola":' . $e . '}';
-            #return $e;
+            return '{"error":' . $e . '}';
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function delTmtbM(Employee $t)
+    {
+
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.TIMETABLE_EMPLOYEE ";
+        $sql .= " WHERE ";
+        $sql .= " IDEMPLOYEE = :IDEMPLOYEE";
+        try {
+            $cn = new conexion;
+            $stmt = $cn->conectar()->prepare($sql);
+            $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_INT);
+            $stmt->execute();
+            $capsule->setMessage('Se eliminaron todos los Horarios personales de '.$t->getPaternal().' '.$t->getMaternal().' '.$t->getNames().' con Exito!');
+
+            $parameters['filter'] = '%%';
+            $parameters['gender'] = '';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            $capsule->setQueryExec($sql);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $e . '}';
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function delWorkM(Employee $t)
+    {
+
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.TIMETABLE_WORK ";
+        $sql .= " WHERE ";
+        $sql .= " IDEMPLOYEE = :IDEMPLOYEE";
+        try {
+            $cn = new conexion;
+            $stmt = $cn->conectar()->prepare($sql);
+            $stmt->bindParam(':IDEMPLOYEE', $t->getIdemployee(), PDO::PARAM_INT);
+            $stmt->execute();
+            $capsule->setMessage('Se eliminaron todos los Horarios de Trabajo de '.$t->getPaternal().' '.$t->getMaternal().' '.$t->getNames().' con Exito!');
+
+            $parameters['filter'] = '%%';
+            $parameters['gender'] = '';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ORDER BY PATERNAL ';
+            $read = EmployeeM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            $capsule->setQueryExec($sql);
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $e . '}';
         } finally {
             $stmt = null;
             $cn->closeCn();

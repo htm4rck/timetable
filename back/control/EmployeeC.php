@@ -33,14 +33,21 @@ class EmployeeC
             case 'changepass':
                 $this->changePass();
                 break;
+            case 'deltmtb':
+                $this->DelTmtb();
+                break;
+            case 'delwork':
+                $this->DelWork();
+                break;
+            
             default:
-                # code...
+                echo json_encode('{"Error": "Metodo no permitido"}');
                 break;
         }
     }
     public function read()
     {
-        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . $_GET['filter'] . '%' : $this->parameters['filter'] = '%%';
+        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . strtolower($_GET['filter']) . '%' : $this->parameters['filter'] = '%%';
         $_GET['gender'] != -1 ? $this->parameters['gender'] = " AND GENDER = '" . $_GET["gender"] . "' " : $this->parameters['gender'] = '';
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ORDER BY PATERNAL ';
@@ -58,6 +65,14 @@ class EmployeeC
     public function delete()
     {
         echo json_encode(EmployeeM::deleteM($this->employee));
+    }
+    public function delTmtb()
+    {
+        echo json_encode(EmployeeM::delTmtbM($this->employee));
+    }
+    public function delWork()
+    {
+        echo json_encode(EmployeeM::delWorkM($this->employee));
     }
     public function changePass()
     {

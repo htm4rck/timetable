@@ -34,6 +34,9 @@ class ManagerC
             case 'login':
                 $this->login();
                 break;
+            case 'changepass':
+                $this->changePass();
+                break;
             default:
                 echo json_encode('{"Error": "Metodo no permitido"}');
                 break;
@@ -41,7 +44,7 @@ class ManagerC
     }
     public function read()
     {
-        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . $_GET['filter'] . '%' : $this->parameters['filter'] = '%%';
+        $_GET['filter'] != '' ? $this->parameters['filter'] = '%' . strtolower($_GET['filter']) . '%' : $this->parameters['filter'] = '%%';
         $_GET['gender'] != -1 ? $this->parameters['gender'] = " AND GENDER = '" . $_GET["gender"] . "' " : $this->parameters['gender'] = '';
         $this->parameters['paginate'] = ' LIMIT ' . $_GET['size'] . ' OFFSET ' . (((int)$_GET['page'] - 1) * (int)$_GET['size']) . ' ';
         $this->parameters['orderby'] = ' ORDER BY PATERNAL ';
@@ -50,7 +53,6 @@ class ManagerC
 
     public function create()
     {
-        echo $this->manager->getPaternal();
         echo json_encode(ManagerM::createM($this->manager));
     }
     public function update()

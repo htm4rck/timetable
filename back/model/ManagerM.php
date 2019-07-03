@@ -51,7 +51,7 @@ class ManagerM
             $capsule->setQueryExec($query);
             return $capsule->getResponse();
         } catch (Exception $e) {
-            return '{"uno":' . $t->getPaternal() . '}';
+            return '{"error":' . $t->getPaternal() . '}';
         } finally {
             $stmt = null;
             $cn->closeCn();

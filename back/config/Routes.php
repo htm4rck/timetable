@@ -53,11 +53,11 @@ class Routes
     array_push($this->list_pages, $resource);
     $resource = new BeanResource('upkeeps/manager', 'upkeeps/manager/manager.html', array($this->path_resource . 'upkeeps/manager/manager.js'));
     array_push($this->list_pages, $resource);
-    $resource = new BeanResource('upkeeps/tmtbemployee', 'upkeeps/tmtbemployee/tmtbemployee.html', array($this->path_resource . 'upkeeps/tmtbemployee/tmtbemployee.js'));
+    $resource = new BeanResource('upkeeps/tmtbemployee', 'upkeeps/tmtbemployee/tmtbemployee.html', array( $this->path_resource . 'upkeeps/tmtbemployee/employee.js'));
     array_push($this->list_pages, $resource);
     $resource = new BeanResource('upkeeps/tmtbweekly', 'upkeeps/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'upkeeps/tmtbweekly/tmtbweekly.js'));
     array_push($this->list_pages, $resource);
-    $resource = new BeanResource('upkeeps/tmtbwork', 'upkeeps/tmtbwork/tmtbwork.html', array($this->path_resource . 'upkeeps/tmtbwork/tmtbwork.js'));
+    $resource = new BeanResource('upkeeps/tmtbwork', 'upkeeps/tmtbwork/tmtbwork.html', array($this->path_resource . 'upkeeps/tmtbwork/employee.js'));
     array_push($this->list_pages, $resource);
 
 

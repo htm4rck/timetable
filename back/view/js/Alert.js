@@ -59,7 +59,7 @@ class ModalAlert {
         this.modal.addEventListener("hide.bs.modal", function (event) {
             this.remove();
             document.querySelectorAll('.fade').forEach(show => {
-                show.remove();
+                show.getAttribute('id')!='exampleModal'?show.remove():null;
             });
         });
 
@@ -148,7 +148,7 @@ class ModalAction {
         this.modal.addEventListener("hide.bs.modal", function (event) {
             this.remove();
             document.querySelectorAll('.fade').forEach(show => {
-                show.remove();
+                show.getAttribute('id')!='exampleModal'?show.remove():null;
             });
         });
         this.btnSI.onclick = function () {

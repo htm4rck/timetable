@@ -132,6 +132,67 @@ class TimetableWeeklyM
             $cn->closeCn();
         }
     }
+    public static function delCleanM(TimetableWeekly $t)
+    {
+        $count = 0;
+
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.TIMETABLE_WORK ";
+        $sql .= " WHERE ";
+        $sql .= " IDTIMETABLE_WEEKLY = :IDTIMETABLE_WEEKLY";
+        try {
+                $cn = new conexion;
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_weekly(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('Se Eliminaron con Exito Todos los Horarios de Trabajo del Horario: '.$t->getDescription());
+
+            $parameters['filter'] = '%%';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ';
+            $read = TimetableWeeklyM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $e . '}';
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
+
+    public static function delAllM(TimetableWeekly $t)
+    {
+        TimetableWeeklyM::delCleanM($t);
+        $capsule = new Capsule();
+        $sql  = "DELETE FROM ";
+        $sql .= " HAPPYLAND.TIMETABLE_WEEKLY ";
+        $sql .= " WHERE ";
+        $sql .= " IDTIMETABLE_WEEKLY = :IDTIMETABLE_WEEKLY";
+        try {
+                $cn = new conexion;
+                $stmt = $cn->conectar()->prepare($sql);
+                $stmt->bindParam(':IDTIMETABLE_WEEKLY', $t->getIdtimetable_weekly(), PDO::PARAM_INT);
+                $stmt->execute();
+                $capsule->setMessage('Se Elimino el Horario Semanal: '.$t->getDescription().' con todos sus Horarios de Trabajo.');
+
+            $parameters['filter'] = '%%';
+            $parameters['paginate'] = ' LIMIT 10 OFFSET 0 ';
+            $parameters['orderby'] = ' ';
+            $read = TimetableWeeklyM::readM($parameters);
+            $capsule->setContent($read->getContent());
+            $capsule->setCounter($read->getCounter());
+            return $capsule->getResponse();
+        } catch (Exception $e) {
+            return '{"error":' . $e . '}';
+            #return $e;
+        } finally {
+            $stmt = null;
+            $cn->closeCn();
+        }
+    }
 
     public static function readM($parameters)
     {
