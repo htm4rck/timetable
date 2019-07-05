@@ -1,3 +1,32 @@
+let stringUrl = window.location.search.split('?')[1];
+console.log(stringUrl);
+class ParamGet {
+	constructor(stringUrl = 'a=b') {
+		let a = stringUrl.split('=')
+		this.param = a.length >= 1 ? a[0] : '';
+		this.value = a.length == 2 ? a[1] : '';
+	}
+}
+class StringGet {
+	constructor(stringUrl = 'a=b&c=d') {
+		let a = stringUrl.split('&').length >= 1 ?
+			stringUrl.split('&') : [stringUrl];
+		this.array = [];
+		a.forEach(param => {
+			this.array.push(new ParamGet(param))
+		})
+	}
+}
+let url = new StringGet(stringUrl);
+(url.array[0].param == 'report' && url.array[0].value == 1) ?
+reportFront(): null;
+
+function reportFront() {
+	document.querySelector('header').style.display = 'none'
+	document.querySelector('footer').style.display = 'none'
+	document.querySelector('.banner_part').style.display = 'none'
+
+}
 class Settings {
 	constructor() {
 		this.api = 'http://timetables-app.herokuapp.com/back/api/';
@@ -29,14 +58,14 @@ class Employee {
 	}
 }
 class Manager {
-    constructor() {
-        this.idmanager = 0;
-        this.paternal = '';
-        this.maternal = '';
-        this.names = '';
-        this.login = '';
-        this.pass = '';
-    }
+	constructor() {
+		this.idmanager = 0;
+		this.paternal = '';
+		this.maternal = '';
+		this.names = '';
+		this.login = '';
+		this.pass = '';
+	}
 }
 class Dia {
 	constructor(id = 0, nombre = 'LUNES', abr = 'L') {
@@ -116,9 +145,9 @@ class Hours {
 		let maxH = parseInt(this.tmtbE.number_hours);
 		let maxM = this.tmtbE.number_minutes;
 		for (let i = 0; i < iterator; i++) {
-			this.arrayHours.push(new Hour(hour, min, maxH,maxM));
+			this.arrayHours.push(new Hour(hour, min, maxH, maxM));
 			min == 0 ? (min = 30) : (hour++, min = 0);
-			maxM == 0 ? (maxM = 30, maxH--) : ( maxM = 0);
+			maxM == 0 ? (maxM = 30, maxH--) : (maxM = 0);
 		}
 	}
 }
@@ -193,7 +222,7 @@ class UtilDateWeek {
 		return 'Del ' + this.dateStart + ' al ' + this.dateEnd;
 	}
 }
-if(document.querySelector('#sidenavToggler')!=null){
+if (document.querySelector('#sidenavToggler') != null) {
 	document.querySelector('#sidenavToggler').addEventListener('click', function (e) {
 		e.preventDefault();
 		document.querySelector('body').classList.toggle('sidenav-toggled');
