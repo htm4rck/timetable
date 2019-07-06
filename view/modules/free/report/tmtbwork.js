@@ -92,7 +92,7 @@ class RTimetableWork {
         let tr = '';
         a.list.forEach(employee => {
             tr += '<tr>'
-            tr += '<td colspan="2" style="white-space: nowrap;"><small><i class="far fa-user mr-1"></i>' + employee.names.split(' ')[0] +' ' + employee.paternal + ' ' + employee.maternal.substring(0,1) + '. ' + '</small></td>';
+            tr += '<td colspan="2" style="white-space: nowrap;"><small>' + employee.names.split(' ')[0] +' ' + employee.paternal + ' ' + employee.maternal.substring(0,1) + '. ' + '</small></td>';
             listDia.forEach(dia => {
                 let existe = -1
                 let lwork = ''
@@ -105,7 +105,7 @@ class RTimetableWork {
                 if (existe == -1) {
                     tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle"><small><i class="fas fa-calendar-day mr-1"></i>LIBRE</small></td>';
                 } else {
-                    tr += '<td style="white-space: nowrap;" class="text-center align-middle"><small><i class="fas fa-business-time mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</small></td>';
+                    tr += '<td style="white-space: nowrap;" class="text-center align-middle"><small>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</small></td>';
                 }
             })
             tr += '</tr>'
