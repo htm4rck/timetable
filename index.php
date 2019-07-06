@@ -15,6 +15,13 @@ require_once "config/Routes.php";
 
 #ELEMENTS
 $configurationTemplate = new ConfigurationTemplate();
-$configurationTemplate->addTemplateBase();
+if ($configurationTemplate->getView() == 'view') {
+    $configurationTemplate->addTemplateBase();
+} else if ($configurationTemplate->getView() == 'api') {
+    header('Content-Type: application/json');
+    $configurationTemplate->addContainer();
+} else {
+    $configurationTemplate->addContainer();
+}
 
 ?>

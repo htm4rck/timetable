@@ -9,62 +9,16 @@ class Routes
     $this->path_resource = "view/modules/";
     $this->list_pages = array();
     
+    $resource = new BeanResource('report', 'free/report/report.html');
+    $resource->viewFree();
+    array_push($this->list_pages, $resource);
+
     //TODO : INICIO
     $resource = new BeanResource('index', 'index/index.html', array($this->path_resource . 'index/tmtbweekly.js',$this->path_resource . 'index/tmtbwork.js',$this->path_resource . 'index/employee.js'));
     array_push($this->list_pages, $resource);
     $resource = new BeanResource('', 'index/index.html', array($this->path_resource . 'index/tmtbweekly.js',$this->path_resource . 'index/tmtbwork.js',$this->path_resource . 'index/employee.js'));
     array_push($this->list_pages, $resource);
-
-    //TODO: API
-    $resource = new BeanResource('api/employee', 'EmployeeC.php');
-    $resource->viewApi();
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('api/manager', 'ManagerC.php');
-    $resource->viewApi();
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('api/timetbemployee', 'TimetableEmployeeC.php');
-    $resource->viewApi();
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('api/timetbweekly', 'TimetableWeeklyC.php');
-    $resource->viewApi();
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('api/timetbwork', 'TimetableWorkC.php');
-    $resource->viewApi();
-    array_push($this->list_pages, $resource);
     
-    //TODO : Free
-    $resource = new BeanResource('api', 'free/blank/blank.html');
-    $resource->viewFree();
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('login', 'free/login/login.html');
-    $resource->viewFree();
-    array_push($this->list_pages, $resource);
-    
-    //TODO : MANTENIMIENTOS
-    $resource = new BeanResource('upkeeps', 'upkeeps/upkeeps.html');
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('upkeeps/employee', 'upkeeps/employee/employee.html', array($this->path_resource . 'upkeeps/employee/employee.js'));
-    array_push($this->list_pages, $resource);
-
-    //TODO : HORARIOS
-    $resource = new BeanResource('process', 'process/process.html');
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('process/employee', 'process/employee/employee.html', array($this->path_resource . 'process/employee/employee.js',$this->path_resource . 'process/employee/tmtbemployee.js'));
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('process/tmtbweekly', 'process/tmtbweekly/tmtbweekly.html', array($this->path_resource . 'process/tmtbweekly/tmtbweekly.js',$this->path_resource . 'process/tmtbweekly/tmtbwork.js',$this->path_resource . 'process/tmtbweekly/employee.js',$this->path_resource . 'process/tmtbweekly/tmtbemployee.js'));
-    array_push($this->list_pages, $resource);
-
-    $resource = new BeanResource('process/tmtbvalid', 'process/tmtbvalid/tmtbvalid.html', array($this->path_resource . 'process/tmtbvalid/tmtbweekly.js',$this->path_resource . 'process/tmtbvalid/tmtbwork.js',$this->path_resource . 'process/tmtbvalid/employee.js'));
-    array_push($this->list_pages, $resource);
-
   }
 
   public function getResourceForContainer()
@@ -73,7 +27,7 @@ class Routes
     $path_scripts = "";
     $view = true;
     if ($routes->isURLValidate()) {
-      $context = '/back/';
+      $context = '/';
       $context_path = $_SERVER['REQUEST_URI'];
       $path = substr($context_path, strlen($context));
       $values_path = explode("?", $path);
