@@ -72,7 +72,7 @@
     <!-- banner part start-->
 
     <!-- about part start-->
-    <section class="about_part">
+    <section class="about_part" style="z-index: 2">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <?php
@@ -142,6 +142,8 @@
     <script src="/back/view/js/bootstrap-native-v4.js"></script>
     <script src="/back/view/js/Alert.js"></script>
     <script src="/back/view/js/main.js"></script>
+    <script src="/back/view/js/jspdf.min.js"></script>
+    <script src="/back/view/js/jspdf.plugin.autotable.js"></script>
     <script src="/view/js/custom.js"></script>
     <?php
     $configurationTemplate = new ConfigurationTemplate();

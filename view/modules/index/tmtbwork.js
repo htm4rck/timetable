@@ -15,6 +15,7 @@ class RTimetableWork {
         this.modalCargandoObject = new Modal(this.modalCargando, {
             backdrop: false
         });
+        this.report = {};
         this.list = [];
         this.eventsDefault();
         this.read();
@@ -84,15 +85,22 @@ class RTimetableWork {
         //TODO : TABLA DE HORARIO
         let thead = document.querySelector('#listTimetableWorkHead');
         let tbody = document.querySelector('#listTimetableWorkBody');
+        this.report.title = 'HORARIO SEMANAL [ ' + this.timetableweekly.description + ' ]';
+        this.report.head = [];
+        this.report.body = [];
+        this.report.head.push('COLABORADOR');
         tbody.innerHTML = ''
         thead.innerHTML = '<th class="text-center align-middle" colspan="2" rowspan="2"><button class="btn btn-sm text-success bg-white"><i class="far fa-user mr-1"></i><small></small></button></th>';
         listDia.forEach(dia => {
+            this.report.head.push(dia.nombre);
             thead.innerHTML += '<th class="text-center align-middle" style="width: 12.50%"><button class="btn btn-sm text-success bg-white"><small>' + dia.nombre + '</small></button></th>';
         });
         let tr = '';
         a.list.forEach(employee => {
+            let row = [];
+            row.push(employee.names.split(' ')[0] + ' ' + employee.paternal + ' ' + employee.maternal.substring(0, 1)+'.');
             tr += '<tr>'
-            tr += '<td colspan="2" style="white-space: nowrap;"><small><i class="far fa-user mr-1"></i>' + employee.names.split(' ')[0] +' ' + employee.paternal + ' ' + employee.maternal.substring(0,1) + '. ' + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</small></td>';
+            tr += '<td colspan="2" style="white-space: nowrap;"><small><i class="far fa-user mr-1"></i>' + employee.names.split(' ')[0] + ' ' + employee.paternal + ' ' + employee.maternal.substring(0, 1) + '. ' + '<br><i class="fas fa-mobile-alt mr-1"></i>' + employee.mobile + '</small></td>';
             listDia.forEach(dia => {
                 let existe = -1
                 let lwork = ''
@@ -100,17 +108,42 @@ class RTimetableWork {
 
                 this.list.forEach(work => {
 
-                    (dia.id == work.day && work.idemployee == employee.idemployee) ? (hora = work.start_hour + (work.start_minute == 0 ? 0 : 0.5) + work.number_hours + (work.number_minutes == 0 ? 0 : 0.5), existe = 1, lwork = work.start_hour + (work.start_minute == 0 ? ':00-' : ':30-')) : null;
+                    (dia.id == work.day && work.idemployee == employee.idemployee) ? (hora = work.start_hour + (work.start_minute == 0 ? 0 : 0.5) + work.number_hours + (work.number_minutes == 0 ? 0 : 0.5), existe = 1, lwork = (work.start_hour>9?work.start_hour:'0'+work.start_hour) + (work.start_minute == 0 ? ':00-' : ':30-')) : null;
                 })
                 if (existe == -1) {
+                    row.push('Libre');
                     tr += '<td style="white-space: nowrap;color:red;" class="text-center align-middle"><small><i class="fas fa-calendar-day mr-1"></i>LIBRE</small></td>';
                 } else {
+                    row.push(lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30'));
                     tr += '<td style="white-space: nowrap;" class="text-center align-middle"><small><i class="fas fa-business-time mr-1"></i>' + lwork + (Number.isInteger(hora) ? parseInt(hora) + ':00' : parseInt(hora) + ':30') + '</small></td>';
                 }
             })
             tr += '</tr>'
+            this.report.body.push(row);
         })
         tbody.innerHTML += tr;
+        this.reportPDF();
+    }
+    reportPDF() {
+        let clase = this;
+        document.querySelector('#btnReport').onclick = function () {
+            //alert()
+            var doc = new jsPDF();
+            // You can use html:
+            doc.setFontSize(10);
+            doc.text(clase.report.title, 14, 22);
+            doc.autoTable({
+                startY: 30,
+                tableWidth: 'wrap',
+                styles: {
+                    cellPadding: 3,
+                    fontSize: 8
+                },
+                head: [clase.report.head],
+                body: clase.report.body
+            });
+            doc.output("dataurlnewwindow");
+        }
     }
 
 }
